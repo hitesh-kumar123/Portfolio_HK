@@ -55,7 +55,7 @@ const Contact = () => {
       href: 'https://github.com/hitesh-kumar123',
       color: 'text-gray-800'
     }
-  ];
+  ]
 
   return (
     <section id="contact" className="section-padding bg-gradient-to-b from-background to-secondary/30">

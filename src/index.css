@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -41,13 +41,23 @@
     --radius: 0.75rem;
 
     /* Custom gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(180 100% 25% / 0.05) 0%, hsl(180 100% 35% / 0.1) 100%);
-    --gradient-section: linear-gradient(180deg, hsl(210 17% 98%) 0%, hsl(0 0% 100%) 100%);
-    
+    --gradient-hero: linear-gradient(
+      135deg,
+      hsl(180 100% 25% / 0.05) 0%,
+      hsl(180 100% 35% / 0.1) 100%
+    );
+    --gradient-section: linear-gradient(
+      180deg,
+      hsl(210 17% 98%) 0%,
+      hsl(0 0% 100%) 100%
+    );
+
     /* Shadows */
-    --shadow-card: 0 4px 6px -1px hsl(180 100% 25% / 0.1), 0 2px 4px -1px hsl(180 100% 25% / 0.06);
-    --shadow-card-hover: 0 20px 25px -5px hsl(180 100% 25% / 0.1), 0 10px 10px -5px hsl(180 100% 25% / 0.04);
-    
+    --shadow-card: 0 4px 6px -1px hsl(180 100% 25% / 0.1),
+      0 2px 4px -1px hsl(180 100% 25% / 0.06);
+    --shadow-card-hover: 0 20px 25px -5px hsl(180 100% 25% / 0.1),
+      0 10px 10px -5px hsl(180 100% 25% / 0.04);
+
     /* Transitions */
     --transition-all: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-transform: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -146,13 +156,21 @@
   }
 
   .section-title::after {
-    content: '';
+    content: "";
     @apply absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-primary rounded-full;
   }
 
   /* Profile Image */
   .profile-image {
     @apply w-64 h-64 lg:w-80 lg:h-80 rounded-full border-4 border-primary shadow-2xl object-cover transition-all duration-500 hover:scale-105 hover:shadow-[0_20px_40px_rgba(0,128,128,0.3)];
+  }
+
+  .profile-image-container {
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .profile-image-container:hover {
+    transform: scale(1.05);
   }
 
   /* Project Card */
@@ -184,7 +202,7 @@
   }
 
   .nav-link::after {
-    content: '';
+    content: "";
     @apply absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300;
   }
 
