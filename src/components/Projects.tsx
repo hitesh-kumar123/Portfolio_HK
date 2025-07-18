@@ -12,7 +12,7 @@ const Projects = () => {
       image: weatherImage,
       technologies: ['React', 'CSS', 'API', 'JavaScript'],
       githubUrl: 'https://github.com/hitesh-kumar123/Weather_react_app.git',
-      liveUrl: 'https://weather-app-hitesh.netlify.app/',
+      liveUrl: 'https://raincheckr.netlify.app/',
       featured: true
     },
     {
