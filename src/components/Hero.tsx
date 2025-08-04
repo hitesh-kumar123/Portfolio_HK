@@ -81,6 +81,7 @@ const Hero = () => {
           <div className="flex flex-row gap-4 justify-center items-center mb-16">
             <button onClick={scrollToContact} className="btn-hero group">
               Contact Me
+              {/* <ChevronDown className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-y-1" /> */}
             </button>
             {/* <a
               href="#"
