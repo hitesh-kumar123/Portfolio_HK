@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Sun, Moon } from "lucide-react";
+import { useDarkMode } from "../hooks/useDarkMode";
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
+  const { isDarkMode, toggleDarkMode } = useDarkMode();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -77,16 +79,40 @@ const Navigation = () => {
                 {label}
               </button>
             ))}
+
+            {/* Dark Mode Toggle */}
+            <button
+              onClick={toggleDarkMode}
+              className="theme-toggle p-2 text-foreground hover:text-primary transition-colors duration-300 rounded-lg hover:bg-primary/10"
+              aria-label={
+                isDarkMode ? "Switch to light mode" : "Switch to dark mode"
+              }
+            >
+              {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+            </button>
           </div>
 
           {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-2 text-foreground hover:text-primary transition-colors duration-300"
-            aria-label="Toggle mobile menu"
-          >
-            {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-          </button>
+          <div className="flex items-center gap-2 md:hidden">
+            {/* Dark Mode Toggle for Mobile */}
+            <button
+              onClick={toggleDarkMode}
+              className="theme-toggle p-2 text-foreground hover:text-primary transition-colors duration-300 rounded-lg hover:bg-primary/10"
+              aria-label={
+                isDarkMode ? "Switch to light mode" : "Switch to dark mode"
+              }
+            >
+              {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
+            </button>
+
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="p-2 text-foreground hover:text-primary transition-colors duration-300"
+              aria-label="Toggle mobile menu"
+            >
+              {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Navigation */}
