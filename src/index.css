@@ -135,34 +135,34 @@
 @layer components {
   /* Button Variants */
   .btn-hero {
-    @apply bg-primary text-primary-foreground hover:bg-accent hover:text-accent-foreground px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg;
+    @apply bg-primary text-primary-foreground hover:bg-accent hover:text-accent-foreground px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg text-sm sm:text-base;
   }
 
   .btn-outline-primary {
-    @apply border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground px-6 py-3 rounded-lg font-medium transition-all duration-300;
+    @apply border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg font-medium transition-all duration-300;
   }
 
   .btn-success {
-    @apply bg-green-600 text-white hover:bg-green-700 px-6 py-3 rounded-lg font-medium transition-all duration-300;
+    @apply bg-green-600 text-white hover:bg-green-700 px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg font-medium transition-all duration-300;
   }
 
   /* Section Styles */
   .section-padding {
-    @apply py-20 lg:py-24;
+    @apply py-16 sm:py-20 lg:py-24;
   }
 
   .section-title {
-    @apply text-4xl lg:text-5xl font-bold text-foreground mb-4 relative inline-block;
+    @apply text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-3 sm:mb-4 relative inline-block;
   }
 
   .section-title::after {
     content: "";
-    @apply absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-primary rounded-full;
+    @apply absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-20 sm:w-24 h-1 bg-primary rounded-full;
   }
 
   /* Profile Image */
   .profile-image {
-    @apply w-64 h-64 lg:w-80 lg:h-80 rounded-full border-4 border-primary shadow-2xl object-cover transition-all duration-500 hover:scale-105 hover:shadow-[0_20px_40px_rgba(0,128,128,0.3)];
+    @apply rounded-full border-4 border-primary shadow-2xl object-cover transition-all duration-500 hover:scale-105 hover:shadow-[0_20px_40px_rgba(0,128,128,0.3)];
   }
 
   .profile-image-container {
@@ -180,12 +180,12 @@
 
   /* Skill Item */
   .skill-item {
-    @apply bg-card border border-border rounded-xl p-4 text-center transition-all duration-300 hover:-translate-y-1 hover:shadow-lg flex flex-col items-center gap-2;
+    @apply bg-card border border-border rounded-xl p-3 sm:p-4 text-center transition-all duration-300 hover:-translate-y-1 hover:shadow-lg flex flex-col items-center gap-2;
   }
 
   /* Contact Form */
   .form-input {
-    @apply w-full px-4 py-3 bg-secondary border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300;
+    @apply w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-secondary border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300;
   }
 
   /* Navigation */
@@ -234,5 +234,20 @@
 
   .fade-in-right.animate {
     @apply opacity-100 translate-x-0;
+  }
+}
+
+/* Mobile-specific improvements */
+@media (max-width: 640px) {
+  .section-padding {
+    @apply py-12;
+  }
+
+  .section-title {
+    @apply text-2xl;
+  }
+
+  .section-title::after {
+    @apply w-16;
   }
 }
