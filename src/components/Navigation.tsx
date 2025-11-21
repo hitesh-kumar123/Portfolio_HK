@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Menu, X, Sun, Moon } from "lucide-react";
 import { useDarkMode } from "../hooks/useDarkMode";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -12,7 +13,6 @@ const Navigation = () => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
 
-      // Update active section based on scroll position
       const sections = ["home", "about", "projects", "certificates", "contact"];
       const scrollPosition = window.scrollY + 300;
 
@@ -52,31 +52,47 @@ const Navigation = () => {
   ];
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? "nav-scrolled py-3 sm:py-4" : "bg-transparent py-4 sm:py-6"
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between">
+    <>
+      <motion.nav
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="fixed top-4 left-0 right-0 z-50 flex justify-center px-4"
+      >
+        <div
+          className={`flex items-center gap-4 sm:gap-8 rounded-full px-6 py-3 transition-all duration-300 ${
+            isScrolled
+              ? "glass border-white/20 bg-background/60 backdrop-blur-xl shadow-lg"
+              : "bg-transparent border border-transparent"
+          }`}
+        >
           {/* Logo */}
           <button
             onClick={() => scrollToSection("home")}
-            className="text-xl sm:text-2xl font-bold text-primary transition-colors duration-300 hover:text-accent"
+            className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent hover:opacity-80 transition-opacity"
           >
             HK
           </button>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-6 lg:space-x-8">
+          <div className="hidden md:flex items-center space-x-1">
             {navItems.map(({ id, label }) => (
               <button
                 key={id}
                 onClick={() => scrollToSection(id)}
-                className={`nav-link font-medium text-sm lg:text-base ${
-                  activeSection === id ? "active" : ""
+                className={`relative px-4 py-2 rounded-full text-sm font-medium transition-colors duration-300 ${
+                  activeSection === id
+                    ? "text-primary-foreground"
+                    : "text-foreground/80 hover:text-primary"
                 }`}
               >
+                {activeSection === id && (
+                  <motion.div
+                    layoutId="activeTab"
+                    className="absolute inset-0 bg-primary rounded-full -z-10"
+                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                  />
+                )}
                 {label}
               </button>
             ))}
@@ -84,59 +100,61 @@ const Navigation = () => {
             {/* Dark Mode Toggle */}
             <button
               onClick={toggleDarkMode}
-              className="theme-toggle p-2 text-foreground hover:text-primary transition-colors duration-300 rounded-lg hover:bg-primary/10"
-              aria-label={
-                isDarkMode ? "Switch to light mode" : "Switch to dark mode"
-              }
+              className="ml-4 p-2 text-foreground hover:text-primary transition-colors duration-300 rounded-full hover:bg-secondary/50"
+              aria-label="Toggle theme"
             >
               {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
             </button>
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="flex items-center gap-2 md:hidden">
-            {/* Dark Mode Toggle for Mobile */}
+          <div className="flex items-center gap-4 md:hidden">
             <button
               onClick={toggleDarkMode}
-              className="theme-toggle p-2 text-foreground hover:text-primary transition-colors duration-300 rounded-lg hover:bg-primary/10"
-              aria-label={
-                isDarkMode ? "Switch to light mode" : "Switch to dark mode"
-              }
+              className="p-2 text-foreground hover:text-primary transition-colors duration-300"
             >
-              {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
+              {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
             </button>
-
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="p-2 text-foreground hover:text-primary transition-colors duration-300"
-              aria-label="Toggle mobile menu"
             >
-              {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
         </div>
+      </motion.nav>
 
-        {/* Mobile Navigation */}
+      {/* Mobile Navigation Overlay */}
+      <AnimatePresence>
         {isMobileMenuOpen && (
-          <div className="md:hidden mt-3 sm:mt-4 py-3 sm:py-4 bg-background/95 backdrop-blur-md rounded-lg shadow-lg border border-border">
-            {navItems.map(({ id, label }) => (
-              <button
-                key={id}
-                onClick={() => scrollToSection(id)}
-                className={`block w-full text-left px-4 py-2.5 sm:py-3 font-medium transition-colors duration-300 text-sm sm:text-base ${
-                  activeSection === id
-                    ? "text-primary bg-primary/10"
-                    : "text-foreground hover:text-primary hover:bg-primary/5"
-                }`}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="fixed top-20 left-4 right-4 z-40 md:hidden rounded-2xl glass overflow-hidden"
+          >
+            <div className="p-4 flex flex-col gap-2">
+              {navItems.map(({ id, label }) => (
+                <button
+                  key={id}
+                  onClick={() => scrollToSection(id)}
+                  className={`w-full text-left px-4 py-3 rounded-xl font-medium transition-all duration-300 ${
+                    activeSection === id
+                      ? "bg-primary/10 text-primary"
+                      : "text-foreground hover:bg-secondary"
+                  }`}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+          </motion.div>
         )}
-      </div>
-    </nav>
+      </AnimatePresence>
+    </>
   );
 };
 
 export default Navigation;
+
