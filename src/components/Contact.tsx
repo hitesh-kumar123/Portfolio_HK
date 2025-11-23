@@ -56,7 +56,7 @@ const Contact = () => {
                   <div className="p-3 rounded-full bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                     <Mail size={24} />
                   </div>
-                  <span className="text-lg">hiteshkumar.hk2001@gmail.com</span>
+                  <span className="text-lg">hiteshdevkumar2003@gmail.com</span>
                 </a>
                 
                 <a 
@@ -66,7 +66,7 @@ const Contact = () => {
                   <div className="p-3 rounded-full bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                     <Phone size={24} />
                   </div>
-                  <span className="text-lg">+91 98765 43210</span>
+                  <span className="text-lg">+91 9983318311</span>
                 </a>
                 
                 <div className="flex items-center gap-4 text-muted-foreground group">

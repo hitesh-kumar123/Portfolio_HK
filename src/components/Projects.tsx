@@ -3,9 +3,30 @@ import { motion } from "framer-motion";
 import weatherImage from "../assets/Weather.png";
 import simonGameImage from "../assets/Simon_Game.png";
 import spotifyCloneImage from "../assets/Spotify_Clone.png";
+import smartRentImage from "../assets/smartRent.png";
+import SayloImage from "../assets/saylo.png";
 
 const Projects = () => {
   const projects = [
+     {
+      title: "Smart Rent System",
+      description:
+        "A full-stack Smart Rent System for property listings, bookings, and rental management with React, Node.js, and MongoDB.",
+      image: smartRentImage,
+      tags: ["HTML", "CSS", "Responsive Design", "JavaScript", "React", "Node.js", "MongoDB" , "Express" ,"RESTful APIs"],
+      githubUrl: "https://github.com/hitesh-kumar123/Smart-Rent",
+      liveUrl: "https://smartrentsystem.netlify.app/",
+    },
+
+    {
+      title: "Saylo",
+      description:
+        "SAYLO is your AI-powered interview coach and career prep companion. Practice realistic, face-to-face mock interviews, get tailored questions from your resume, and receive instant, actionable feedback on content, delivery, and confidence. Upload your resume for targeted drills, track your progress with performance metrics, and review your interview.",
+      image: SayloImage,
+      tags: ["HTML", "CSS", "Responsive Design"],
+      githubUrl: "https://github.com/hitesh-kumar123/saylo",
+      liveUrl: "https://saylo-ten.vercel.app/",
+    },
     {
       title: "Weather Application",
       description:
