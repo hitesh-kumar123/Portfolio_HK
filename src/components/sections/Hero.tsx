@@ -1,5 +1,5 @@
 import { ArrowDown, Github, Linkedin, Mail } from "lucide-react";
-import profileImage from "../assets/Hitesh_Kumar.jpg";
+import profileImage from "@/assets/Hitesh_Kumar.jpg";
 import { motion } from "framer-motion";
 import { Typewriter } from "react-simple-typewriter";
 

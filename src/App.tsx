@@ -6,8 +6,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import ScrollProgress from "./components/ScrollProgress";
-import BackToTop from "./components/BackToTop";
+import ScrollProgress from "./components/common/ScrollProgress";
+import BackToTop from "./components/common/BackToTop";
 
 const queryClient = new QueryClient();
 

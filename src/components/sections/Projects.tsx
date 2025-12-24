@@ -1,10 +1,10 @@
 import { ExternalLink, Github } from "lucide-react";
 import { motion } from "framer-motion";
-import weatherImage from "../assets/Weather.png";
-import simonGameImage from "../assets/Simon_Game.png";
-import spotifyCloneImage from "../assets/Spotify_Clone.png";
-import smartRentImage from "../assets/smartRent.png";
-import SayloImage from "../assets/saylo.png";
+import weatherImage from "@/assets/Weather.png";
+import simonGameImage from "@/assets/Simon_Game.png";
+import spotifyCloneImage from "@/assets/Spotify_Clone.png";
+import smartRentImage from "@/assets/smartRent.png";
+import SayloImage from "@/assets/Saylo.png";
 
 const Projects = () => {
   const projects = [

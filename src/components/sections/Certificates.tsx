@@ -1,10 +1,10 @@
 import { motion } from "framer-motion";
-import fullStackCert from "../assets/Certificates/Full Stack Development.png";
-import gssocCert from "../assets/Certificates/GSSOC.jpg";
-import hack2skillCert from "../assets/Certificates/Hack2skill-Certificate.png";
-import azureCert from "../assets/Certificates/Microsoft Azure.pdf.png";
-import postmanCert from "../assets/Certificates/Postman - Postman API Fundamentals Student Expert - 2025-09-27 (1).png";
-import contributorBadge from "../assets/Certificates/Contributor's badge.jpg";
+import fullStackCert from "@/assets/Certificates/Full Stack Development.png";
+import gssocCert from "@/assets/Certificates/GSSOC.jpg";
+import hack2skillCert from "@/assets/Certificates/Hack2skill-Certificate.png";
+import azureCert from "@/assets/Certificates/Microsoft Azure.pdf.png";
+import postmanCert from "@/assets/Certificates/Postman - Postman API Fundamentals Student Expert - 2025-09-27 (1).png";
+import contributorBadge from "@/assets/Certificates/Contributor's badge.jpg";
 
 const Certificates = () => {
   const certificates = [
