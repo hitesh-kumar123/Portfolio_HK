@@ -15,18 +15,9 @@ const App = () => {
   const [isThemeLoaded, setIsThemeLoaded] = useState(false);
 
   useEffect(() => {
-    // Check if theme is already set in localStorage
-    const theme = localStorage.getItem("theme");
-    const systemPrefersDark = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    ).matches;
-
-    if (theme === "dark" || (!theme && systemPrefersDark)) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-
+    // Enforce dark mode globally
+    document.documentElement.classList.add("dark");
+    localStorage.setItem("theme", "dark");
     setIsThemeLoaded(true);
   }, []);
 
@@ -47,7 +38,7 @@ const App = () => {
         <ScrollProgress />
         <Toaster />
         <Sonner />
-        <BrowserRouter>
+        <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
           <Routes>
             <Route path="/" element={<Index />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
