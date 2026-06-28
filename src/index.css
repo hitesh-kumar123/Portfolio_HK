@@ -52,7 +52,7 @@
     --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
     --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.7);
     --shadow-glow: 0 0 15px hsl(var(--primary) / 0.15);
-    --shadow-glow-lg: 0 0 30px hsl(var(--primary) / 0.20);
+    --shadow-glow-lg: 0 0 30px hsl(var(--primary) / 0.2);
   }
 }
 
@@ -60,7 +60,6 @@
    BASE STYLES
 ───────────────────────────────────────────── */
 @layer base {
-
   *,
   *::before,
   *::after {
@@ -140,7 +139,6 @@
 
   /* Respect reduced motion */
   @media (prefers-reduced-motion: reduce) {
-
     *,
     *::before,
     *::after {
@@ -156,7 +154,6 @@
    COMPONENTS
 ───────────────────────────────────────────── */
 @layer components {
-
   /* ── Dot-matrix background ── */
   .dot-matrix {
     position: relative;
@@ -168,7 +165,10 @@
     position: absolute;
     inset: 0;
     z-index: -1;
-    background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-image: radial-gradient(
+      rgba(255, 255, 255, 0.04) 1px,
+      transparent 1px
+    );
     background-size: 24px 24px;
     pointer-events: none;
   }
@@ -198,8 +198,8 @@
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
     box-shadow: var(--glass-shadow);
-    backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
+    backdrop-filter: blur(24px);
     @apply rounded-3xl transition-all duration-300;
   }
 
@@ -283,8 +283,8 @@
     @apply flex items-center gap-1.5 rounded-full transition-all duration-300;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
     box-shadow: var(--shadow-sm);
   }
 
@@ -315,8 +315,8 @@
     transform: none;
   }
 
-  .floating-input:focus~.floating-label,
-  .floating-input:not(:placeholder-shown)~.floating-label {
+  .floating-input:focus ~ .floating-label,
+  .floating-input:not(:placeholder-shown) ~ .floating-label {
     top: 0.6rem;
     transform: none;
     font-size: 0.7rem;
@@ -325,8 +325,8 @@
     color: hsl(var(--primary));
   }
 
-  .floating-input:focus~.floating-label-textarea,
-  .floating-input:not(:placeholder-shown)~.floating-label-textarea {
+  .floating-input:focus ~ .floating-label-textarea,
+  .floating-input:not(:placeholder-shown) ~ .floating-label-textarea {
     top: 0.5rem;
     font-size: 0.7rem;
     font-weight: 700;
