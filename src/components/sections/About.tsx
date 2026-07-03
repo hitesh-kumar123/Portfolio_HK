@@ -4,20 +4,17 @@ import {
   Server, Smartphone, GitBranch, Cpu,
 } from "lucide-react";
 
-/* ─────────────────────────────────────────────
-   DATA
-───────────────────────────────────────────── */
 const SKILLS = [
-  { name: "React", icon: <Code size={14} />, level: 90 },
-  { name: "Node.js", icon: <Server size={14} />, level: 85 },
-  { name: "MongoDB", icon: <Database size={14} />, level: 75 },
-  { name: "Tailwind CSS", icon: <Layout size={14} />, level: 92 },
-  { name: "JavaScript", icon: <Code size={14} />, level: 88 },
-  { name: "HTML / CSS", icon: <Globe size={14} />, level: 95 },
-  { name: "Responsive Design", icon: <Smartphone size={14} />, level: 90 },
-  { name: "Git / GitHub", icon: <GitBranch size={14} />, level: 78 },
-  { name: "Express.js", icon: <Server size={14} />, level: 80 },
-  { name: "REST APIs", icon: <Cpu size={14} />, level: 82 },
+  { name: "React", icon: <Code size={14} /> },
+  { name: "Node.js", icon: <Server size={14} /> },
+  { name: "MongoDB", icon: <Database size={14} /> },
+  { name: "Tailwind CSS", icon: <Layout size={14} /> },
+  { name: "JavaScript", icon: <Code size={14} /> },
+  { name: "HTML / CSS", icon: <Globe size={14} /> },
+  { name: "Responsive Design", icon: <Smartphone size={14} /> },
+  { name: "Git / GitHub", icon: <GitBranch size={14} /> },
+  { name: "Express.js", icon: <Server size={14} /> },
+  { name: "REST APIs", icon: <Cpu size={14} /> },
 ];
 
 const TIMELINE = [
@@ -60,9 +57,6 @@ const BIO_LINES = [
   "Off the keyboard: visual design trends, emerging UI standards, cloud setups.",
 ];
 
-/* ─────────────────────────────────────────────
-   FADE-UP WRAPPER
-───────────────────────────────────────────── */
 const FadeUp = ({
   children,
   delay = 0,
@@ -83,9 +77,6 @@ const FadeUp = ({
   </motion.div>
 );
 
-/* ─────────────────────────────────────────────
-   SKILL BAR
-───────────────────────────────────────────── */
 const SkillBar = ({
   skill,
   index,
@@ -93,48 +84,30 @@ const SkillBar = ({
   skill: (typeof SKILLS)[0];
   index: number;
 }) => (
-  <div className="group">
-    <div className="flex items-center justify-between mb-1.5">
-      <div className="flex items-center gap-2 text-white/50 group-hover:text-blue-400 transition-colors duration-200">
-        <span className="text-blue-500">{skill.icon}</span>
-        <span className="text-xs font-semibold tracking-wide">{skill.name}</span>
-      </div>
-      <span className="font-mono text-[11px] text-white/30">{skill.level}%</span>
-    </div>
-    <div className="h-[3px] bg-white/5 rounded-full overflow-hidden">
-      <motion.div
-        initial={{ width: 0 }}
-        whileInView={{ width: `${skill.level}%` }}
-        viewport={{ once: true }}
-        transition={{ duration: 1, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
+  <div className="flex items-center gap-3">
+    <span className="text-white/30">{skill.icon}</span>
+    <span className="text-xs font-medium text-white/50 w-32 flex-shrink-0">{skill.name}</span>
+    <div className="flex-1 h-[2px] bg-white/5 rounded-full overflow-hidden">
+      <div
         className="h-full rounded-full"
         style={{
-          background: `linear-gradient(90deg, hsl(217 91% 60%) 0%, hsl(239 84% 67%) 100%)`,
+          width: `${70 + index * 3 > 95 ? 95 : 70 + index * 3}%`,
+          background: "linear-gradient(90deg, hsl(217 91% 60%) 0%, hsl(239 84% 67%) 100%)",
         }}
       />
     </div>
   </div>
 );
 
-/* ─────────────────────────────────────────────
-   ABOUT
-───────────────────────────────────────────── */
 const About = () => (
   <section
     id="about"
     className="section-padding relative overflow-hidden"
     aria-labelledby="about-heading"
   >
-    {/* Ambient glow */}
-    <div
-      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full blur-[160px] opacity-[0.04] pointer-events-none"
-      style={{ background: "hsl(217 91% 60%)" }}
-      aria-hidden="true"
-    />
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-
-      {/* ── Section header ── */}
+      {/* Section header */}
       <FadeUp className="text-center mb-20">
         <div className="flex justify-center mb-4">
           <span className="section-tag">
@@ -148,30 +121,23 @@ const About = () => (
         </h2>
       </FadeUp>
 
-      {/* ── Row 1: Bio terminal + Stats + Skills ── */}
+      {/* Row 1: Bio + Stats */}
       <div className="grid lg:grid-cols-12 gap-6 mb-8">
 
-        {/* Bio terminal — 7 cols */}
+        {/* Bio terminal */}
         <FadeUp delay={0.05} className="lg:col-span-7">
           <div className="h-full premium-card overflow-hidden">
-            {/* Terminal chrome */}
-            <div className="flex items-center justify-between px-5 py-3 border-b border-white/5 bg-black/30">
+            <div className="flex items-center px-5 py-3 border-b border-white/5 bg-black/30">
               <div className="flex items-center gap-1.5" aria-hidden="true">
                 {["bg-red-500/40", "bg-yellow-500/40", "bg-green-500/40"].map((c, i) => (
                   <div key={i} className={`w-2.5 h-2.5 rounded-full ${c}`} />
                 ))}
               </div>
-              <span className="font-mono text-[10px] text-white/25 tracking-widest uppercase">
+              <span className="font-mono text-[10px] text-white/25 tracking-widest uppercase mx-auto">
                 biography.log
               </span>
-              <span className="font-mono text-[10px] text-green-400/60">● live</span>
             </div>
-
-            {/* Bio lines — typewriter feel via staggered fade */}
             <div className="p-6 md:p-8 font-mono space-y-4">
-              <div className="text-[11px] text-blue-400/60 tracking-widest uppercase mb-6">
-                $ cat biography.log
-              </div>
               {BIO_LINES.map((line, i) => (
                 <motion.p
                   key={i}
@@ -185,7 +151,6 @@ const About = () => (
                   {line}
                 </motion.p>
               ))}
-              {/* Blinking cursor */}
               <div className="flex items-center gap-2 mt-2" aria-hidden="true">
                 <span className="text-white/20 select-none">&gt;</span>
                 <span className="inline-block w-2 h-4 bg-blue-500/70 animate-pulse rounded-sm" />
@@ -194,10 +159,8 @@ const About = () => (
           </div>
         </FadeUp>
 
-        {/* Right column: 2 stat cards stacked + skill count — 5 cols */}
+        {/* Stat cards + status */}
         <div className="lg:col-span-5 flex flex-col gap-6">
-
-          {/* Stat cards row */}
           <div className="grid grid-cols-2 gap-4">
             {[
               { num: "20+", label: "Projects built", sub: "shipped & live" },
@@ -206,11 +169,8 @@ const About = () => (
               { num: "1+", label: "Years experience", sub: "continuous growth" },
             ].map((s, i) => (
               <FadeUp key={s.label} delay={0.1 + i * 0.07}>
-                <div className="premium-card p-5 group hover:border-blue-500/20 transition-colors duration-300">
-                  <div
-                    className="text-2xl font-bold tracking-tight text-white mb-0.5"
-                    style={{ fontVariantNumeric: "tabular-nums" }}
-                  >
+                <div className="premium-card p-5">
+                  <div className="text-2xl font-bold tracking-tight text-white mb-0.5">
                     {s.num}
                   </div>
                   <div className="text-[11px] font-semibold text-white/70 leading-tight">
@@ -222,11 +182,10 @@ const About = () => (
             ))}
           </div>
 
-          {/* Currently tag */}
           <FadeUp delay={0.3}>
             <div className="premium-card p-5 flex items-center gap-4">
               <div className="w-9 h-9 rounded-xl bg-green-500/10 border border-green-500/20 flex items-center justify-center flex-shrink-0">
-                <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" aria-hidden="true" />
+                <span className="w-2 h-2 rounded-full bg-green-400" aria-hidden="true" />
               </div>
               <div>
                 <div className="text-xs font-semibold text-white/80">Currently</div>
@@ -239,18 +198,12 @@ const About = () => (
         </div>
       </div>
 
-      {/* ── Row 2: Full-width skills panel ── */}
-      <FadeUp delay={0.15} className="mb-24">
+      {/* Skills panel */}
+      <FadeUp delay={0.1} className="mb-24">
         <div className="premium-card p-7 md:p-8">
-          <div className="flex items-center justify-between mb-6 pb-4 border-b border-white/5">
-            <div>
-              <h3 className="text-sm font-bold text-white">Technical skills</h3>
-              <p className="text-[11px] text-white/30 font-mono mt-0.5">stack.config.ts</p>
-            </div>
-            <div className="text-[10px] font-mono text-white/20 tracking-widest uppercase">
-              {SKILLS.length} skills indexed
-            </div>
-          </div>
+          <h3 className="text-sm font-bold text-white mb-6 pb-4 border-b border-white/5">
+            Technical skills
+          </h3>
           <div className="grid sm:grid-cols-2 gap-x-10 gap-y-4">
             {SKILLS.map((skill, i) => (
               <SkillBar key={skill.name} skill={skill} index={i} />
@@ -259,20 +212,14 @@ const About = () => (
         </div>
       </FadeUp>
 
-      {/* ── Row 3: Journey timeline ── */}
-      <FadeUp>
-        <div className="text-center mb-14">
-          <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
-            My <span className="text-blue-400">journey log</span>
-          </h3>
-          <p className="text-white/30 text-[11px] font-mono uppercase tracking-widest mt-2">
-            Executing developmental milestones
-          </p>
-        </div>
+      {/* Journey timeline */}
+      <FadeUp className="mb-14 text-center">
+        <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+          My <span className="text-blue-400">journey log</span>
+        </h3>
       </FadeUp>
 
       <div className="relative max-w-2xl mx-auto pl-8 sm:pl-10">
-        {/* Vertical track */}
         <div
           className="absolute left-[3px] sm:left-[4px] top-2 bottom-2 w-px"
           style={{
@@ -290,15 +237,13 @@ const About = () => (
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.45, delay: i * 0.07, ease: [0.22, 1, 0.36, 1] }}
-              className="relative group"
+              className="relative"
             >
-              {/* Node dot */}
               <div
-                className="absolute -left-[31px] sm:-left-[33px] top-4 w-2 h-2 rounded-full border border-blue-500 bg-background group-hover:bg-blue-500 group-hover:scale-125 transition-all duration-300"
+                className="absolute -left-[31px] sm:-left-[33px] top-4 w-2 h-2 rounded-full border border-blue-500 bg-background"
                 aria-hidden="true"
               />
-
-              <div className="premium-card p-6 group-hover:border-blue-500/20 transition-colors duration-300">
+              <div className="premium-card p-6">
                 <div className="flex flex-wrap items-center gap-2 mb-3">
                   <span className="font-mono text-[10px] text-blue-400 font-bold px-2 py-0.5 rounded bg-blue-500/10 border border-blue-500/20">
                     {item.year}
@@ -306,13 +251,11 @@ const About = () => (
                   <span className="font-mono text-[10px] text-white/20 uppercase tracking-widest">
                     {item.tag}
                   </span>
-                  <h4 className="text-sm font-semibold text-white/90 tracking-tight group-hover:text-blue-400 transition-colors duration-200 w-full sm:w-auto sm:ml-auto">
+                  <h4 className="text-sm font-semibold text-white/90 tracking-tight w-full sm:w-auto sm:ml-auto">
                     {item.title}
                   </h4>
                 </div>
-                <p className="text-[13px] text-white/45 leading-relaxed">
-                  {item.desc}
-                </p>
+                <p className="text-[13px] text-white/45 leading-relaxed">{item.desc}</p>
               </div>
             </motion.li>
           ))}

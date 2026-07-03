@@ -1,11 +1,21 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { BadgeCheck, ExternalLink, Award } from "lucide-react";
+import { ExternalLink, Award, ChevronLeft, ChevronRight } from "lucide-react";
 import fullStackCert from "@/assets/Certificates/Full Stack Development.png";
 import gssocCert from "@/assets/Certificates/GSSOC.jpg";
 import hack2skillCert from "@/assets/Certificates/Hack2skill-Certificate.png";
 import azureCert from "@/assets/Certificates/Microsoft Azure.pdf.png";
 import postmanCert from "@/assets/Certificates/Postman - Postman API Fundamentals Student Expert - 2025-09-27 (1).png";
 import contributorBadge from "@/assets/Certificates/Contributor's badge.jpg";
+
+const ISSUER_STYLES: Record<string, { badge: string; text: string }> = {
+  Udemy: { badge: "bg-purple-500/10 border-purple-500/20", text: "text-purple-400" },
+  "GirlScript Summer of Code": { badge: "bg-orange-500/10 border-orange-500/20", text: "text-orange-400" },
+  Hack2Skill: { badge: "bg-blue-500/10  border-blue-500/20", text: "text-blue-400" },
+  Microsoft: { badge: "bg-sky-500/10   border-sky-500/20", text: "text-sky-400" },
+  Postman: { badge: "bg-amber-500/10 border-amber-500/20", text: "text-amber-400" },
+  GitHub: { badge: "bg-white/5      border-white/10", text: "text-white/60" },
+};
 
 const certificates = [
   {
@@ -14,7 +24,7 @@ const certificates = [
     date: "2023",
     image: fullStackCert,
     description: "Comprehensive bootcamp covering MERN stack development.",
-    issuerColor: "text-[#CCFF00]",
+    verifyUrl: "https://www.udemy.com/",
   },
   {
     title: "GSSOC Contributor",
@@ -22,7 +32,7 @@ const certificates = [
     date: "2023",
     image: gssocCert,
     description: "Open source contribution program — top contributor.",
-    issuerColor: "text-[#00FFCC]",
+    verifyUrl: "https://gssoc.girlscript.tech/",
   },
   {
     title: "Hack2Skill Certification",
@@ -30,7 +40,7 @@ const certificates = [
     date: "2022",
     image: hack2skillCert,
     description: "Recognition for participation in hackathons and coding events.",
-    issuerColor: "text-[#CCFF00]",
+    verifyUrl: "https://hack2skill.com/",
   },
   {
     title: "Microsoft Azure Fundamentals",
@@ -38,7 +48,7 @@ const certificates = [
     date: "2022",
     image: azureCert,
     description: "Cloud services fundamentals with Microsoft Azure.",
-    issuerColor: "text-[#00FFCC]",
+    verifyUrl: "https://learn.microsoft.com/",
   },
   {
     title: "Postman API Fundamentals",
@@ -46,7 +56,7 @@ const certificates = [
     date: "2025",
     image: postmanCert,
     description: "Expert-level API development, testing and documentation.",
-    issuerColor: "text-[#CCFF00]",
+    verifyUrl: "https://www.postman.com/",
   },
   {
     title: "Open Source Contributor",
@@ -54,29 +64,134 @@ const certificates = [
     date: "2021",
     image: contributorBadge,
     description: "Active contributor badge for open source projects.",
-    issuerColor: "text-[#00FFCC]",
+    verifyUrl: "https://github.com/hitesh-kumar123",
   },
 ];
 
+/* 2 cols × 3 rows per page → page 1: [0,1,2,3], page 2: [4,5]
+   but we want 3+3 split so chunk by 4? No — 2 cols means 3 rows = 6 per page.
+   All 6 fit on page 1 if we do 3+3. User said 2 columns 3+3 split = page1: certs 0-2 left col + 0-2 right, 
+   actually: 2 columns means each page shows 4 cards (2×2) or all 6 (2×3).
+   User said "3+3 split" = page1: 3 certs, page2: 3 certs, 2 columns each. */
+const PAGES: (typeof certificates)[] = [
+  certificates.slice(0, 3),
+  certificates.slice(3, 6),
+];
+
+/* ── Single flip card ── */
+const CertCard = ({ cert }: { cert: (typeof certificates)[0] }) => {
+  const style = ISSUER_STYLES[cert.issuer] ?? ISSUER_STYLES["GitHub"];
+
+  return (
+    <div
+      className="w-full"
+      style={{ perspective: "1000px" }}
+      role="group"
+      aria-label={cert.title}
+    >
+      <div
+        className="relative"
+        style={{
+          height: "320px",
+          transformStyle: "preserve-3d",
+          transition: "transform 0.6s cubic-bezier(0.22,1,0.36,1)",
+        }}
+        onMouseEnter={(e) => {
+          (e.currentTarget as HTMLDivElement).style.transform = "rotateX(180deg)";
+        }}
+        onMouseLeave={(e) => {
+          (e.currentTarget as HTMLDivElement).style.transform = "rotateX(0deg)";
+        }}
+      >
+        {/* FRONT — certificate image */}
+        <div
+          className="absolute inset-0 rounded-2xl overflow-hidden border border-white/8 bg-[#07070b]"
+          style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
+        >
+          <img
+            src={cert.image}
+            alt={cert.title}
+            className="w-full h-full object-cover opacity-85"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+          <div className="absolute bottom-4 left-4 right-4">
+            <p className="text-[10px] font-mono text-white/30 uppercase tracking-widest">
+              hover to view details
+            </p>
+          </div>
+        </div>
+
+        {/* BACK — details */}
+        <div
+          className="absolute inset-0 rounded-2xl border border-white/8 bg-[#07070b] p-6 flex flex-col justify-between"
+          style={{
+            backfaceVisibility: "hidden",
+            WebkitBackfaceVisibility: "hidden",
+            transform: "rotateX(180deg)",
+          }}
+        >
+          {/* Top: issuer badge + date */}
+          <div className="flex items-center justify-between mb-4">
+            <span
+              className={`inline-flex items-center px-2.5 py-1 rounded-lg border text-[10px] font-mono font-bold uppercase tracking-wider ${style.badge} ${style.text}`}
+            >
+              {cert.issuer}
+            </span>
+            <span className="text-[10px] font-mono text-white/30 border border-white/8 px-2 py-1 rounded-lg">
+              {cert.date}
+            </span>
+          </div>
+
+          {/* Title */}
+          <div className="flex-1">
+            <h3 className="text-base font-bold text-white leading-snug mb-3">
+              {cert.title}
+            </h3>
+            <p className="text-[13px] text-white/45 leading-relaxed">
+              {cert.description}
+            </p>
+          </div>
+
+          {/* View certificate link */}
+          <div className="pt-4 border-t border-white/5">
+            <a
+              href={cert.image}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white text-black text-[12px] font-medium hover:bg-white/90 transition-colors duration-200"
+            >
+              <ExternalLink size={12} />
+              View Certificate
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/* ── Certificates section ── */
 const Certificates = () => {
+  const [page, setPage] = useState(0);
+  const total = PAGES.length;
+
+  const goTo = (next: number) => setPage(next);
+
   return (
     <section
       id="certificates"
       className="section-padding relative overflow-hidden"
+      aria-labelledby="cert-heading"
     >
-      {/* Background decoration */}
-      <div className="absolute top-1/4 -left-40 w-80 h-80 bg-accent/5 rounded-full blur-[120px] -z-10 pointer-events-none" />
-      <div className="absolute bottom-1/4 -right-40 w-80 h-80 bg-primary/5 rounded-full blur-[120px] -z-10 pointer-events-none" />
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* ── Section Title ── */}
+
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-20"
+          className="text-center mb-16"
         >
           <div className="flex justify-center mb-4">
             <span className="section-tag">
@@ -84,93 +199,65 @@ const Certificates = () => {
               Certifications
             </span>
           </div>
-          <h2 className="section-title">
-            Proof of <span className="text-gradient">Learning</span>
+          <h2 id="cert-heading" className="section-title">
+            Proof of <span className="text-blue-400">Learning</span>
           </h2>
-          <p className="text-base text-white/70 max-w-xl mx-auto mt-4 leading-normal">
-            Continuous engineering education. Validating technical capability and system knowledge.
+          <p className="text-[15px] text-white/45 max-w-md mx-auto mt-4 leading-relaxed">
+            Continuous education — validating technical capability across platforms.
           </p>
         </motion.div>
 
-        {/* Certificates Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {certificates.map((cert, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.08 }}
-              className="group relative bg-[#07070b] rounded-3xl overflow-hidden border border-white/5 hover:border-primary/30 transition-all duration-500 hover:shadow-2xl hover:-translate-y-1"
-            >
-              {/* Grayscale to color certificate image */}
-              <a
-                href={cert.image}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block relative aspect-[4/3] w-full overflow-hidden bg-black/50"
-              >
-                {/* Hover overlay link */}
-                <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 flex items-center justify-center">
-                  <span className="flex items-center gap-2 px-4 py-2 bg-background/90 border border-white/5 rounded-full text-[10px] font-bold uppercase tracking-wider text-primary shadow-lg transform scale-90 group-hover:scale-100 transition-transform duration-300">
-                    <ExternalLink size={12} />
-                    Verify Log
-                  </span>
-                </div>
-                
-                <img
-                  src={cert.image}
-                  alt={cert.title}
-                  className="project-img-filter w-full h-full object-cover"
-                />
-              </a>
-
-              {/* Card content */}
-              <div className="p-6">
-                <div className="flex justify-between items-start mb-3">
-                  <h3 className="text-base font-bold group-hover:text-primary transition-colors leading-tight flex-1 mr-2">
-                    {cert.title}
-                  </h3>
-                  <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-white/5 border border-white/5 text-white/55 whitespace-nowrap">
-                    {cert.date}
-                  </span>
-                </div>
-
-                {/* Verified issuer */}
-                <div className="flex items-center gap-1.5 mb-3">
-                  <BadgeCheck size={14} className={`${cert.issuerColor} flex-shrink-0`} />
-                  <p className={`text-xs font-bold font-mono uppercase tracking-wider ${cert.issuerColor}`}>
-                    {cert.issuer}
-                  </p>
-                </div>
-
-                <p className="text-sm text-white/50 leading-normal line-clamp-2 min-h-[32px]">
-                  {cert.description}
-                </p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Bottom statistics panel */}
+        {/* Cards grid */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="mt-20 max-w-2xl mx-auto p-6 rounded-3xl border border-white/5 bg-white/2 flex flex-wrap justify-around gap-6 text-center"
+          key={page}
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+          className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10"
         >
-          {[
-            { value: "6+", label: "Total Certificates" },
-            { value: "3+", label: "Education Platforms" },
-            { value: "2021–2025", label: "Learning Span" },
-          ].map((stat, i) => (
-            <div key={i}>
-              <p className="text-2xl font-black text-gradient leading-none mb-1 font-mono">{stat.value}</p>
-              <p className="text-[10px] text-white/50 font-mono uppercase tracking-widest">{stat.label}</p>
-            </div>
+          {PAGES[page].map((cert) => (
+            <CertCard key={cert.title} cert={cert} />
           ))}
         </motion.div>
+
+        {/* Pagination */}
+        <div className="flex items-center justify-center gap-6">
+          <button
+            onClick={() => goTo(page - 1)}
+            disabled={page === 0}
+            aria-label="Previous page"
+            className="w-9 h-9 rounded-xl border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:border-white/25 disabled:opacity-20 disabled:cursor-not-allowed transition-all duration-200"
+          >
+            <ChevronLeft size={16} />
+          </button>
+
+          <div className="flex items-center gap-2">
+            {PAGES.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => goTo(i)}
+                aria-label={`Page ${i + 1}`}
+                className={`rounded-full transition-all duration-200 ${i === page
+                  ? "w-5 h-1.5 bg-white"
+                  : "w-1.5 h-1.5 bg-white/20 hover:bg-white/40"
+                  }`}
+              />
+            ))}
+          </div>
+
+          <button
+            onClick={() => goTo(page + 1)}
+            disabled={page === total - 1}
+            aria-label="Next page"
+            className="w-9 h-9 rounded-xl border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:border-white/25 disabled:opacity-20 disabled:cursor-not-allowed transition-all duration-200"
+          >
+            <ChevronRight size={16} />
+          </button>
+        </div>
+
+        <p className="text-center text-[11px] font-mono text-white/20 mt-4">
+          {page + 1} / {total}
+        </p>
 
       </div>
     </section>
