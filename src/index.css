@@ -1,0 +1,109 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-ivory: #F5F0E6;
+    --bg-surface: #EEE8DC;
+    --border-color: #D9D2C5;
+    --text-ink: #111111;
+    --text-body: #3A3630;
+    --text-muted: #555048;
+    --accent-cobalt: #4057FF;
+  }
+
+  html {
+    background-color: var(--bg-ivory);
+    color: var(--text-ink);
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-ivory);
+    color: var(--text-ink);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Paper subtle texture overlay (2.5% opacity) */
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Syne", sans-serif;
+    letter-spacing: -0.025em;
+    font-weight: 700;
+  }
+
+  .font-serif {
+    font-family: "Instrument Serif", Georgia, serif;
+  }
+
+  .font-mono {
+    font-family: "JetBrains Mono", monospace;
+  }
+
+  /* Focus styling */
+  :focus-visible {
+    outline: 2px solid var(--accent-cobalt);
+    outline-offset: 2px;
+  }
+
+  /* Selection styling */
+  ::selection {
+    background: #4057FF;
+    color: #FFFFFF;
+  }
+}
+
+@layer components {
+  /* Section container with strict 8px/16px scale */
+  .section-container {
+    @apply max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-24 sm:py-32;
+  }
+
+  /* Section Index Tag */
+  .section-tag {
+    @apply inline-flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-wider text-cobalt mb-6;
+  }
+
+  /* Display Title (Clean, unified 2 font weights/styles max) */
+  .display-title {
+    @apply font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-ink leading-[1.08];
+  }
+
+  /* Unified Primary Button */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-cobalt text-white font-mono text-xs font-bold uppercase tracking-wider rounded-full transition-all duration-200 hover:bg-cobalt-hover hover:shadow-md active:scale-[0.98];
+  }
+
+  /* Unified Secondary/Ghost Button */
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3.5 border border-[#D9D2C5] bg-[#EEE8DC] text-ink font-mono text-xs font-bold uppercase tracking-wider rounded-full transition-all duration-200 hover:border-ink hover:bg-ink hover:text-white active:scale-[0.98];
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
