@@ -10,33 +10,38 @@ export default {
   theme: {
     extend: {
       colors: {
-        ivory: {
-          DEFAULT: "#F4F0E8",
-          dark: "#E8E2D5",
-          light: "#FCFAF6",
-          muted: "#DDD6C8",
+        canvas: {
+          DEFAULT: "#FAFAFA",
+          pure: "#FFFFFF",
+          subtle: "#F4F5F7",
+          dark: "#F0F2F5",
+        },
+        surface: {
+          DEFAULT: "#FFFFFF",
+          muted: "#F8F9FA",
+          subtle: "#F3F4F6",
         },
         ink: {
-          DEFAULT: "#111111",
+          DEFAULT: "#09090B",
           pure: "#000000",
-          soft: "#2A2A2A",
-          muted: "#666666",
-          faint: "#999999",
-          border: "rgba(17, 17, 17, 0.12)",
-          hairline: "rgba(17, 17, 17, 0.08)",
+          soft: "#18181B",
+          body: "#374151",
+          muted: "#6B7280",
+          faint: "#9CA3AF",
+          border: "rgba(0, 0, 0, 0.08)",
+          hairline: "rgba(0, 0, 0, 0.06)",
         },
         cobalt: {
-          DEFAULT: "#4057FF",
-          hover: "#2A41ED",
-          light: "#6477FF",
-          faint: "rgba(64, 87, 255, 0.08)",
-          soft: "#DDE4FF",
+          DEFAULT: "#2563EB",
+          hover: "#1D4ED8",
+          light: "#3B82F6",
+          faint: "rgba(37, 99, 235, 0.08)",
+          soft: "#EFF6FF",
         },
-        lime: {
-          DEFAULT: "#C7F36B",
-          hover: "#B6E955",
-          faint: "rgba(199, 243, 107, 0.2)",
-        },
+      },
+      boxShadow: {
+        '2xs': '0 1px 2px 0 rgba(0, 0, 0, 0.03)',
+        'xs': '0 1px 3px 0 rgba(0, 0, 0, 0.05)',
       },
       fontFamily: {
         display: ['"Syne"', 'sans-serif'],

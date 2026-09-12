@@ -4,6 +4,8 @@ import { ExternalLink, Github, BookOpen, ArrowUpRight, Grid } from "lucide-react
 import { projectsData, Project } from "@/data/projects";
 import { CaseStudyModal } from "../modals/CaseStudyModal";
 import { ProjectArchiveModal } from "../modals/ProjectArchiveModal";
+import { TiltCard } from "../common/TiltCard";
+import { Magnetic } from "../common/Magnetic";
 
 export const Projects: React.FC = () => {
   const [selectedCaseStudy, setSelectedCaseStudy] = useState<Project | null>(null);
@@ -31,11 +33,11 @@ export const Projects: React.FC = () => {
       <section
         id="work"
         onMouseMove={handleMouseMove}
-        className="section-container border-b border-[#D9D2C5] bg-[#F5F0E6] relative"
+        className="section-container border-b border-gray-200 bg-canvas relative"
         aria-labelledby="work-heading"
       >
         {/* ── Section Header ── */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 pb-6 border-b border-[#D9D2C5]">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 pb-6 border-b border-gray-200">
           <div>
             <span className="section-tag">
               03 — SELECTED WORK
@@ -47,20 +49,22 @@ export const Projects: React.FC = () => {
           </div>
 
           <div className="flex items-center gap-4">
-            <button
-              onClick={() => setIsArchiveOpen(true)}
-              className="btn-secondary"
-            >
-              <Grid size={14} />
-              <span>Browse All Work ({projectsData.length})</span>
-            </button>
+            <Magnetic strength={0.2}>
+              <button
+                onClick={() => setIsArchiveOpen(true)}
+                className="btn-secondary group"
+              >
+                <Grid size={14} className="group-hover:rotate-90 transition-transform duration-300" />
+                <span>Browse All Work ({projectsData.length})</span>
+              </button>
+            </Magnetic>
           </div>
         </div>
 
-        {/* ── Curated Balanced 3-Column Editorial Grid ── */}
+        {/* ── Curated Balanced 3-Column Editorial Grid with 3D Tilt ── */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           {featuredProjects.map((project, idx) => (
-            <motion.article
+            <motion.div
               key={project.id}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -68,94 +72,103 @@ export const Projects: React.FC = () => {
               transition={{ duration: 0.6, delay: idx * 0.12, ease: [0.16, 1, 0.3, 1] }}
               onMouseEnter={() => setHoveredProject(project)}
               onMouseLeave={() => setHoveredProject(null)}
-              className="group flex flex-col bg-[#EEE8DC] rounded-2xl border border-[#D9D2C5] hover:border-cobalt hover:shadow-xl transition-all duration-300 overflow-hidden relative"
+              className="h-full"
             >
-              {/* Image Preview Container */}
-              <div className="relative aspect-[16/10] overflow-hidden bg-black/5 border-b border-[#D9D2C5]">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-all duration-700 ease-[0.16,1,0.3,1]"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
+              <TiltCard
+                maxTilt={4}
+                spotlight={true}
+                spotlightColor="rgba(37, 99, 235, 0.12)"
+                className="h-full group flex flex-col bg-white rounded-2xl border border-gray-200 hover:border-cobalt hover:shadow-2xl transition-all duration-300 overflow-hidden shadow-xs"
+              >
+                <article className="flex flex-col h-full">
+                  {/* Image Preview Container */}
+                  <div className="relative aspect-[16/10] overflow-hidden bg-black/5 border-b border-gray-200">
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-full object-cover group-hover:scale-108 transition-all duration-700 ease-[0.16,1,0.3,1]"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
 
-                {/* Project Number & Category Pill */}
-                <div className="absolute top-4 left-4 bg-ink px-2.5 py-0.5 text-[10px] font-mono font-bold text-white rounded">
-                  0{idx + 1}
-                </div>
+                    {/* Project Number & Category Pill */}
+                    <div className="absolute top-4 left-4 bg-ink px-2.5 py-0.5 text-[10px] font-mono font-bold text-white rounded shadow-sm">
+                      0{idx + 1}
+                    </div>
 
-                <div className="absolute top-4 right-4 bg-white px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-ink shadow-xs rounded-full border border-black/10">
-                  {project.category}
-                </div>
-              </div>
+                    <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-xs px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-ink shadow-sm rounded-full border border-gray-200 transition-transform group-hover:scale-105">
+                      {project.category}
+                    </div>
+                  </div>
 
-              {/* Information Body */}
-              <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between space-y-6">
-                <div className="space-y-4">
-                  {/* Tech stack tags */}
-                  <div className="flex flex-wrap gap-1.5">
-                    {project.technologies.slice(0, 4).map((tech) => (
-                      <span
-                        key={tech}
-                        className="px-2.5 py-1 text-xs font-semibold bg-white text-ink rounded-md border border-[#D9D2C5]"
+                  {/* Information Body */}
+                  <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between space-y-6">
+                    <div className="space-y-4">
+                      {/* Tech stack tags */}
+                      <div className="flex flex-wrap gap-1.5">
+                        {project.technologies.slice(0, 4).map((tech) => (
+                          <span
+                            key={tech}
+                            className="px-2.5 py-1 text-xs font-semibold bg-gray-100 text-gray-800 rounded-md border border-gray-200 transition-all duration-200 hover:border-cobalt hover:text-cobalt hover:-translate-y-0.5"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+
+                      {/* Title */}
+                      <h3 className="font-display text-2xl text-ink font-bold tracking-tight group-hover:text-cobalt transition-colors duration-200">
+                        {project.title}
+                      </h3>
+
+                      {/* Description with WCAG contrast */}
+                      <p className="text-sm text-gray-600 leading-relaxed font-normal">
+                        {project.description}
+                      </p>
+                    </div>
+
+                    {/* Card Actions Footer */}
+                    <div className="pt-5 border-t border-gray-200 flex flex-col gap-2.5">
+                      <button
+                        onClick={() => setSelectedCaseStudy(project)}
+                        className="w-full py-2.5 bg-gray-50 hover:bg-ink hover:text-white text-ink text-xs font-mono font-bold uppercase tracking-wider rounded-xl flex items-center justify-center gap-2 border border-gray-200 transition-all duration-200 hover:shadow-xs active:scale-98 group/btn"
                       >
-                        {tech}
-                      </span>
-                    ))}
+                        <BookOpen size={14} className="group-hover/btn:scale-110 transition-transform" />
+                        <span>Read Case Study</span>
+                      </button>
+
+                      <div className="flex items-center gap-2">
+                        <a
+                          href={project.githubUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex-1 py-2.5 bg-white hover:bg-ink hover:text-white border border-gray-200 text-ink text-xs font-mono font-bold uppercase tracking-wider rounded-xl flex items-center justify-center gap-1.5 transition-all duration-200 active:scale-98 group/gh shadow-2xs"
+                        >
+                          <Github size={14} className="group-hover/gh:rotate-12 transition-transform" />
+                          <span>Code</span>
+                        </a>
+
+                        <a
+                          href={project.liveUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex-1 py-2.5 bg-cobalt hover:bg-cobalt-hover text-white text-xs font-mono font-bold uppercase tracking-wider rounded-xl flex items-center justify-center gap-1.5 transition-all duration-200 shadow-xs hover:shadow-md active:scale-98 group/live"
+                        >
+                          <span>Live App</span>
+                          <ArrowUpRight size={14} className="group-hover/live:translate-x-0.5 group-hover/live:-translate-y-0.5 transition-transform" />
+                        </a>
+                      </div>
+                    </div>
+
                   </div>
-
-                  {/* Title */}
-                  <h3 className="font-display text-2xl text-ink font-bold tracking-tight group-hover:text-cobalt transition-colors">
-                    {project.title}
-                  </h3>
-
-                  {/* Description with WCAG contrast */}
-                  <p className="text-sm text-[#3A3630] leading-relaxed font-normal">
-                    {project.description}
-                  </p>
-                </div>
-
-                {/* Card Actions Footer */}
-                <div className="pt-5 border-t border-[#D9D2C5] flex flex-col gap-2.5">
-                  <button
-                    onClick={() => setSelectedCaseStudy(project)}
-                    className="w-full py-2.5 bg-white hover:bg-ink hover:text-white text-ink text-xs font-mono font-bold uppercase tracking-wider rounded-xl flex items-center justify-center gap-2 border border-[#D9D2C5] transition-colors"
-                  >
-                    <BookOpen size={14} />
-                    <span>Read Case Study</span>
-                  </button>
-
-                  <div className="flex items-center gap-2">
-                    <a
-                      href={project.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 py-2.5 bg-[#EEE8DC] hover:bg-ink hover:text-white border border-[#D9D2C5] text-ink text-xs font-mono font-bold uppercase tracking-wider rounded-xl flex items-center justify-center gap-1.5 transition-colors"
-                    >
-                      <Github size={14} />
-                      <span>Code</span>
-                    </a>
-
-                    <a
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 py-2.5 bg-cobalt hover:bg-cobalt-hover text-white text-xs font-mono font-bold uppercase tracking-wider rounded-xl flex items-center justify-center gap-1.5 transition-colors shadow-xs"
-                    >
-                      <span>Live App</span>
-                      <ArrowUpRight size={14} />
-                    </a>
-                  </div>
-                </div>
-
-              </div>
-            </motion.article>
+                </article>
+              </TiltCard>
+            </motion.div>
           ))}
         </div>
 
         {/* ── Global Archive Banner CTA ── */}
-        <div className="p-8 sm:p-12 rounded-2xl border border-[#D9D2C5] bg-[#EEE8DC] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+        <div className="p-8 sm:p-12 rounded-2xl border border-gray-200 bg-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 hover:shadow-lg transition-shadow shadow-xs">
           <div className="space-y-2">
             <span className="font-mono text-xs font-bold uppercase tracking-wider text-cobalt">
               CATALOG ARCHIVE
@@ -163,27 +176,31 @@ export const Projects: React.FC = () => {
             <h3 className="font-display text-2xl sm:text-3xl text-ink font-bold tracking-tight">
               Looking for more projects &amp; experiments?
             </h3>
-            <p className="text-sm text-[#555048] max-w-lg font-medium">
+            <p className="text-sm text-gray-500 max-w-lg font-medium">
               Explore the complete archive containing frontends, API prototypes, and open-source challenges.
             </p>
           </div>
 
           <div className="flex flex-wrap items-center gap-3">
-            <button
-              onClick={() => setIsArchiveOpen(true)}
-              className="btn-primary"
-            >
-              <span>View All Work →</span>
-            </button>
-            <a
-              href="https://github.com/hitesh-kumar123"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-secondary"
-            >
-              <Github size={14} />
-              <span>GitHub</span>
-            </a>
+            <Magnetic strength={0.2}>
+              <button
+                onClick={() => setIsArchiveOpen(true)}
+                className="btn-primary"
+              >
+                <span>View All Work →</span>
+              </button>
+            </Magnetic>
+            <Magnetic strength={0.2}>
+              <a
+                href="https://github.com/hitesh-kumar123"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-secondary"
+              >
+                <Github size={14} />
+                <span>GitHub Archive</span>
+              </a>
+            </Magnetic>
           </div>
         </div>
       </section>

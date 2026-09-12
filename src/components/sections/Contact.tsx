@@ -59,7 +59,7 @@ export const Contact: React.FC = () => {
   return (
     <section
       id="contact"
-      className="section-container bg-[#F5F0E6] relative overflow-hidden"
+      className="section-container bg-canvas relative overflow-hidden"
       aria-labelledby="contact-heading"
     >
       {/* ── Section Header Tag ── */}
@@ -69,7 +69,7 @@ export const Contact: React.FC = () => {
 
       {/* ── Main Contact Grid ── */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-        
+
         {/* Left: Statement & Channels */}
         <div className="lg:col-span-5 space-y-8">
           <div className="space-y-4">
@@ -79,30 +79,30 @@ export const Contact: React.FC = () => {
               <span className="text-cobalt">let's talk.</span>
             </h2>
 
-            <p className="text-base text-[#3A3630] leading-relaxed font-normal max-w-md">
+            <p className="text-base text-gray-700 leading-relaxed font-normal max-w-md">
               Whether you are looking to hire a Full Stack Developer, need a freelance MVP built from scratch, or want to collaborate on open-source software.
             </p>
           </div>
 
           {/* Status Pill Card */}
-          <div className="p-6 bg-[#EEE8DC] rounded-2xl border border-[#D9D2C5] space-y-2">
+          <div className="p-6 bg-white rounded-2xl border border-gray-200 shadow-xs space-y-2">
             <div className="flex items-center justify-between">
-              <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#555048]">
+              <span className="font-mono text-xs font-bold uppercase tracking-wider text-gray-500">
                 Availability Status
               </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 font-mono text-[10px] font-bold bg-white text-cobalt uppercase tracking-wider rounded-full border border-[#D9D2C5]">
-                <span className="w-1.5 h-1.5 rounded-full bg-cobalt" />
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 font-mono text-[10px] font-bold bg-cobalt/10 text-cobalt uppercase tracking-wider rounded-full border border-cobalt/20">
+                <span className="w-1.5 h-1.5 rounded-full bg-cobalt animate-pulse" />
                 Available Now
               </span>
             </div>
-            <p className="text-xs text-[#3A3630] leading-relaxed">
+            <p className="text-xs text-gray-600 leading-relaxed">
               Accepting full-time remote engineering roles and select freelance projects for 2026.
             </p>
           </div>
 
           {/* Direct Rails */}
           <div className="space-y-3 pt-2">
-            <span className="block font-mono text-xs font-bold uppercase tracking-wider text-[#555048] mb-3">
+            <span className="block font-mono text-xs font-bold uppercase tracking-wider text-gray-500 mb-3">
               Direct Channels
             </span>
             {DIRECT_CHANNELS.map((ch) => {
@@ -113,21 +113,29 @@ export const Contact: React.FC = () => {
                   href={ch.href}
                   target={ch.href.startsWith("http") ? "_blank" : undefined}
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 p-3.5 bg-[#EEE8DC] rounded-xl border border-[#D9D2C5] text-sm text-ink hover:border-cobalt hover:text-cobalt transition-colors group"
+                  className="flex items-center gap-3.5 p-4 bg-white rounded-xl border border-gray-200 text-sm text-ink hover:border-cobalt hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 group shadow-2xs"
                 >
-                  <Icon size={16} className="text-cobalt group-hover:scale-110 transition-transform" />
-                  <span className="font-bold">{ch.label}:</span>
-                  <span className="text-[#3A3630] group-hover:text-cobalt truncate font-medium">{ch.text}</span>
-                  <ArrowUpRight size={14} className="ml-auto text-[#555048] group-hover:text-cobalt" />
+                  <div className="w-8 h-8 rounded-lg bg-gray-50 group-hover:bg-cobalt/10 border border-gray-200 flex items-center justify-center transition-colors">
+                    <Icon size={16} className="text-cobalt group-hover:scale-110 transition-transform duration-200" />
+                  </div>
+                  <div className="flex flex-col min-w-0">
+                    <span className="font-mono text-[11px] uppercase font-bold text-gray-500">{ch.label}</span>
+                    <span className="text-ink font-semibold group-hover:text-cobalt truncate transition-colors">{ch.text}</span>
+                  </div>
+                  <ArrowUpRight size={16} className="ml-auto text-gray-400 group-hover:text-cobalt group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
                 </a>
               ) : (
                 <div
                   key={ch.label}
-                  className="flex items-center gap-3 p-3.5 bg-[#EEE8DC] rounded-xl border border-[#D9D2C5] text-sm text-[#3A3630]"
+                  className="flex items-center gap-3.5 p-4 bg-white rounded-xl border border-gray-200 text-sm text-gray-700 shadow-2xs"
                 >
-                  <Icon size={16} className="text-cobalt" />
-                  <span className="font-bold text-ink">{ch.label}:</span>
-                  <span className="truncate font-medium">{ch.text}</span>
+                  <div className="w-8 h-8 rounded-lg bg-gray-50 border border-gray-200 flex items-center justify-center">
+                    <Icon size={16} className="text-cobalt" />
+                  </div>
+                  <div className="flex flex-col min-w-0">
+                    <span className="font-mono text-[11px] uppercase font-bold text-gray-500">{ch.label}</span>
+                    <span className="font-semibold text-ink truncate">{ch.text}</span>
+                  </div>
                 </div>
               );
             })}
@@ -135,9 +143,9 @@ export const Contact: React.FC = () => {
         </div>
 
         {/* Right: Contact Form */}
-        <div className="lg:col-span-7 bg-[#EEE8DC] rounded-2xl border border-[#D9D2C5] p-8 sm:p-12">
+        <div className="lg:col-span-7 bg-white rounded-2xl border border-gray-200 shadow-sm p-8 sm:p-12">
           <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
-            
+
             <div className="space-y-2">
               <label
                 htmlFor="from_name"
@@ -154,7 +162,7 @@ export const Contact: React.FC = () => {
                 required
                 disabled={status === "loading"}
                 placeholder="Jane Doe"
-                className="w-full bg-[#F5F0E6] border border-[#D9D2C5] rounded-xl p-4 text-sm text-ink placeholder-[#555048]/60 focus:outline-none focus:border-cobalt focus:bg-white transition-all"
+                className="w-full bg-gray-50 border border-gray-200 rounded-xl p-4 text-sm text-ink placeholder-gray-400 focus:outline-none focus:border-cobalt focus:bg-white transition-all shadow-2xs"
               />
             </div>
 
@@ -174,7 +182,7 @@ export const Contact: React.FC = () => {
                 required
                 disabled={status === "loading"}
                 placeholder="jane@example.com"
-                className="w-full bg-[#F5F0E6] border border-[#D9D2C5] rounded-xl p-4 text-sm text-ink placeholder-[#555048]/60 focus:outline-none focus:border-cobalt focus:bg-white transition-all"
+                className="w-full bg-gray-50 border border-gray-200 rounded-xl p-4 text-sm text-ink placeholder-gray-400 focus:outline-none focus:border-cobalt focus:bg-white transition-all shadow-2xs"
               />
             </div>
 
@@ -194,7 +202,7 @@ export const Contact: React.FC = () => {
                 rows={4}
                 disabled={status === "loading"}
                 placeholder="Tell me about your project or opportunity..."
-                className="w-full bg-[#F5F0E6] border border-[#D9D2C5] rounded-xl p-4 text-sm text-ink placeholder-[#555048]/60 focus:outline-none focus:border-cobalt focus:bg-white transition-all resize-none"
+                className="w-full bg-gray-50 border border-gray-200 rounded-xl p-4 text-sm text-ink placeholder-gray-400 focus:outline-none focus:border-cobalt focus:bg-white transition-all resize-none shadow-2xs"
               />
             </div>
 
@@ -204,9 +212,9 @@ export const Contact: React.FC = () => {
                 <motion.div
                   initial={{ opacity: 0, y: 5 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="p-4 bg-white border border-cobalt text-cobalt rounded-xl text-xs font-semibold flex items-center gap-2"
+                  className="p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl text-xs font-semibold flex items-center gap-2"
                 >
-                  <CheckCircle size={16} className="text-cobalt" />
+                  <CheckCircle size={16} className="text-emerald-600" />
                   <span>Message sent successfully! I will reply within 24 hours.</span>
                 </motion.div>
               )}
@@ -247,7 +255,7 @@ export const Contact: React.FC = () => {
       </div>
 
       {/* ── Marquee Ticker ── */}
-      <div className="overflow-hidden border-y border-[#D9D2C5] bg-[#EEE8DC] py-4 mt-20 -mx-6 sm:-mx-8 lg:-mx-12">
+      <div className="overflow-hidden border-y border-gray-200 bg-white py-4 mt-20 -mx-6 sm:-mx-8 lg:-mx-12">
         <motion.div
           className="flex gap-8 whitespace-nowrap"
           animate={{ x: ["0%", "-50%"] }}
@@ -256,7 +264,7 @@ export const Contact: React.FC = () => {
           {[...TICKER_ITEMS, ...TICKER_ITEMS].map((item, i) => (
             <span
               key={i}
-              className="inline-flex items-center gap-3 font-mono text-xs font-bold uppercase tracking-wider text-[#555048] flex-shrink-0"
+              className="inline-flex items-center gap-3 font-mono text-xs font-bold uppercase tracking-wider text-gray-500 flex-shrink-0"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-cobalt" />
               <span>{item}</span>

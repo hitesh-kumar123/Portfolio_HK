@@ -4,17 +4,18 @@
 
 @layer base {
   :root {
-    --bg-ivory: #F5F0E6;
-    --bg-surface: #EEE8DC;
-    --border-color: #D9D2C5;
-    --text-ink: #111111;
-    --text-body: #3A3630;
-    --text-muted: #555048;
-    --accent-cobalt: #4057FF;
+    --bg-canvas: #FAFAFA;
+    --bg-surface: #FFFFFF;
+    --bg-subtle: #F4F5F7;
+    --border-color: #E5E7EB;
+    --text-ink: #09090B;
+    --text-body: #374151;
+    --text-muted: #6B7280;
+    --accent-cobalt: #2563EB;
   }
 
   html {
-    background-color: var(--bg-ivory);
+    background-color: var(--bg-canvas);
     color: var(--text-ink);
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
@@ -23,25 +24,11 @@
 
   body {
     font-family: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
-    background-color: var(--bg-ivory);
+    background-color: var(--bg-canvas);
     color: var(--text-ink);
     min-height: 100vh;
     overflow-x: hidden;
     position: relative;
-  }
-
-  /* Paper subtle texture overlay (2.5% opacity) */
-  body::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    pointer-events: none;
-    z-index: 999;
-    opacity: 0.03;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -66,7 +53,7 @@
 
   /* Selection styling */
   ::selection {
-    background: #4057FF;
+    background: #2563EB;
     color: #FFFFFF;
   }
 }
@@ -87,14 +74,41 @@
     @apply font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-ink leading-[1.08];
   }
 
-  /* Unified Primary Button */
+  /* Unified Primary Button with Shimmer & Spring Lift */
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-cobalt text-white font-mono text-xs font-bold uppercase tracking-wider rounded-full transition-all duration-200 hover:bg-cobalt-hover hover:shadow-md active:scale-[0.98];
+    @apply relative inline-flex items-center justify-center gap-2.5 px-7 py-3.5 bg-cobalt text-white font-mono text-xs font-bold uppercase tracking-wider rounded-full overflow-hidden transition-all duration-300 hover:bg-cobalt-hover hover:shadow-[0_10px_25px_rgba(37,99,235,0.3)] hover:-translate-y-0.5 active:translate-y-0 active:scale-95 cursor-pointer select-none;
   }
 
-  /* Unified Secondary/Ghost Button */
+  /* Shimmer Glint on Primary Button */
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transform: skewX(-20deg);
+    transition: left 0.75s ease;
+  }
+
+  .btn-primary:hover::after {
+    left: 140%;
+  }
+
+  /* Unified Secondary/Ghost Button with Inversion & Lift */
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 px-6 py-3.5 border border-[#D9D2C5] bg-[#EEE8DC] text-ink font-mono text-xs font-bold uppercase tracking-wider rounded-full transition-all duration-200 hover:border-ink hover:bg-ink hover:text-white active:scale-[0.98];
+    @apply relative inline-flex items-center justify-center gap-2.5 px-6 py-3.5 border border-gray-200 bg-white text-ink font-mono text-xs font-bold uppercase tracking-wider rounded-full shadow-sm transition-all duration-300 hover:border-ink hover:bg-ink hover:text-white hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 active:scale-95 cursor-pointer select-none;
+  }
+
+  /* Icon Button with Smooth Spring */
+  .icon-btn {
+    @apply inline-flex items-center justify-center p-3 rounded-full border border-gray-200 bg-white text-ink shadow-sm transition-all duration-300 hover:border-cobalt hover:text-cobalt hover:bg-white hover:shadow-md hover:-translate-y-0.5 hover:scale-105 active:scale-95 cursor-pointer;
+  }
+
+  /* Interactive Card Elevation */
+  .card-hover {
+    @apply transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:border-cobalt;
   }
 }
 

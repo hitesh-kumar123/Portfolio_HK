@@ -57,17 +57,17 @@ export const CertificateArchiveModal: React.FC<CertificateArchiveModalProps> = (
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.97 }}
             transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="relative w-full max-w-5xl bg-[#F5F0E6] rounded-3xl border border-[#D9D2C5] shadow-2xl overflow-hidden my-auto max-h-[90vh] flex flex-col z-10"
+            className="relative w-full max-w-5xl bg-white rounded-3xl border border-gray-200 shadow-2xl overflow-hidden my-auto max-h-[90vh] flex flex-col z-10"
           >
             {/* Header */}
-            <div className="flex items-center justify-between px-6 sm:px-8 py-5 border-b border-[#D9D2C5] bg-[#EEE8DC]">
+            <div className="flex items-center justify-between px-6 sm:px-8 py-5 border-b border-gray-200 bg-gray-50">
               <span className="font-mono text-xs font-bold text-cobalt uppercase tracking-wider">
                 All Verified Credentials ({certificatesData.length})
               </span>
 
               <button
                 onClick={onClose}
-                className="w-8 h-8 rounded-full border border-[#D9D2C5] flex items-center justify-center text-ink bg-white hover:bg-ink hover:text-white transition-colors"
+                className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-ink bg-white hover:bg-ink hover:text-white transition-colors"
                 aria-label="Close Certificate Archive"
               >
                 <X size={16} />
@@ -75,7 +75,7 @@ export const CertificateArchiveModal: React.FC<CertificateArchiveModalProps> = (
             </div>
 
             {/* Filter and Search Bar */}
-            <div className="px-6 sm:px-8 py-4 border-b border-[#D9D2C5] bg-[#EEE8DC]/50 flex flex-col sm:flex-row gap-4 items-stretch sm:items-center justify-between">
+            <div className="px-6 sm:px-8 py-4 border-b border-gray-200 bg-gray-50/50 flex flex-col sm:flex-row gap-4 items-stretch sm:items-center justify-between">
               <div className="flex flex-wrap gap-2">
                 {CATEGORIES.map((category) => (
                   <button
@@ -84,7 +84,7 @@ export const CertificateArchiveModal: React.FC<CertificateArchiveModalProps> = (
                     className={`px-3.5 py-1.5 font-mono text-xs font-bold uppercase tracking-wider rounded-full transition-all border ${
                       selectedCategory === category
                         ? "bg-cobalt text-white border-cobalt shadow-xs"
-                        : "bg-white text-ink border-[#D9D2C5] hover:border-black/30"
+                        : "bg-white text-ink border-gray-200 hover:border-black/30"
                     }`}
                   >
                     {category}
@@ -93,13 +93,13 @@ export const CertificateArchiveModal: React.FC<CertificateArchiveModalProps> = (
               </div>
 
               <div className="relative min-w-[240px]">
-                <Search size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#555048]" />
+                <Search size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
                 <input
                   type="text"
                   placeholder="Search by issuer or name..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-white border border-[#D9D2C5] rounded-full pl-9 pr-4 py-2 font-mono text-xs text-ink placeholder-[#555048] focus:outline-none focus:border-cobalt"
+                  className="w-full bg-white border border-gray-200 rounded-full pl-9 pr-4 py-2 font-mono text-xs text-ink placeholder-gray-400 focus:outline-none focus:border-cobalt"
                 />
               </div>
             </div>
@@ -107,7 +107,7 @@ export const CertificateArchiveModal: React.FC<CertificateArchiveModalProps> = (
             {/* Gallery Grid */}
             <div className="p-6 sm:p-8 overflow-y-auto space-y-4 flex-1">
               {filteredCerts.length === 0 ? (
-                <div className="py-12 text-center text-[#555048] text-sm font-medium">
+                <div className="py-12 text-center text-gray-500 text-sm font-medium">
                   No certificates match your search criteria.
                 </div>
               ) : (
@@ -115,10 +115,10 @@ export const CertificateArchiveModal: React.FC<CertificateArchiveModalProps> = (
                   {filteredCerts.map((cert) => (
                     <div
                       key={cert.id}
-                      className="p-6 bg-[#EEE8DC] rounded-2xl border border-[#D9D2C5] hover:border-cobalt hover:shadow-lg transition-all duration-200 flex flex-col justify-between group space-y-3"
+                      className="p-6 bg-white rounded-2xl border border-gray-200 hover:border-cobalt hover:shadow-lg transition-all duration-200 flex flex-col justify-between group space-y-3 shadow-2xs"
                     >
                       <div className="space-y-3">
-                        <div className="aspect-[4/3] overflow-hidden rounded-xl border border-[#D9D2C5] bg-white relative">
+                        <div className="aspect-[4/3] overflow-hidden rounded-xl border border-gray-200 bg-gray-50 relative">
                           <img
                             src={cert.image}
                             alt={cert.title}
@@ -130,7 +130,7 @@ export const CertificateArchiveModal: React.FC<CertificateArchiveModalProps> = (
                           <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-cobalt bg-cobalt/10 px-2.5 py-0.5 rounded">
                             {cert.category}
                           </span>
-                          <span className="font-mono text-xs text-[#555048] font-bold">
+                          <span className="font-mono text-xs text-gray-500 font-bold">
                             {cert.year}
                           </span>
                         </div>
@@ -139,16 +139,16 @@ export const CertificateArchiveModal: React.FC<CertificateArchiveModalProps> = (
                           {cert.title}
                         </h3>
 
-                        <p className="font-mono text-xs text-[#555048] font-semibold">
+                        <p className="font-mono text-xs text-gray-500 font-semibold">
                           Issuer: {cert.issuer}
                         </p>
 
-                        <p className="text-xs text-[#3A3630] leading-relaxed">
+                        <p className="text-xs text-gray-600 leading-relaxed">
                           {cert.description}
                         </p>
                       </div>
 
-                      <div className="pt-3 border-t border-[#D9D2C5]">
+                      <div className="pt-3 border-t border-gray-200">
                         <a
                           href={cert.verifyUrl}
                           target="_blank"
@@ -166,7 +166,7 @@ export const CertificateArchiveModal: React.FC<CertificateArchiveModalProps> = (
             </div>
 
             {/* Footer */}
-            <div className="px-6 sm:px-8 py-4 border-t border-[#D9D2C5] bg-[#EEE8DC] flex items-center justify-between font-mono text-xs text-[#555048]">
+            <div className="px-6 sm:px-8 py-4 border-t border-gray-200 bg-gray-50 flex items-center justify-between font-mono text-xs text-gray-500">
               <span>Archive contains {filteredCerts.length} of {certificatesData.length} credentials</span>
               <button
                 onClick={onClose}

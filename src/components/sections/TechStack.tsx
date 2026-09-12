@@ -6,11 +6,11 @@ export const TechStack: React.FC = () => {
   return (
     <section
       id="toolbox"
-      className="section-container border-b border-[#D9D2C5] bg-[#F5F0E6]"
+      className="section-container border-b border-gray-200 bg-canvas"
       aria-labelledby="toolbox-heading"
     >
       {/* ── Section Header ── */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 pb-6 border-b border-[#D9D2C5]">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 pb-6 border-b border-gray-200">
         <div>
           <span className="section-tag">
             02 — TOOLBOX
@@ -21,7 +21,7 @@ export const TechStack: React.FC = () => {
           </h2>
         </div>
 
-        <p className="text-sm font-medium text-[#555048] max-w-xs md:text-right">
+        <p className="text-sm font-medium text-gray-500 max-w-xs md:text-right">
           A catalog of languages, libraries, and frameworks I use to engineer full-stack systems.
         </p>
       </div>
@@ -38,7 +38,7 @@ export const TechStack: React.FC = () => {
             className="space-y-4"
           >
             {/* Category Header */}
-            <div className="flex items-center gap-3 pb-2 border-b border-[#D9D2C5]">
+            <div className="flex items-center gap-3 pb-2 border-b border-gray-200">
               <span className="font-mono text-xs font-bold text-cobalt">
                 {group.number}
               </span>
@@ -54,11 +54,11 @@ export const TechStack: React.FC = () => {
                 return (
                   <div
                     key={skill.name}
-                    className="group p-4 bg-[#EEE8DC] rounded-xl border border-[#D9D2C5] hover:border-cobalt hover:bg-white hover:shadow-md transition-all duration-200 flex items-start gap-4"
+                    className="group p-4 bg-white rounded-xl border border-gray-200 hover:border-cobalt hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex items-start gap-4 cursor-default shadow-2xs"
                   >
                     {/* Icon Container */}
                     <div
-                      className="w-11 h-11 rounded-lg border border-[#D9D2C5] flex items-center justify-center flex-shrink-0 bg-white group-hover:scale-105 transition-transform shadow-xs"
+                      className="w-11 h-11 rounded-lg border border-gray-100 flex items-center justify-center flex-shrink-0 bg-gray-50 group-hover:bg-white group-hover:scale-105 transition-all shadow-xs"
                       style={{ color: skill.color }}
                     >
                       {Icon ? (
@@ -80,7 +80,7 @@ export const TechStack: React.FC = () => {
                           </span>
                         )}
                       </div>
-                      <p className="text-xs text-[#555048] leading-snug font-medium">
+                      <p className="text-xs text-gray-500 leading-snug font-medium">
                         {skill.context}
                       </p>
                     </div>

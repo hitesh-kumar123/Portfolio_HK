@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Menu, X, ArrowUpRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { siteNavItems } from "@/data/navigation";
+import { Magnetic } from "../common/Magnetic";
 
 export const SiteHeader: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -47,7 +48,7 @@ export const SiteHeader: React.FC = () => {
     <>
       <header
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${isScrolled
-          ? "bg-[#F4F0E8]/90 backdrop-blur-md border-b border-black/[0.08] shadow-[0_4px_20px_rgba(0,0,0,0.03)] py-4"
+          ? "bg-white/85 backdrop-blur-md border-b border-gray-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] py-4"
           : "bg-transparent py-6 sm:py-8"
           }`}
       >
@@ -65,7 +66,7 @@ export const SiteHeader: React.FC = () => {
           </button>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-2 bg-white/70 backdrop-blur-md px-4 py-1.5 rounded-full border border-black/[0.08] shadow-sm" aria-label="Main Navigation">
+          <nav className="hidden md:flex items-center gap-1.5 bg-white/90 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-gray-200 shadow-xs" aria-label="Main Navigation">
             {siteNavItems.map(({ id, label }) => {
               const isActive = activeSection === id;
               return (
@@ -73,8 +74,8 @@ export const SiteHeader: React.FC = () => {
                   key={id}
                   onClick={() => scrollTo(id)}
                   className={`relative px-4 py-1.5 text-xs font-semibold uppercase tracking-wider rounded-full transition-all duration-200 ${isActive
-                    ? "text-white bg-cobalt shadow-sm"
-                    : "text-ink/70 hover:text-ink hover:bg-black/5"
+                    ? "text-white bg-cobalt shadow-xs"
+                    : "text-gray-600 hover:text-ink hover:bg-gray-100"
                     }`}
                 >
                   <span>{label}</span>
@@ -85,18 +86,20 @@ export const SiteHeader: React.FC = () => {
 
           {/* Action CTA */}
           <div className="flex items-center gap-3">
-            <button
-              onClick={() => scrollTo("contact")}
-              className="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 bg-ink text-white text-xs font-bold uppercase tracking-wider rounded-full hover:bg-cobalt transition-all duration-200 shadow-sm group"
-            >
-              <span>Get in Touch</span>
-              <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-            </button>
+            <Magnetic strength={0.25}>
+              <button
+                onClick={() => scrollTo("contact")}
+                className="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 bg-ink text-white text-xs font-bold uppercase tracking-wider rounded-full hover:bg-cobalt transition-all duration-200 shadow-xs hover:shadow-md active:scale-95 group"
+              >
+                <span>Get in Touch</span>
+                <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </button>
+            </Magnetic>
 
             {/* Mobile Menu Trigger */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2.5 md:hidden rounded-full border border-black/15 text-ink bg-white/80 hover:bg-ink hover:text-white transition-colors"
+              className="p-2.5 md:hidden rounded-full border border-gray-200 text-ink bg-white hover:bg-ink hover:text-white transition-colors"
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
@@ -114,14 +117,14 @@ export const SiteHeader: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="fixed top-[76px] left-4 right-4 z-40 bg-[#F4F0E8] border border-black/10 rounded-2xl p-6 shadow-2xl md:hidden space-y-4"
+            className="fixed top-[76px] left-4 right-4 z-40 bg-white border border-gray-200 rounded-2xl p-6 shadow-2xl md:hidden space-y-4"
           >
             <nav className="space-y-1">
               {siteNavItems.map(({ id, label }) => (
                 <button
                   key={id}
                   onClick={() => scrollTo(id)}
-                  className={`w-full text-left py-3 px-4 rounded-xl text-sm font-semibold uppercase tracking-wider transition-colors ${activeSection === id ? "bg-cobalt text-white" : "text-ink/80 hover:bg-black/5"
+                  className={`w-full text-left py-3 px-4 rounded-xl text-sm font-semibold uppercase tracking-wider transition-colors ${activeSection === id ? "bg-cobalt text-white" : "text-gray-700 hover:bg-gray-100"
                     }`}
                 >
                   {label}

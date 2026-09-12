@@ -7,11 +7,11 @@ export const OpenSourceTimeline: React.FC = () => {
   return (
     <section
       id="journey"
-      className="section-container border-b border-[#D9D2C5] bg-[#F5F0E6]"
+      className="section-container border-b border-gray-200 bg-canvas"
       aria-labelledby="journey-heading"
     >
       {/* ── Section Header ── */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 pb-6 border-b border-[#D9D2C5]">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 pb-6 border-b border-gray-200">
         <div>
           <span className="section-tag">
             04 — OPEN SOURCE
@@ -22,7 +22,7 @@ export const OpenSourceTimeline: React.FC = () => {
           </h2>
         </div>
 
-        <div className="flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-wider text-cobalt bg-[#EEE8DC] px-4 py-2 rounded-full border border-[#D9D2C5]">
+        <div className="flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-wider text-cobalt bg-white px-4 py-2 rounded-full border border-gray-200 shadow-2xs">
           <GitBranch size={16} />
           <span>2+ Years Active Involvement</span>
         </div>
@@ -40,14 +40,14 @@ export const OpenSourceTimeline: React.FC = () => {
             className="relative pl-8 sm:pl-12 border-l-2 border-cobalt/40 space-y-4 group"
           >
             {/* Timeline Node */}
-            <div className="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-[#F5F0E6] border-4 border-cobalt group-hover:scale-125 transition-transform" />
+            <div className="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-white border-4 border-cobalt group-hover:scale-125 transition-transform shadow-xs" />
 
             {/* Year and Program Badge */}
             <div className="flex flex-wrap items-center gap-3">
               <span className="font-mono text-xs font-bold text-white bg-cobalt px-3 py-1 rounded-full shadow-xs">
                 {milestone.year}
               </span>
-              <span className="font-mono text-xs font-bold text-[#555048] uppercase tracking-wider">
+              <span className="font-mono text-xs font-bold text-gray-500 uppercase tracking-wider">
                 {milestone.program}
               </span>
             </div>
@@ -63,7 +63,7 @@ export const OpenSourceTimeline: React.FC = () => {
             </div>
 
             {/* Summary */}
-            <p className="text-base text-[#3A3630] leading-relaxed font-normal max-w-3xl">
+            <p className="text-base text-gray-700 leading-relaxed font-normal max-w-3xl">
               {milestone.summary}
             </p>
 
@@ -72,7 +72,7 @@ export const OpenSourceTimeline: React.FC = () => {
               {milestone.contributions.map((item, i) => (
                 <div
                   key={i}
-                  className="flex items-start gap-2.5 p-3.5 bg-[#EEE8DC] rounded-xl border border-[#D9D2C5] text-xs text-ink font-medium"
+                  className="flex items-start gap-2.5 p-3.5 bg-white rounded-xl border border-gray-200 text-xs text-ink font-medium shadow-2xs hover:border-cobalt hover:shadow-xs transition-all"
                 >
                   <CheckCircle2 size={16} className="text-cobalt flex-shrink-0 mt-0.5" />
                   <span>{item}</span>
@@ -99,8 +99,8 @@ export const OpenSourceTimeline: React.FC = () => {
       </div>
 
       {/* ── Bottom Callout ── */}
-      <div className="mt-16 pt-8 border-t border-[#D9D2C5] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div className="flex items-center gap-2 text-xs font-mono text-[#555048] font-medium">
+      <div className="mt-16 pt-8 border-t border-gray-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="flex items-center gap-2 text-xs font-mono text-gray-500 font-medium">
           <GitPullRequest size={16} className="text-cobalt" />
           <span>All pull requests, issues, and code reviews are auditable on GitHub</span>
         </div>

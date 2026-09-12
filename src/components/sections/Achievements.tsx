@@ -7,11 +7,11 @@ export const Achievements: React.FC = () => {
   return (
     <section
       id="achievements"
-      className="section-container border-b border-[#D9D2C5] bg-[#F5F0E6]"
+      className="section-container border-b border-gray-200 bg-canvas"
       aria-labelledby="achievements-heading"
     >
       {/* ── Section Header ── */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 pb-6 border-b border-[#D9D2C5]">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 pb-6 border-b border-gray-200">
         <div>
           <span className="section-tag">
             06 — MILESTONES
@@ -22,13 +22,13 @@ export const Achievements: React.FC = () => {
           </h2>
         </div>
 
-        <p className="text-sm font-medium text-[#555048] max-w-xs md:text-right">
+        <p className="text-sm font-medium text-gray-500 max-w-xs md:text-right">
           Verifiable recognitions from national hackathons, open-source programs, and developer events.
         </p>
       </div>
 
       {/* ── Editorial Milestone List ── */}
-      <div className="border-t border-[#D9D2C5] divide-y divide-[#D9D2C5]">
+      <div className="border-t border-gray-200 divide-y divide-gray-200">
         {achievementsList.map((item, idx) => (
           <motion.div
             key={item.id}
@@ -36,11 +36,11 @@ export const Achievements: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-30px" }}
             transition={{ duration: 0.5, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
-            className="py-8 sm:py-10 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start group hover:bg-[#EEE8DC]/60 px-4 -mx-4 rounded-xl transition-colors"
+            className="py-8 sm:py-10 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start group hover:bg-white px-5 -mx-5 rounded-2xl transition-all duration-200 border border-transparent hover:border-gray-200 hover:shadow-md"
           >
             {/* Year & Status Pill */}
             <div className="lg:col-span-3 space-y-2">
-              <span className="font-mono text-xs font-bold text-[#555048] block">
+              <span className="font-mono text-xs font-bold text-gray-500 block">
                 {item.year}
               </span>
               <span className="inline-block font-mono text-[10px] font-bold uppercase tracking-wider text-cobalt bg-cobalt/10 px-2.5 py-1 rounded-full border border-cobalt/20">
@@ -53,14 +53,14 @@ export const Achievements: React.FC = () => {
               <h3 className="font-display text-2xl text-ink font-bold tracking-tight group-hover:text-cobalt transition-colors">
                 {item.title}
               </h3>
-              <p className="font-mono text-xs text-[#555048] uppercase tracking-wider font-semibold">
+              <p className="font-mono text-xs text-gray-500 uppercase tracking-wider font-semibold">
                 {item.organization}
               </p>
             </div>
 
             {/* Description & Link */}
             <div className="lg:col-span-4 space-y-3">
-              <p className="text-sm text-[#3A3630] leading-relaxed font-normal">
+              <p className="text-sm text-gray-700 leading-relaxed font-normal">
                 {item.description}
               </p>
               {item.link && (

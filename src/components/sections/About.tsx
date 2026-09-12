@@ -15,7 +15,7 @@ export const About: React.FC = () => {
   return (
     <section
       id="about"
-      className="section-container border-b border-[#D9D2C5] bg-[#F5F0E6]"
+      className="section-container border-b border-gray-200 bg-canvas"
       aria-labelledby="about-heading"
     >
       {/* ── Section Tag ── */}
@@ -33,7 +33,7 @@ export const About: React.FC = () => {
 
       {/* ── Open Split Composition ── */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-        
+
         {/* Left: Clean Heading & Statement */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -50,7 +50,7 @@ export const About: React.FC = () => {
 
           <div className="h-1 w-16 bg-cobalt rounded-full" />
 
-          <p className="text-xl sm:text-2xl text-[#3A3630] leading-relaxed font-medium">
+          <p className="text-xl sm:text-2xl text-gray-700 leading-relaxed font-medium">
             "I believe good web development is not just about writing code that compiles — it is about engineering software that is fast, maintainable, and genuinely useful."
           </p>
         </motion.div>
@@ -64,7 +64,7 @@ export const About: React.FC = () => {
           className="lg:col-span-6 space-y-8"
         >
           {/* High Contrast Narrative */}
-          <div className="space-y-4 text-base sm:text-lg text-[#3A3630] leading-relaxed font-normal">
+          <div className="space-y-4 text-base sm:text-lg text-gray-700 leading-relaxed font-normal">
             <p>
               I am a Full Stack Developer based in India, specializing in building responsive web applications using the MERN stack (MongoDB, Express.js, React, Node.js) and TypeScript.
             </p>
@@ -77,9 +77,9 @@ export const About: React.FC = () => {
           </div>
 
           {/* Metadata Grid */}
-          <div className="pt-6 border-t border-[#D9D2C5] grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="pt-6 border-t border-gray-200 grid grid-cols-1 sm:grid-cols-2 gap-4">
             {METADATA_FIELDS.map((item) => (
-              <div key={item.label} className="space-y-1 p-4 bg-[#EEE8DC] rounded-xl border border-[#D9D2C5]">
+              <div key={item.label} className="space-y-1 p-4 bg-white rounded-xl border border-gray-200 shadow-2xs hover:border-cobalt hover:shadow-sm transition-all duration-200">
                 <span className="block font-mono text-[10px] font-bold uppercase tracking-wider text-cobalt">
                   {item.label}
                 </span>

@@ -59,17 +59,17 @@ export const ProjectArchiveModal: React.FC<ProjectArchiveModalProps> = ({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.97 }}
             transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="relative w-full max-w-5xl bg-[#F5F0E6] rounded-3xl border border-[#D9D2C5] shadow-2xl overflow-hidden my-auto max-h-[90vh] flex flex-col z-10"
+            className="relative w-full max-w-5xl bg-white rounded-3xl border border-gray-200 shadow-2xl overflow-hidden my-auto max-h-[90vh] flex flex-col z-10"
           >
             {/* Header */}
-            <div className="flex items-center justify-between px-6 sm:px-8 py-5 border-b border-[#D9D2C5] bg-[#EEE8DC]">
+            <div className="flex items-center justify-between px-6 sm:px-8 py-5 border-b border-gray-200 bg-gray-50">
               <span className="font-mono text-xs font-bold text-cobalt uppercase tracking-wider">
                 All Projects ({projectsData.length})
               </span>
 
               <button
                 onClick={onClose}
-                className="w-8 h-8 rounded-full border border-[#D9D2C5] flex items-center justify-center text-ink bg-white hover:bg-ink hover:text-white transition-colors"
+                className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-ink bg-white hover:bg-ink hover:text-white transition-colors"
                 aria-label="Close Project Archive"
               >
                 <X size={16} />
@@ -77,7 +77,7 @@ export const ProjectArchiveModal: React.FC<ProjectArchiveModalProps> = ({
             </div>
 
             {/* Filter & Search Controls */}
-            <div className="px-6 sm:px-8 py-4 border-b border-[#D9D2C5] bg-[#EEE8DC]/50 flex flex-col sm:flex-row gap-4 items-stretch sm:items-center justify-between">
+            <div className="px-6 sm:px-8 py-4 border-b border-gray-200 bg-gray-50/50 flex flex-col sm:flex-row gap-4 items-stretch sm:items-center justify-between">
               {/* Category Pills */}
               <div className="flex flex-wrap gap-2">
                 {CATEGORIES.map((category) => (
@@ -87,7 +87,7 @@ export const ProjectArchiveModal: React.FC<ProjectArchiveModalProps> = ({
                     className={`px-3.5 py-1.5 font-mono text-xs font-bold uppercase tracking-wider rounded-full transition-all border ${
                       selectedCategory === category
                         ? "bg-cobalt text-white border-cobalt shadow-xs"
-                        : "bg-white text-ink border-[#D9D2C5] hover:border-black/30"
+                        : "bg-white text-ink border-gray-200 hover:border-black/30"
                     }`}
                   >
                     {category}
@@ -97,13 +97,13 @@ export const ProjectArchiveModal: React.FC<ProjectArchiveModalProps> = ({
 
               {/* Search Bar */}
               <div className="relative min-w-[240px]">
-                <Search size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#555048]" />
+                <Search size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
                 <input
                   type="text"
                   placeholder="Filter by technology or name..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-white border border-[#D9D2C5] rounded-full pl-9 pr-4 py-2 font-mono text-xs text-ink placeholder-[#555048] focus:outline-none focus:border-cobalt"
+                  className="w-full bg-white border border-gray-200 rounded-full pl-9 pr-4 py-2 font-mono text-xs text-ink placeholder-gray-400 focus:outline-none focus:border-cobalt"
                 />
               </div>
             </div>
@@ -111,7 +111,7 @@ export const ProjectArchiveModal: React.FC<ProjectArchiveModalProps> = ({
             {/* Project Grid */}
             <div className="p-6 sm:p-8 overflow-y-auto space-y-4 flex-1">
               {filteredProjects.length === 0 ? (
-                <div className="py-12 text-center text-[#555048] text-sm font-medium">
+                <div className="py-12 text-center text-gray-500 text-sm font-medium">
                   No projects match your filter criteria.
                 </div>
               ) : (
@@ -119,19 +119,19 @@ export const ProjectArchiveModal: React.FC<ProjectArchiveModalProps> = ({
                   {filteredProjects.map((project) => (
                     <div
                       key={project.id}
-                      className="p-6 bg-[#EEE8DC] rounded-2xl border border-[#D9D2C5] hover:border-cobalt hover:shadow-lg transition-all duration-200 flex flex-col justify-between group space-y-4"
+                      className="p-6 bg-white rounded-2xl border border-gray-200 hover:border-cobalt hover:shadow-lg transition-all duration-200 flex flex-col justify-between group space-y-4 shadow-2xs"
                     >
                       <div className="space-y-3">
                         <div className="flex items-center justify-between">
                           <span className="font-mono text-xs font-bold uppercase tracking-wider text-cobalt bg-cobalt/10 px-3 py-0.5 rounded-full">
                             {project.category}
                           </span>
-                          <span className="font-mono text-xs text-[#555048] font-semibold">
+                          <span className="font-mono text-xs text-gray-500 font-semibold">
                             {project.year}
                           </span>
                         </div>
 
-                        <div className="aspect-[16/9] overflow-hidden rounded-xl border border-[#D9D2C5] relative bg-white">
+                        <div className="aspect-[16/9] overflow-hidden rounded-xl border border-gray-200 relative bg-gray-50">
                           <img
                             src={project.image}
                             alt={project.title}
@@ -143,7 +143,7 @@ export const ProjectArchiveModal: React.FC<ProjectArchiveModalProps> = ({
                           {project.title}
                         </h3>
 
-                        <p className="text-xs text-[#3A3630] leading-relaxed line-clamp-2">
+                        <p className="text-xs text-gray-600 leading-relaxed line-clamp-2">
                           {project.description}
                         </p>
 
@@ -151,7 +151,7 @@ export const ProjectArchiveModal: React.FC<ProjectArchiveModalProps> = ({
                           {project.technologies.slice(0, 4).map((tech) => (
                             <span
                               key={tech}
-                              className="px-2.5 py-0.5 text-[11px] font-semibold bg-white text-ink rounded-md border border-[#D9D2C5]"
+                              className="px-2.5 py-0.5 text-[11px] font-semibold bg-gray-100 text-ink rounded-md border border-gray-200"
                             >
                               {tech}
                             </span>
@@ -160,7 +160,7 @@ export const ProjectArchiveModal: React.FC<ProjectArchiveModalProps> = ({
                       </div>
 
                       {/* Card Actions */}
-                      <div className="flex items-center justify-between pt-3 border-t border-[#D9D2C5] gap-2">
+                      <div className="flex items-center justify-between pt-3 border-t border-gray-200 gap-2">
                         <button
                           onClick={() => onSelectCaseStudy(project)}
                           className="inline-flex items-center gap-1.5 font-mono text-xs font-bold uppercase tracking-wider text-cobalt hover:underline"
@@ -174,7 +174,7 @@ export const ProjectArchiveModal: React.FC<ProjectArchiveModalProps> = ({
                             href={project.githubUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="p-2 border border-[#D9D2C5] bg-white text-ink hover:bg-black hover:text-white rounded-full transition-colors"
+                            className="p-2 border border-gray-200 bg-white text-ink hover:bg-black hover:text-white rounded-full transition-colors"
                             aria-label={`${project.title} Source`}
                           >
                             <Github size={13} />
@@ -197,7 +197,7 @@ export const ProjectArchiveModal: React.FC<ProjectArchiveModalProps> = ({
             </div>
 
             {/* Footer */}
-            <div className="px-6 sm:px-8 py-4 border-t border-[#D9D2C5] bg-[#EEE8DC] flex items-center justify-between font-mono text-xs text-[#555048]">
+            <div className="px-6 sm:px-8 py-4 border-t border-gray-200 bg-gray-50 flex items-center justify-between font-mono text-xs text-gray-500">
               <span>Showing {filteredProjects.length} of {projectsData.length} projects</span>
               <button
                 onClick={onClose}
