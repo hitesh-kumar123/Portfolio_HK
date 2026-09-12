@@ -21,16 +21,19 @@ export const BackToTop: React.FC = () => {
     <AnimatePresence>
       {visible && (
         <motion.button
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.8 }}
+          initial={{ opacity: 0, scale: 0.8, y: 10 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.8, y: 10 }}
+          whileHover={{ scale: 1.08 }}
+          whileTap={{ scale: 0.95 }}
           onClick={scrollToTop}
-          className="fixed bottom-6 right-6 z-40 p-3 bg-ink text-ivory hover:bg-cobalt border border-ink/20 shadow-lg transition-colors"
+          className="fixed bottom-6 right-6 z-40 w-11 h-11 rounded-full bg-white/95 backdrop-blur-md text-ink hover:bg-cobalt hover:text-white border border-gray-200 hover:border-cobalt shadow-md hover:shadow-lg flex items-center justify-center transition-all duration-200 group"
           aria-label="Back to top of page"
         >
-          <ArrowUp size={16} />
+          <ArrowUp size={16} className="group-hover:-translate-y-0.5 transition-transform" />
         </motion.button>
       )}
     </AnimatePresence>
   );
 };
+
