@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 
 // Real project preview assets from repository
 import smartRentImage from "@/assets/smartRent.png";
@@ -9,7 +9,7 @@ import simonGameImage from "@/assets/Simon_Game.png";
 
 // ─────────────────────────────────────────────
 // Tech Stack / Toolbox: Interactive Editorial Catalogue
-// Colors: Paper #F4F1E9 | Ink #151513 | Muted #706C63 | Surface #FAF8F2 | Border #D3CEC2 | Wine #7C2638
+// Colors: Paper #F4F1E9 | Ink #151513 | Muted #706C63 | Surface #FAF8F2 | Border #D3CEC2 | Wine #B02038
 // Typography: Syne (headings/techs) | Plus Jakarta Sans (body) | JetBrains Mono (labels/meta)
 // Scope: TechStack.tsx ONLY
 // ─────────────────────────────────────────────
@@ -231,10 +231,10 @@ export const TechStack: React.FC = () => {
           <div className="tb-header-text">
             <span className="tb-label">TOOLBOX</span>
             <h2 className="tb-headline">
-              TOOLS I USE<br />
-              TO TURN IDEAS<br />
-              INTO WORKING<br />
-              SYSTEMS.
+              Tools I use
+              to turn ideas
+              into working
+              systems.
             </h2>
           </div>
           <div className="tb-header-hint" aria-hidden="true">
@@ -404,18 +404,17 @@ export const TechStack: React.FC = () => {
           font-weight: 500;
           letter-spacing: 0.12em;
           text-transform: uppercase;
-          color: #7C2638;
+          color: #B02038;
           margin-bottom: 1rem;
         }
 
         .tb-headline {
           margin: 0;
           font-family: 'Syne', sans-serif;
-          font-weight: 800;
+          font-weight: 700;
           font-size: clamp(2rem, 3.8vw, 3.6rem);
-          line-height: 1.02;
-          letter-spacing: -0.03em;
-          text-transform: uppercase;
+          line-height: 1.1;
+          letter-spacing: -0.018em;
           color: #151513;
         }
 
@@ -525,7 +524,7 @@ export const TechStack: React.FC = () => {
 
         .tb-item-arrow {
           font-size: 14px;
-          color: #7C2638;
+          color: #B02038;
           opacity: 0;
           transform: translateX(-4px);
           transition: opacity 200ms ease, transform 200ms ease;
@@ -551,7 +550,7 @@ export const TechStack: React.FC = () => {
 
         /* Active / Selected State */
         .tb-item-btn--active {
-          border-bottom-color: #7C2638;
+          border-bottom-color: #B02038;
           transform: translateX(4px);
         }
 
@@ -601,7 +600,7 @@ export const TechStack: React.FC = () => {
           font-weight: 600;
           letter-spacing: 0.1em;
           text-transform: uppercase;
-          color: #7C2638;
+          color: #B02038;
           margin-bottom: 0.35rem;
         }
 
@@ -609,9 +608,10 @@ export const TechStack: React.FC = () => {
           margin: 0;
           font-family: 'Syne', sans-serif;
           font-size: 1.5rem;
-          font-weight: 800;
+          font-weight: 700;
           text-transform: uppercase;
-          letter-spacing: -0.02em;
+          letter-spacing: -0.014em;
+          line-height: 1.15;
           color: #151513;
         }
 
@@ -673,7 +673,7 @@ export const TechStack: React.FC = () => {
           font-weight: 600;
           letter-spacing: 0.08em;
           text-transform: uppercase;
-          color: #7C2638;
+          color: #B02038;
         }
 
         .tb-project-title {
@@ -707,7 +707,7 @@ export const TechStack: React.FC = () => {
         }
 
         .tb-project-link:hover {
-          color: #7C2638;
+          color: #B02038;
         }
 
         .tb-preview-standard-box {
@@ -733,7 +733,7 @@ export const TechStack: React.FC = () => {
           padding: 1rem;
           margin: 0.25rem 0 0.75rem 0;
           background-color: #FAF8F2;
-          border-left: 2px solid #7C2638;
+          border-left: 2px solid #B02038;
           box-sizing: border-box;
           width: 100%;
         }

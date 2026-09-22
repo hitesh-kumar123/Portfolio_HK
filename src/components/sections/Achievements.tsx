@@ -3,16 +3,16 @@ import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { achievementsList } from "@/data/achievements";
 
-/* ─────────────────────────────────────────────
-   Palette — matches global editorial system
-   ───────────────────────────────────────────── */
+/* ---------------------------------------------
+   Palette � matches global editorial system
+   --------------------------------------------- */
 const PAL = {
   paper:   "#F4F1E9",
   surface: "#FAF8F2",
   ink:     "#151513",
   muted:   "#706C63",
   border:  "#D3CEC2",
-  wine:    "#7C2638",
+  wine:    "#B02038",
 };
 
 export const Achievements: React.FC = () => {
@@ -22,9 +22,9 @@ export const Achievements: React.FC = () => {
     <section
       id="achievements"
       aria-labelledby="achievements-heading"
-      style={{ background: PAL.paper, borderBottom: `1px solid ${PAL.border}` }}
+      style={{ background: '#EDE9DC', borderBottom: `1px solid ${PAL.border}` }}
     >
-      {/* ── Scoped styles ── */}
+      {/* -- Scoped styles -- */}
       <style>{`
         .ach-mono  { font-family: 'JetBrains Mono', 'Fira Mono', monospace; }
         .ach-display { font-family: 'Syne', sans-serif; }
@@ -144,7 +144,7 @@ export const Achievements: React.FC = () => {
 
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "96px 40px" }}>
 
-        {/* ── Section Header ── */}
+        {/* -- Section Header -- */}
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -173,7 +173,7 @@ export const Achievements: React.FC = () => {
                 marginBottom: 14,
               }}
             >
-              06 — RECOGNITION
+              06 � RECOGNITION
             </p>
             <h2
               id="achievements-heading"
@@ -204,12 +204,12 @@ export const Achievements: React.FC = () => {
             }}
           >
             A factual record of hackathons,
-            programs, and community work —
+            programs, and community work �
             built through consistency, not claims.
           </p>
         </motion.div>
 
-        {/* ── Achievement Records ── */}
+        {/* -- Achievement Records -- */}
         <div
           role="list"
           style={{ borderTop: `1px solid ${PAL.border}` }}
@@ -230,9 +230,9 @@ export const Achievements: React.FC = () => {
                 onFocus={() => setActiveIdx(idx)}
                 onBlur={() => setActiveIdx(null)}
                 tabIndex={0}
-                aria-label={`${item.title} — ${item.organization}, ${item.year}`}
+                aria-label={`${item.title} � ${item.organization}, ${item.year}`}
               >
-                {/* ── Left: Year + Status ── */}
+                {/* -- Left: Year + Status -- */}
                 <div style={{ paddingTop: 4 }}>
                   <p
                     className="ach-mono"
@@ -261,7 +261,7 @@ export const Achievements: React.FC = () => {
                   />
                 </div>
 
-                {/* ── Centre: Title + Org + Description ── */}
+                {/* -- Centre: Title + Org + Description -- */}
                 <div>
                   <div style={{ marginBottom: 10 }}>
                     <h3
@@ -306,7 +306,7 @@ export const Achievements: React.FC = () => {
                     {item.description}
                   </p>
 
-                  {/* Link — visible below description on mobile */}
+                  {/* Link � visible below description on mobile */}
                   {item.link && (
                     <div style={{ marginTop: 16, display: "none" }} className="ach-link-mobile">
                       <a
@@ -322,7 +322,7 @@ export const Achievements: React.FC = () => {
                   )}
                 </div>
 
-                {/* ── Right: External link arrow (desktop) ── */}
+                {/* -- Right: External link arrow (desktop) -- */}
                 <div className="ach-link-col" style={{ paddingTop: 4, minWidth: 32 }}>
                   {item.link ? (
                     <a
@@ -330,7 +330,7 @@ export const Achievements: React.FC = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="ach-link"
-                      aria-label={`${item.link.text} — opens in new tab`}
+                      aria-label={`${item.link.text} � opens in new tab`}
                       style={{ flexDirection: "column", alignItems: "flex-end" }}
                     >
                       <ArrowUpRight size={16} strokeWidth={2} className="ach-link-arrow" />
@@ -355,7 +355,7 @@ export const Achievements: React.FC = () => {
           ))}
         </div>
 
-        {/* ── Bottom note ── */}
+        {/* -- Bottom note -- */}
         <motion.p
           className="ach-mono"
           initial={{ opacity: 0 }}

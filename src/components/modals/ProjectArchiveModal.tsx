@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Github, Search, BookOpen, ArrowUpRight } from "lucide-react";
 import { projectsData, Project } from "@/data/projects";
@@ -64,7 +64,7 @@ export const ProjectArchiveModal: React.FC<ProjectArchiveModalProps> = ({
             {/* Header */}
             <div className="flex items-center justify-between px-6 sm:px-8 py-5 border-b border-[#D3CEC2] bg-[#FAF8F2]">
               <div className="flex items-center gap-3">
-                <span className="font-mono text-[11px] font-bold text-[#7C2638] uppercase tracking-wider">
+                <span className="font-mono text-[11px] font-bold text-[#B02038] uppercase tracking-wider">
                   PROJECT ARCHIVE
                 </span>
                 <span className="text-[#D3CEC2]">•</span>
@@ -109,7 +109,7 @@ export const ProjectArchiveModal: React.FC<ProjectArchiveModalProps> = ({
                   placeholder="Filter by tech or keyword..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-[#FAF8F2] border border-[#D3CEC2] pl-9 pr-4 py-1.5 font-mono text-xs text-[#151513] placeholder-[#706C63] focus:outline-none focus:border-[#7C2638]"
+                  className="w-full bg-[#FAF8F2] border border-[#D3CEC2] pl-9 pr-4 py-1.5 font-mono text-xs text-[#151513] placeholder-[#706C63] focus:outline-none focus:border-[#B02038]"
                 />
               </div>
             </div>
@@ -129,7 +129,7 @@ export const ProjectArchiveModal: React.FC<ProjectArchiveModalProps> = ({
                     >
                       <div className="space-y-3">
                         <div className="flex items-center justify-between">
-                          <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-[#7C2638]">
+                          <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-[#B02038]">
                             {project.category}
                           </span>
                           <span className="font-mono text-[10px] text-[#706C63] font-semibold">
@@ -169,7 +169,7 @@ export const ProjectArchiveModal: React.FC<ProjectArchiveModalProps> = ({
                       <div className="flex items-center justify-between pt-3 border-t border-[#D3CEC2] gap-2">
                         <button
                           onClick={() => onSelectCaseStudy(project)}
-                          className="inline-flex items-center gap-1 font-mono text-[11px] font-semibold uppercase tracking-wider text-[#706C63] hover:text-[#7C2638] underline text-underline-offset-2 cursor-pointer"
+                          className="inline-flex items-center gap-1 font-mono text-[11px] font-semibold uppercase tracking-wider text-[#706C63] hover:text-[#B02038] underline text-underline-offset-2 cursor-pointer"
                         >
                           <BookOpen size={12} />
                           <span>CASE STUDY</span>
@@ -181,7 +181,7 @@ export const ProjectArchiveModal: React.FC<ProjectArchiveModalProps> = ({
                               href={project.githubUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="p-1.5 border border-[#D3CEC2] bg-[#FAF8F2] text-[#151513] hover:border-[#7C2638] hover:text-[#7C2638] transition-colors"
+                              className="p-1.5 border border-[#D3CEC2] bg-[#FAF8F2] text-[#151513] hover:border-[#B02038] hover:text-[#B02038] transition-colors"
                               aria-label={`${project.title} Source`}
                             >
                               <Github size={13} />
@@ -192,7 +192,7 @@ export const ProjectArchiveModal: React.FC<ProjectArchiveModalProps> = ({
                               href={project.liveUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="inline-flex items-center gap-1 px-3 py-1 bg-[#151513] text-[#F4F1E9] font-mono text-[10px] font-semibold uppercase tracking-wider hover:bg-[#7C2638] transition-colors"
+                              className="inline-flex items-center gap-1 px-3 py-1 bg-[#151513] text-[#F4F1E9] font-mono text-[10px] font-semibold uppercase tracking-wider hover:bg-[#B02038] transition-colors"
                             >
                               <span>LIVE</span>
                               <ArrowUpRight size={12} />
@@ -211,7 +211,7 @@ export const ProjectArchiveModal: React.FC<ProjectArchiveModalProps> = ({
               <span>SHOWING {filteredProjects.length} OF {projectsData.length} PROJECTS</span>
               <button
                 onClick={onClose}
-                className="font-bold text-[#151513] hover:text-[#7C2638] transition-colors uppercase tracking-wider cursor-pointer"
+                className="font-bold text-[#151513] hover:text-[#B02038] transition-colors uppercase tracking-wider cursor-pointer"
               >
                 CLOSE [ESC]
               </button>

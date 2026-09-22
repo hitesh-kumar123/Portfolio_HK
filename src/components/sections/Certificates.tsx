@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { certificatesData } from "@/data/certificates";
@@ -13,7 +13,7 @@ const PAL = {
   ink:     "#151513",
   muted:   "#706C63",
   border:  "#D3CEC2",
-  wine:    "#7C2638",
+  wine:    "#B02038",
 };
 
 /* Sort: most recent year first */

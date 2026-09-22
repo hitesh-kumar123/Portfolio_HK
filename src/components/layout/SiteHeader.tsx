@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+﻿import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 // ─────────────────────────────────────────────
 // SiteHeader: Editorial Minimal Navigation
-// Color system: Paper #F4F1E9 | Ink #151513 | Wine #7C2638 | Muted #706C63 | Border #D3CEC2
+// Color system: Paper #F4F1E9 | Ink #151513 | Wine #B02038 | Muted #706C63 | Border #D3CEC2
 // Fonts: Plus Jakarta Sans (name) | JetBrains Mono (MENU/CLOSE/metadata)
 // Scope: SiteHeader ONLY — no other components modified
 //
@@ -315,7 +315,7 @@ export const SiteHeader: React.FC = () => {
           text-decoration: none;
         }
         .sh-wordmark:focus-visible {
-          outline: 2px solid #7C2638;
+          outline: 2px solid #B02038;
           outline-offset: 4px;
           border-radius: 2px;
         }
@@ -336,7 +336,7 @@ export const SiteHeader: React.FC = () => {
         .sh-dot {
           font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
           font-size: 1.1em;
-          color: #7C2638;
+          color: #B02038;
           line-height: 1;
           /* Optical alignment */
           margin-bottom: 0.05em;
@@ -364,7 +364,7 @@ export const SiteHeader: React.FC = () => {
         }
         .sh-menu-btn:hover { opacity: 0.55; }
         .sh-menu-btn:focus-visible {
-          outline: 2px solid #7C2638;
+          outline: 2px solid #B02038;
           outline-offset: 4px;
           border-radius: 2px;
         }
@@ -372,7 +372,7 @@ export const SiteHeader: React.FC = () => {
         .sh-menu-arrow {
           display: inline-block;
           font-size: 12px;
-          color: #7C2638;
+          color: #B02038;
           transition: transform 220ms cubic-bezier(0.25, 0, 0, 1);
         }
         .sh-menu-btn:hover .sh-menu-arrow {
@@ -438,7 +438,7 @@ export const SiteHeader: React.FC = () => {
         }
         .sh-close-btn:hover { opacity: 0.55; }
         .sh-close-btn:focus-visible {
-          outline: 2px solid #7C2638;
+          outline: 2px solid #B02038;
           outline-offset: 4px;
           border-radius: 2px;
         }
@@ -447,7 +447,7 @@ export const SiteHeader: React.FC = () => {
           font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
           font-size: 14px;
           font-weight: 400;
-          color: #7C2638;
+          color: #B02038;
           line-height: 1;
         }
 
@@ -480,7 +480,7 @@ export const SiteHeader: React.FC = () => {
           /* No border-bottom on each item — whitespace is the separator */
         }
         .sh-nav-item:focus-visible {
-          outline: 2px solid #7C2638;
+          outline: 2px solid #B02038;
           outline-offset: 4px;
           border-radius: 2px;
         }
@@ -501,7 +501,7 @@ export const SiteHeader: React.FC = () => {
         .sh-nav-arrow {
           font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
           font-size: clamp(1.5rem, 3vw, 2.5rem);
-          color: #7C2638;
+          color: #B02038;
           opacity: 0;
           transform: translate(-6px, 0);
           transition: opacity 220ms ease,
@@ -563,7 +563,7 @@ export const SiteHeader: React.FC = () => {
         }
         .sh-social-link:hover { color: #151513; }
         .sh-social-link:focus-visible {
-          outline: 2px solid #7C2638;
+          outline: 2px solid #B02038;
           outline-offset: 3px;
           border-radius: 2px;
         }
@@ -571,7 +571,7 @@ export const SiteHeader: React.FC = () => {
         .sh-social-arrow {
           display: inline-block;
           font-size: 10px;
-          color: #7C2638;
+          color: #B02038;
           opacity: 0;
           transition: opacity 200ms ease, transform 220ms ease;
         }

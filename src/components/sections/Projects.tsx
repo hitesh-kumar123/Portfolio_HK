@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { ArrowUpRight, Github, BookOpen, Layers } from "lucide-react";
 import { projectsData, Project } from "@/data/projects";
 import { CaseStudyModal } from "../modals/CaseStudyModal";
@@ -20,15 +20,15 @@ export const Projects: React.FC = () => {
     <>
       <section id="work" className="pj-section" aria-labelledby="work-heading">
         <div className="pj-container">
-          {/* ── Section Header ── */}
+          {/* -- Section Header -- */}
           <header className="pj-header">
             <div className="pj-header-text">
               <span className="pj-label">SELECTED WORK</span>
               <h2 id="work-heading" className="pj-headline">
-                BUILT FOR<br />
-                REAL USERS.<br />
-                DESIGNED WITH<br />
-                PURPOSE.
+                Built for
+                real users.
+                Designed with
+                purpose.
               </h2>
             </div>
             <div className="pj-header-action">
@@ -39,12 +39,12 @@ export const Projects: React.FC = () => {
                 aria-label="Browse all projects in catalog archive"
               >
                 <Layers size={13} aria-hidden="true" />
-                <span>ARCHIVE ({projectsData.length}) ↗</span>
+                <span>ARCHIVE ({projectsData.length}) ?</span>
               </button>
             </div>
           </header>
 
-          {/* ── 1. Featured Project Showcase ── */}
+          {/* -- 1. Featured Project Showcase -- */}
           {featuredProject && (
             <article className="pj-featured-card" aria-label={`Featured Project: ${featuredProject.title}`}>
               <div className="pj-featured-img-wrap">
@@ -59,7 +59,7 @@ export const Projects: React.FC = () => {
               <div className="pj-featured-info">
                 <div className="pj-meta-top">
                   <span className="pj-tag-accent">{featuredProject.category}</span>
-                  <span className="pj-meta-dot">•</span>
+                  <span className="pj-meta-dot">�</span>
                   <span className="pj-meta-year">{featuredProject.year}</span>
                 </div>
 
@@ -117,7 +117,7 @@ export const Projects: React.FC = () => {
             </article>
           )}
 
-          {/* ── 2. Secondary Projects (2-Column Editorial Grid) ── */}
+          {/* -- 2. Secondary Projects (2-Column Editorial Grid) -- */}
           <div className="pj-secondary-grid">
             {secondaryProjects.map((project) => (
               <article key={project.id} className="pj-secondary-card" aria-label={`Project: ${project.title}`}>
@@ -133,7 +133,7 @@ export const Projects: React.FC = () => {
                 <div className="pj-secondary-info">
                   <div className="pj-meta-top">
                     <span className="pj-tag-accent">{project.category}</span>
-                    <span className="pj-meta-dot">•</span>
+                    <span className="pj-meta-dot">�</span>
                     <span className="pj-meta-year">{project.year}</span>
                   </div>
 
@@ -190,7 +190,7 @@ export const Projects: React.FC = () => {
             ))}
           </div>
 
-          {/* ── 3. Supporting Projects (Compact Editorial Rows) ── */}
+          {/* -- 3. Supporting Projects (Compact Editorial Rows) -- */}
           {supportingProjects.length > 0 && (
             <div className="pj-supporting-section">
               <div className="pj-supporting-header">
@@ -257,7 +257,7 @@ export const Projects: React.FC = () => {
             </div>
           )}
 
-          {/* ── 4. Catalog Archive Banner CTA ── */}
+          {/* -- 4. Catalog Archive Banner CTA -- */}
           <footer className="pj-footer-banner">
             <div className="pj-banner-content">
               <span className="pj-banner-tag">FULL REPOSITORY INDEX</span>
@@ -290,11 +290,11 @@ export const Projects: React.FC = () => {
           </footer>
         </div>
 
-        {/* ── Scoped Editorial Styling ── */}
+        {/* -- Scoped Editorial Styling -- */}
         <style>{`
-          /* ══════════════════════════════════════
+          /* --------------------------------------
              SECTION & CONTAINER
-          ══════════════════════════════════════ */
+          -------------------------------------- */
           .pj-section {
             background-color: #F4F1E9;
             color: #151513;
@@ -310,9 +310,9 @@ export const Projects: React.FC = () => {
             box-sizing: border-box;
           }
 
-          /* ══════════════════════════════════════
+          /* --------------------------------------
              HEADER
-          ══════════════════════════════════════ */
+          -------------------------------------- */
           .pj-header {
             display: flex;
             flex-direction: column;
@@ -337,18 +337,17 @@ export const Projects: React.FC = () => {
             font-weight: 500;
             letter-spacing: 0.12em;
             text-transform: uppercase;
-            color: #7C2638;
+            color: #B02038;
             margin-bottom: 1rem;
           }
 
           .pj-headline {
             margin: 0;
             font-family: 'Syne', sans-serif;
-            font-weight: 800;
+            font-weight: 700;
             font-size: clamp(2rem, 3.8vw, 3.6rem);
-            line-height: 1.02;
-            letter-spacing: -0.03em;
-            text-transform: uppercase;
+            line-height: 1.1;
+            letter-spacing: -0.018em;
             color: #151513;
           }
 
@@ -370,14 +369,14 @@ export const Projects: React.FC = () => {
           }
 
           .pj-archive-btn:hover {
-            color: #7C2638;
-            border-color: #7C2638;
+            color: #B02038;
+            border-color: #B02038;
             transform: translateY(-1px);
           }
 
-          /* ══════════════════════════════════════
+          /* --------------------------------------
              COMMON META & TAGS
-          ══════════════════════════════════════ */
+          -------------------------------------- */
           .pj-meta-top {
             display: flex;
             align-items: center;
@@ -391,7 +390,7 @@ export const Projects: React.FC = () => {
             font-weight: 600;
             letter-spacing: 0.1em;
             text-transform: uppercase;
-            color: #7C2638;
+            color: #B02038;
           }
 
           .pj-meta-dot {
@@ -433,9 +432,9 @@ export const Projects: React.FC = () => {
             padding: 0.15rem 0.45rem;
           }
 
-          /* ══════════════════════════════════════
+          /* --------------------------------------
              ACTION BUTTONS
-          ══════════════════════════════════════ */
+          -------------------------------------- */
           .pj-actions-row {
             display: flex;
             flex-wrap: wrap;
@@ -463,8 +462,8 @@ export const Projects: React.FC = () => {
           }
 
           .pj-btn-primary:hover {
-            background-color: #7C2638;
-            border-color: #7C2638;
+            background-color: #B02038;
+            border-color: #B02038;
             transform: translateY(-2px);
           }
 
@@ -487,8 +486,8 @@ export const Projects: React.FC = () => {
           }
 
           .pj-btn-secondary:hover {
-            color: #7C2638;
-            border-color: #7C2638;
+            color: #B02038;
+            border-color: #B02038;
             transform: translateY(-2px);
           }
 
@@ -513,13 +512,13 @@ export const Projects: React.FC = () => {
           }
 
           .pj-btn-text:hover {
-            color: #7C2638;
-            text-decoration-color: #7C2638;
+            color: #B02038;
+            text-decoration-color: #B02038;
           }
 
-          /* ══════════════════════════════════════
+          /* --------------------------------------
              1. FEATURED PROJECT (Horizontal Showcase)
-          ══════════════════════════════════════ */
+          -------------------------------------- */
           .pj-featured-card {
             display: flex;
             flex-direction: column;
@@ -580,8 +579,9 @@ export const Projects: React.FC = () => {
             margin: 0;
             font-family: 'Syne', sans-serif;
             font-size: clamp(1.65rem, 2.4vw, 2.25rem);
-            font-weight: 800;
-            letter-spacing: -0.02em;
+            font-weight: 700;
+            letter-spacing: -0.014em;
+            line-height: 1.12;
             color: #151513;
           }
 
@@ -593,9 +593,9 @@ export const Projects: React.FC = () => {
             color: #706C63;
           }
 
-          /* ══════════════════════════════════════
+          /* --------------------------------------
              2. SECONDARY PROJECTS (2-Column Grid)
-          ══════════════════════════════════════ */
+          -------------------------------------- */
           .pj-secondary-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -651,8 +651,9 @@ export const Projects: React.FC = () => {
             margin: 0;
             font-family: 'Syne', sans-serif;
             font-size: 1.45rem;
-            font-weight: 800;
-            letter-spacing: -0.02em;
+            font-weight: 700;
+            letter-spacing: -0.014em;
+            line-height: 1.15;
             color: #151513;
           }
 
@@ -664,9 +665,9 @@ export const Projects: React.FC = () => {
             color: #706C63;
           }
 
-          /* ══════════════════════════════════════
+          /* --------------------------------------
              3. SUPPORTING PROJECTS (Editorial Rows)
-          ══════════════════════════════════════ */
+          -------------------------------------- */
           .pj-supporting-section {
             margin-top: 2rem;
             margin-bottom: 3.5rem;
@@ -725,7 +726,7 @@ export const Projects: React.FC = () => {
             font-family: 'JetBrains Mono', monospace;
             font-size: 10px;
             font-weight: 600;
-            color: #7C2638;
+            color: #B02038;
           }
 
           .pj-supporting-cat {
@@ -741,7 +742,9 @@ export const Projects: React.FC = () => {
             margin: 0;
             font-family: 'Syne', sans-serif;
             font-size: 1.2rem;
-            font-weight: 800;
+            font-weight: 700;
+            letter-spacing: -0.012em;
+            line-height: 1.2;
             color: #151513;
           }
 
@@ -781,7 +784,7 @@ export const Projects: React.FC = () => {
           }
 
           .pj-row-link:hover {
-            color: #7C2638;
+            color: #B02038;
           }
 
           .pj-row-btn {
@@ -804,13 +807,13 @@ export const Projects: React.FC = () => {
           }
 
           .pj-row-btn:hover {
-            color: #7C2638;
-            text-decoration-color: #7C2638;
+            color: #B02038;
+            text-decoration-color: #B02038;
           }
 
-          /* ══════════════════════════════════════
+          /* --------------------------------------
              4. FOOTER BANNER CTA
-          ══════════════════════════════════════ */
+          -------------------------------------- */
           .pj-footer-banner {
             padding: clamp(2rem, 4vw, 3rem);
             background-color: #FAF8F2;
@@ -839,7 +842,7 @@ export const Projects: React.FC = () => {
             font-weight: 600;
             letter-spacing: 0.12em;
             text-transform: uppercase;
-            color: #7C2638;
+            color: #B02038;
             margin-bottom: 0.5rem;
           }
 
@@ -847,8 +850,9 @@ export const Projects: React.FC = () => {
             margin: 0;
             font-family: 'Syne', sans-serif;
             font-size: clamp(1.35rem, 2vw, 1.75rem);
-            font-weight: 800;
-            letter-spacing: -0.02em;
+            font-weight: 700;
+            letter-spacing: -0.014em;
+            line-height: 1.15;
             color: #151513;
           }
 
@@ -868,9 +872,9 @@ export const Projects: React.FC = () => {
             flex-shrink: 0;
           }
 
-          /* ══════════════════════════════════════
+          /* --------------------------------------
              REDUCED MOTION
-          ══════════════════════════════════════ */
+          -------------------------------------- */
           @media (prefers-reduced-motion: reduce) {
             .pj-featured-img,
             .pj-secondary-img,

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { currentlyExploringList } from "@/data/exploring";
 
@@ -11,7 +11,7 @@ const PAL = {
   ink:     "#151513",
   muted:   "#706C63",
   border:  "#D3CEC2",
-  wine:    "#7C2638",
+  wine:    "#B02038",
 };
 
 export const CurrentlyExploring: React.FC = () => {

@@ -3,7 +3,7 @@ import { motion, useInView } from "framer-motion";
 
 // ─────────────────────────────────────────────
 // About: Editorial Engineering Manifesto
-// Color system: Paper #F4F1E9 | Ink #151513 | Wine #7C2638 | Muted #706C63 | Border #D3CEC2
+// Color system: Paper #F4F1E9 | Ink #151513 | Wine #B02038 | Muted #706C63 | Border #D3CEC2
 // Typography: Syne (manifesto) | Plus Jakarta Sans (body) | JetBrains Mono (label/CTA)
 // Scope: About section ONLY
 // Preserved: id="about", id="about-heading", GitHub URL, factual bio content
@@ -101,13 +101,13 @@ export const About: React.FC = () => {
                 {/* Line 1 */}
                 <span className="ab-line-clip">
                   <motion.span className="ab-line" variants={lineVariants}>
-                    I DON&apos;T JUST
+                    I don&apos;t just
                   </motion.span>
                 </span>
                 {/* Line 2 */}
                 <span className="ab-line-clip">
                   <motion.span className="ab-line" variants={lineVariants}>
-                    WRITE CODE.
+                    write code.
                   </motion.span>
                 </span>
 
@@ -117,13 +117,13 @@ export const About: React.FC = () => {
                 {/* Line 3 */}
                 <span className="ab-line-clip">
                   <motion.span className="ab-line" variants={lineVariants}>
-                    I BUILD SYSTEMS
+                    I build systems
                   </motion.span>
                 </span>
                 {/* Line 4 — Wine accent */}
                 <span className="ab-line-clip">
                   <motion.span className="ab-line ab-line--wine" variants={lineVariants}>
-                    PEOPLE CAN USE.
+                    people can use.
                   </motion.span>
                 </span>
               </motion.h2>
@@ -143,9 +143,9 @@ export const About: React.FC = () => {
               <p>
                 I'm Hitesh Kumar — a Full Stack Engineer based in India,
                 specialising in building responsive web applications with
-                the MERN stack and TypeScript. I care about the full product
-                journey: from architecture decisions to the moment a user
-                actually accomplishes something.
+                the MERN stack and TypeScript. I care about the{" "}
+                <em>full product journey</em>: from architecture decisions
+                to the moment a user actually accomplishes something.
               </p>
               <p>
                 My open-source work spans contribution and project administration
@@ -183,7 +183,7 @@ export const About: React.FC = () => {
         ══════════════════════════════════════ */
         .ab-section {
           position: relative;
-          background-color: #F4F1E9;
+          background-color: #EDE9DC;
           border-bottom: 1px solid #D3CEC2;
           box-sizing: border-box;
           padding-top: clamp(4rem, 7vw, 6.5rem);
@@ -212,7 +212,7 @@ export const About: React.FC = () => {
           font-weight: 500;
           letter-spacing: 0.12em;
           text-transform: uppercase;
-          color: #7C2638;
+          color: #B02038;
         }
 
         /* ══════════════════════════════════════
@@ -247,7 +247,7 @@ export const About: React.FC = () => {
           flex-shrink: 0;
           width: 2px;
           align-self: stretch;
-          background-color: #7C2638;
+          background-color: #B02038;
           opacity: 0.55;
           margin-top: 0.25rem;
           margin-bottom: 0.25rem;
@@ -262,11 +262,11 @@ export const About: React.FC = () => {
           margin: 0;
           padding: 0;
           font-family: 'Syne', sans-serif;
-          font-weight: 800;
+          font-weight: 700;
           font-size: clamp(1.75rem, 6.5vw, 2.5rem);
-          line-height: 0.98;
-          letter-spacing: -0.03em;
-          text-transform: uppercase;
+          line-height: 1.05;
+          letter-spacing: -0.018em;
+          /* Sentence case — text-transform removed for human feel */
           color: #151513;
         }
 
@@ -286,7 +286,7 @@ export const About: React.FC = () => {
 
         /* Wine accent on "PEOPLE CAN USE." */
         .ab-line--wine {
-          color: #7C2638;
+          color: #B02038;
         }
 
         /* Breathing gap between phrases */
@@ -317,6 +317,12 @@ export const About: React.FC = () => {
           line-height: 1.75;
           color: #706C63;
           margin: 0;
+        }
+
+        .ab-narrative-text em {
+          font-style: italic;
+          color: #151513;
+          font-weight: 500;
         }
 
         /* ══════════════════════════════════════
@@ -355,7 +361,7 @@ export const About: React.FC = () => {
         }
 
         .ab-github-link:focus-visible {
-          outline: 2px solid #7C2638;
+          outline: 2px solid #B02038;
           outline-offset: 4px;
           border-radius: 2px;
         }
@@ -363,7 +369,7 @@ export const About: React.FC = () => {
         .ab-github-arrow {
           display: inline-block;
           font-size: 13px;
-          color: #7C2638;
+          color: #B02038;
           transition: transform 260ms cubic-bezier(0.25, 0, 0, 1);
         }
 
@@ -387,7 +393,8 @@ export const About: React.FC = () => {
           }
 
           .ab-manifesto {
-            font-size: clamp(1.75rem, 2.1vw, 2.45rem);
+            font-size: clamp(1.85rem, 2.2vw, 2.55rem);
+            line-height: 1.06;
           }
 
           .ab-narrative-col {
@@ -399,7 +406,8 @@ export const About: React.FC = () => {
 
         @media (min-width: 1280px) {
           .ab-manifesto {
-            font-size: clamp(1.85rem, 2.1vw, 2.55rem);
+            font-size: clamp(1.9rem, 2.2vw, 2.65rem);
+            line-height: 1.07;
           }
         }
 

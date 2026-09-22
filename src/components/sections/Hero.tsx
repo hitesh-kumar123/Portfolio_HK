@@ -3,7 +3,7 @@ import hiteshImage from "@/assets/Hitesh_Kumar.jpg";
 
 // ─────────────────────────────────────────────
 // Hero: Editorial Collision
-// Color system: Paper #F4F1E9 | Ink #151513 | Wine #7C2638 | Muted #706C63 | Border #D3CEC2
+// Color system: Paper #F4F1E9 | Ink #151513 | Wine #B02038 | Muted #706C63 | Border #D3CEC2
 // Fonts: Syne (display) | Plus Jakarta Sans (body) | JetBrains Mono (metadata)
 // Scope: Hero section ONLY — no other components modified
 // ─────────────────────────────────────────────
@@ -157,7 +157,6 @@ export const Hero: React.FC = () => {
           <div className="hero-right-col hero-anim-portrait">
             <div className="hero-portrait-outer" ref={portraitWrapperRef}>
               <div ref={scrollParallaxRef} style={{ position: "relative", width: "100%", height: "100%" }}>
-                <div className="hero-offset-frame" aria-hidden="true" />
                 <div className="hero-portrait-frame">
                   <img
                     src={hiteshImage}
@@ -252,7 +251,7 @@ export const Hero: React.FC = () => {
         .hero-wine-line {
           width: 1px;
           height: 1.75rem;
-          background-color: #7C2638;
+          background-color: #B02038;
           flex-shrink: 0;
         }
         .hero-meta-pills {
@@ -311,16 +310,14 @@ export const Hero: React.FC = () => {
           margin: 0;
           padding: 0;
           font-family: 'Syne', sans-serif;
-          font-weight: 800;
+          font-weight: 700;
           /*
-            Mobile safe: At 375px with 1.5rem (24px) padding each side,
-            available width = 375 - 48 = 327px.
-            'PRODUCTS' (8 chars) at -0.04em letter-spacing:
-            safe font-size ≈ 327 / (8 * 0.55) ≈ 74px → use ~2rem min, 8.8vw preferred.
+            Natural scale: gives the headline room to breathe.
+            Avoiding extremes — no over-compression, no aggressive vw jumps.
           */
-          font-size: clamp(2.1rem, 8.8vw, 4rem);
-          line-height: 0.88;
-          letter-spacing: -0.04em;
+          font-size: clamp(2.2rem, 7.5vw, 3.75rem);
+          line-height: 0.94;
+          letter-spacing: -0.025em;
           text-transform: uppercase;
         }
 
@@ -333,17 +330,10 @@ export const Hero: React.FC = () => {
         }
         .hero-line-ink  { color: #151513; }
         .hero-line-wine {
-          color: #7C2638;
-          /* slightly smaller so 'THAT MATTER.' stays on one line */
-          font-size: 0.8em;
-          /*
-            Subtle editorial offset on mobile: a small indent
-            that reads as intentional rhythm break, not an error.
-            Desktop override below increases this further.
-          */
-          padding-left: 0.18em;
-          /* Pull it slightly toward the previous line — optical tension */
-          margin-top: -0.04em;
+          color: #B02038;
+          /* Same size as other lines — no awkward size break */
+          padding-left: 0.08em;
+          margin-top: 0;
         }
 
         /* ══════════════════════════════════════
@@ -399,7 +389,7 @@ export const Hero: React.FC = () => {
         }
         .hero-btn-primary:hover { transform: translateY(-2px); }
         .hero-btn-primary:focus-visible {
-          outline: 2px solid #7C2638;
+          outline: 2px solid #B02038;
           outline-offset: 3px;
         }
         .hero-arrow-diag {
@@ -429,7 +419,7 @@ export const Hero: React.FC = () => {
         }
         .hero-btn-secondary:hover { color: #151513; }
         .hero-btn-secondary:focus-visible {
-          outline: 2px solid #7C2638;
+          outline: 2px solid #B02038;
           outline-offset: 3px;
           border-radius: 2px;
         }
@@ -467,24 +457,15 @@ export const Hero: React.FC = () => {
           will-change: transform;
         }
 
-        /* Offset wine signature frame (subtle) */
-        .hero-offset-frame {
-          position: absolute;
-          inset: 0;
-          border: 1px solid #7C2638;
-          border-radius: 2px;
-          transform: translate(5px, 5px);
-          z-index: 0;
-          pointer-events: none;
-        }
+        /* Offset frame removed — clean, confident portrait */
 
         .hero-portrait-frame {
           position: relative;
           z-index: 1;
           border: 1px solid #D3CEC2;
-          border-radius: 2px;
+          border-radius: 3px;
           background-color: #EAE6DC;
-          padding: 3px;
+          padding: 4px;
           overflow: hidden;
         }
         .hero-portrait-img {
@@ -493,8 +474,9 @@ export const Hero: React.FC = () => {
           aspect-ratio: 4 / 5;
           object-fit: cover;
           object-position: center top;
-          border-radius: 1px;
-          filter: grayscale(10%) contrast(1.03);
+          border-radius: 2px;
+          /* Full B&W — confident photographic choice, not uncertain half-measure */
+          filter: grayscale(100%) contrast(1.06);
         }
 
         /* ══════════════════════════════════════
@@ -539,7 +521,8 @@ export const Hero: React.FC = () => {
           .hero-editorial { padding-top: 7rem; padding-bottom: 2rem; }
           .hero-container { padding: 0 2rem; gap: 1.75rem; }
           .hero-headline {
-            font-size: clamp(2.8rem, 9.5vw, 5rem);
+            font-size: clamp(2.75rem, 7.8vw, 4.5rem);
+            line-height: 0.95;
           }
           .hero-portrait-outer {
             width: clamp(150px, 34vw, 210px);
@@ -576,31 +559,26 @@ export const Hero: React.FC = () => {
           }
 
           .hero-headline {
-            font-size: clamp(3.8rem, 6vw, 7rem);
-            line-height: 0.87;
+            font-size: clamp(3.5rem, 5.2vw, 6.25rem);
+            line-height: 0.95;
+            letter-spacing: -0.022em;
           }
 
           .hero-line-wine {
-            /*
-              Stronger editorial offset on desktop:
-              'THAT MATTER.' reads as a visual break from the
-              three-line stack above — intentional, not accidental.
-            */
-            padding-left: 2rem;
-            margin-top: -0.02em;
+            /* Measured editorial offset — intentional, not accidental */
+            padding-left: 1.25rem;
+            margin-top: 0;
           }
 
           .hero-right-col {
             flex: 0 0 auto;
             justify-content: flex-end;
-            /* Slight top offset: portrait crown starts ~1.5rem below
-               the composition top, creating a subtle vertical interplay
-               with the headline's first line. */
             align-items: flex-start;
-            padding-top: 1.5rem;
+            padding-top: 0.5rem;
           }
           .hero-portrait-outer {
-            width: clamp(180px, 17vw, 230px);
+            /* Bigger photo — confident, personal, not a thumbnail */
+            width: clamp(240px, 22vw, 310px);
           }
 
           .hero-body-group {
@@ -617,13 +595,14 @@ export const Hero: React.FC = () => {
         /* 1280px: allow slightly larger headline */
         @media (min-width: 1280px) {
           .hero-headline {
-            font-size: clamp(4.5rem, 6.2vw, 7.5rem);
+            font-size: clamp(4rem, 5.8vw, 7rem);
+            line-height: 0.96;
           }
           .hero-portrait-outer {
-            width: clamp(200px, 17vw, 240px);
+            width: clamp(270px, 22vw, 340px);
           }
           .hero-right-col {
-            padding-top: 2rem;
+            padding-top: 0.5rem;
           }
         }
 

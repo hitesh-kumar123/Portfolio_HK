@@ -3,16 +3,16 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { servicesList } from "@/data/services";
 
-/* ─────────────────────────────────────────────
-   Palette — matches global editorial system
-   ───────────────────────────────────────────── */
+/* ---------------------------------------------
+   Palette � matches global editorial system
+   --------------------------------------------- */
 const PAL = {
   paper:   "#F4F1E9",
   surface: "#FAF8F2",
   ink:     "#151513",
   muted:   "#706C63",
   border:  "#D3CEC2",
-  wine:    "#7C2638",
+  wine:    "#B02038",
 };
 
 export const Services: React.FC = () => {
@@ -25,9 +25,9 @@ export const Services: React.FC = () => {
     <section
       id="services"
       aria-labelledby="services-heading"
-      style={{ background: PAL.paper, borderBottom: `1px solid ${PAL.border}` }}
+      style={{ background: '#EDE9DC', borderBottom: `1px solid ${PAL.border}` }}
     >
-      {/* ── Scoped styles ── */}
+      {/* -- Scoped styles -- */}
       <style>{`
         .svc-mono { font-family: 'JetBrains Mono', 'Fira Mono', monospace; }
         .svc-display { font-family: 'Syne', sans-serif; }
@@ -145,7 +145,7 @@ export const Services: React.FC = () => {
 
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "96px 40px" }}>
 
-        {/* ── Section Header ── */}
+        {/* -- Section Header -- */}
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -174,7 +174,7 @@ export const Services: React.FC = () => {
                 marginBottom: 14,
               }}
             >
-              05 — WHAT I BUILD
+              05 � WHAT I BUILD
             </p>
             <h2
               id="services-heading"
@@ -212,7 +212,7 @@ export const Services: React.FC = () => {
           </p>
         </motion.div>
 
-        {/* ── Capability Index Rows ── */}
+        {/* -- Capability Index Rows -- */}
         <div
           role="list"
           style={{ borderTop: `1px solid ${PAL.border}` }}
@@ -228,7 +228,7 @@ export const Services: React.FC = () => {
                 viewport={{ once: true, margin: "-30px" }}
                 transition={{ duration: 0.55, delay: idx * 0.07, ease: [0.16, 1, 0.3, 1] }}
               >
-                {/* ── Main row ── */}
+                {/* -- Main row -- */}
                 <div
                   className="svc-row"
                   onMouseEnter={() => setActiveIdx(idx)}
@@ -238,7 +238,7 @@ export const Services: React.FC = () => {
                   tabIndex={0}
                   role="button"
                   aria-expanded={isOpen}
-                  aria-label={`${service.title} — ${service.shortSummary}`}
+                  aria-label={`${service.title} � ${service.shortSummary}`}
                   onKeyDown={(e) => {
                     if (e.key === "Enter" || e.key === " ") {
                       e.preventDefault();
@@ -338,7 +338,7 @@ export const Services: React.FC = () => {
           })}
         </div>
 
-        {/* ── Bottom editorial CTA ── */}
+        {/* -- Bottom editorial CTA -- */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -379,7 +379,7 @@ export const Services: React.FC = () => {
           <button
             onClick={() => scrollTo("contact")}
             className="svc-cta"
-            aria-label="Discuss a project — scroll to contact section"
+            aria-label="Discuss a project � scroll to contact section"
           >
             <span>DISCUSS A PROJECT</span>
             <ArrowUpRight size={12} strokeWidth={2.5} />

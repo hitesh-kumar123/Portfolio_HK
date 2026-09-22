@@ -9,7 +9,7 @@ const PAL = {
   ink:     "#151513",
   muted:   "#706C63",
   border:  "#D3CEC2",
-  wine:    "#7C2638",
+  wine:    "#B02038",
 };
 
 const NAV_LINKS = [

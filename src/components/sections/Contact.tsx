@@ -1,16 +1,16 @@
-import React, { useState, useRef } from "react";
+﻿import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, Loader2, CheckCircle, AlertCircle, Copy, Check } from "lucide-react";
 import emailjs from "@emailjs/browser";
 
-/* ── EmailJS config (unchanged) ── */
+/* -- EmailJS config (unchanged) -- */
 const EMAILJS_SERVICE_ID  = "YOUR_SERVICE_ID";
 const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID";
 const EMAILJS_PUBLIC_KEY  = "YOUR_PUBLIC_KEY";
 
 type FormStatus = "idle" | "loading" | "success" | "error";
 
-/* ── Real contact channels from repository ── */
+/* -- Real contact channels from repository -- */
 const CHANNELS = [
   {
     id: "email",
@@ -42,16 +42,16 @@ const CHANNELS = [
   },
 ];
 
-/* ─────────────────────────────────────────────
-   Palette — matches global editorial system
-   ───────────────────────────────────────────── */
+/* ---------------------------------------------
+   Palette � matches global editorial system
+   --------------------------------------------- */
 const PAL = {
   paper:   "#F4F1E9",
   surface: "#FAF8F2",
   ink:     "#151513",
   muted:   "#706C63",
   border:  "#D3CEC2",
-  wine:    "#7C2638",
+  wine:    "#B02038",
 };
 
 export const Contact: React.FC = () => {
@@ -91,9 +91,9 @@ export const Contact: React.FC = () => {
     <section
       id="contact"
       aria-labelledby="contact-heading"
-      style={{ background: PAL.paper }}
+      style={{ background: '#EDE9DC' }}
     >
-      {/* ── Scoped styles ── */}
+      {/* -- Scoped styles -- */}
       <style>{`
         .ctc-mono    { font-family: 'JetBrains Mono', 'Fira Mono', monospace; }
         .ctc-display { font-family: 'Syne', sans-serif; }
@@ -241,7 +241,7 @@ export const Contact: React.FC = () => {
 
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "96px 40px" }}>
 
-        {/* ── Top headline area ── */}
+        {/* -- Top headline area -- */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -268,7 +268,7 @@ export const Contact: React.FC = () => {
           </h2>
         </motion.div>
 
-        {/* ── Two-column editorial body ── */}
+        {/* -- Two-column editorial body -- */}
         <div className="ctc-grid">
 
           {/* LEFT: contact channels */}
@@ -283,7 +283,7 @@ export const Contact: React.FC = () => {
               style={{ fontSize: 11, color: PAL.muted, lineHeight: 1.8, marginBottom: 40, maxWidth: 360 }}
             >
               If you have a project worth building, a role that needs
-              filling, or an idea worth discussing — reach out directly.
+              filling, or an idea worth discussing � reach out directly.
             </p>
 
             {/* Channel list */}
@@ -465,9 +465,9 @@ export const Contact: React.FC = () => {
                 className="ctc-btn"
               >
                 {status === "loading" ? (
-                  <><Loader2 size={14} style={{ animation: "spin 1s linear infinite" }} /><span>SENDING…</span></>
+                  <><Loader2 size={14} style={{ animation: "spin 1s linear infinite" }} /><span>SENDING�</span></>
                 ) : status === "success" ? (
-                  <span>MESSAGE SENT ✓</span>
+                  <span>MESSAGE SENT ?</span>
                 ) : (
                   <><span>SEND MESSAGE</span><ArrowUpRight size={13} strokeWidth={2.5} /></>
                 )}
@@ -476,12 +476,12 @@ export const Contact: React.FC = () => {
           </motion.div>
         </div>
 
-        {/* ── Bottom rule ── */}
+        {/* -- Bottom rule -- */}
         <div
           style={{ marginTop: 80, paddingTop: 32, borderTop: `1px solid ${PAL.border}`, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}
         >
           <p className="ctc-mono" style={{ fontSize: 10, color: PAL.muted, letterSpacing: "0.1em", textTransform: "uppercase" }}>
-            Ahmedabad, Gujarat, India · Remote available
+            Ahmedabad, Gujarat, India � Remote available
           </p>
           <p className="ctc-mono" style={{ fontSize: 10, color: PAL.border }}>
             hiteshdevkumar2003@gmail.com

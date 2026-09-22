@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { openSourceTimeline } from "@/data/openSource";
@@ -12,7 +12,7 @@ const PAL = {
   ink:     "#151513",
   muted:   "#706C63",
   border:  "#D3CEC2",
-  wine:    "#7C2638",
+  wine:    "#B02038",
 };
 
 export const OpenSourceTimeline: React.FC = () => {
@@ -35,13 +35,13 @@ export const OpenSourceTimeline: React.FC = () => {
           font-weight: 700;
           letter-spacing: 0.12em;
           text-transform: uppercase;
-          color: #7C2638;
+          color: #B02038;
           border-bottom: 1px solid transparent;
           padding-bottom: 1px;
           transition: border-color 0.2s, opacity 0.2s;
           text-decoration: none;
         }
-        .ost-link:hover { border-color: #7C2638; opacity: 0.78; }
+        .ost-link:hover { border-color: #B02038; opacity: 0.78; }
 
         .ost-pill {
           font-family: 'JetBrains Mono', monospace;
@@ -60,7 +60,7 @@ export const OpenSourceTimeline: React.FC = () => {
           width: 4px;
           height: 4px;
           border-radius: 50%;
-          background: #7C2638;
+          background: #B02038;
           flex-shrink: 0;
           margin-top: 7px;
         }

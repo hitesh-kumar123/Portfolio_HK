@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Github, CheckCircle2, AlertCircle, ArrowUpRight } from "lucide-react";
 import { Project } from "@/data/projects";
@@ -51,7 +51,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
             {/* Header Bar */}
             <div className="flex items-center justify-between px-6 sm:px-8 py-5 border-b border-[#D3CEC2] bg-[#FAF8F2]">
               <div className="flex items-center gap-3">
-                <span className="font-mono text-[11px] font-bold text-[#7C2638] uppercase tracking-wider">
+                <span className="font-mono text-[11px] font-bold text-[#B02038] uppercase tracking-wider">
                   CASE STUDY
                 </span>
                 <span className="text-[#D3CEC2]">•</span>
@@ -106,7 +106,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
                 {/* Overview */}
                 <div className="space-y-2 p-5 bg-[#FAF8F2] border border-[#D3CEC2]">
-                  <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-[#7C2638]">
+                  <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-[#B02038]">
                     OVERVIEW
                   </span>
                   <p className="text-xs sm:text-sm text-[#706C63] leading-relaxed">
@@ -116,7 +116,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
 
                 {/* Problem */}
                 <div className="space-y-2 p-5 bg-[#FAF8F2] border border-[#D3CEC2]">
-                  <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-[#7C2638]">
+                  <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-[#B02038]">
                     THE PROBLEM
                   </span>
                   <p className="text-xs sm:text-sm text-[#706C63] leading-relaxed">
@@ -126,7 +126,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
 
                 {/* Approach */}
                 <div className="space-y-2 p-5 bg-[#FAF8F2] border border-[#D3CEC2]">
-                  <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-[#7C2638]">
+                  <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-[#B02038]">
                     ARCHITECTURAL APPROACH
                   </span>
                   <p className="text-xs sm:text-sm text-[#706C63] leading-relaxed">
@@ -136,7 +136,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
 
                 {/* Role */}
                 <div className="space-y-2 p-5 bg-[#FAF8F2] border border-[#D3CEC2]">
-                  <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-[#7C2638]">
+                  <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-[#B02038]">
                     MY ROLE &amp; OWNERSHIP
                   </span>
                   <p className="text-xs sm:text-sm text-[#706C63] leading-relaxed">
@@ -147,13 +147,13 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
 
               {/* Features List */}
               <div className="space-y-3 pt-4 border-t border-[#D3CEC2]">
-                <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-[#7C2638]">
+                <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-[#B02038]">
                   KEY FUNCTIONALITIES SHIPPED
                 </span>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {project.caseStudy.features.map((feature, idx) => (
                     <div key={idx} className="flex items-start gap-2.5 p-3.5 bg-[#FAF8F2] border border-[#D3CEC2]">
-                      <CheckCircle2 size={15} className="text-[#7C2638] flex-shrink-0 mt-0.5" />
+                      <CheckCircle2 size={15} className="text-[#B02038] flex-shrink-0 mt-0.5" />
                       <span className="text-xs text-[#151513] font-medium leading-relaxed">
                         {feature}
                       </span>
@@ -164,17 +164,17 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
 
               {/* Challenges & Solutions */}
               <div className="space-y-4 pt-4 border-t border-[#D3CEC2]">
-                <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-[#7C2638]">
+                <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-[#B02038]">
                   TECHNICAL CHALLENGES &amp; SOLUTIONS
                 </span>
                 <div className="space-y-3">
                   {project.caseStudy.challenges.map((challenge, idx) => (
                     <div key={idx} className="p-4 bg-[#FAF8F2] border border-[#D3CEC2] space-y-2">
                       <div className="flex items-center gap-2 text-xs font-bold text-[#151513]">
-                        <AlertCircle size={14} className="text-[#7C2638]" />
+                        <AlertCircle size={14} className="text-[#B02038]" />
                         <span>Challenge: {challenge}</span>
                       </div>
-                      <div className="text-xs text-[#706C63] pl-4 border-l-2 border-[#7C2638] leading-relaxed">
+                      <div className="text-xs text-[#706C63] pl-4 border-l-2 border-[#B02038] leading-relaxed">
                         <strong className="text-[#151513] font-semibold">Solution: </strong>
                         {project.caseStudy.solutions[idx]}
                       </div>
@@ -191,7 +191,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
                   href={project.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-[#151513] border border-[#D3CEC2] px-4 py-2 hover:border-[#7C2638] hover:text-[#7C2638] transition-colors"
+                  className="inline-flex items-center gap-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-[#151513] border border-[#D3CEC2] px-4 py-2 hover:border-[#B02038] hover:text-[#B02038] transition-colors"
                 >
                   <Github size={14} />
                   <span>SOURCE CODE</span>
@@ -203,7 +203,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
                   href={project.liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider bg-[#151513] text-[#F4F1E9] px-5 py-2 hover:bg-[#7C2638] transition-colors"
+                  className="inline-flex items-center gap-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider bg-[#151513] text-[#F4F1E9] px-5 py-2 hover:bg-[#B02038] transition-colors"
                 >
                   <span>LIVE PROJECT</span>
                   <ArrowUpRight size={14} />
