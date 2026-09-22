@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useCallback } from "react";
-import hiteshImage from "@/assets/Hitesh_Kumar.jpg";
+import hiteshImage from "@/assets/Hitesh_Kumar.png";
 
 // ─────────────────────────────────────────────
 // Hero: Editorial Collision
@@ -157,15 +157,125 @@ export const Hero: React.FC = () => {
           <div className="hero-right-col hero-anim-portrait">
             <div className="hero-portrait-outer" ref={portraitWrapperRef}>
               <div ref={scrollParallaxRef} style={{ position: "relative", width: "100%", height: "100%" }}>
-                <div className="hero-portrait-frame">
-                  <img
-                    src={hiteshImage}
-                    alt="Hitesh Kumar — Full Stack Engineer"
-                    className="hero-portrait-img"
-                    loading="eager"
-                    draggable={false}
-                  />
+                {/* Hand-drawn artistic sketch & doodle background */}
+                <div className="hero-portrait-doodles" aria-hidden="true">
+                  <svg
+                    viewBox="0 0 400 480"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="hero-doodle-svg"
+                  >
+                    {/* Soft watercolor blob fill */}
+                    <path
+                      d="M200,65 C285,55 355,105 360,215 C365,325 295,410 195,415 C95,420 38,335 34,225 C30,115 115,75 200,65 Z"
+                      fill="rgba(176, 32, 56, 0.08)"
+                    />
+                    
+                    {/* Primary sketchy circle loop */}
+                    <path
+                      d="M 195,58 C 290,50 362,112 366,220 C 370,330 292,418 190,422 C 88,426 30,332 26,220 C 22,108 100,66 195,58 Z"
+                      stroke="#B02038"
+                      strokeWidth="2.2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeDasharray="420 12 180 8"
+                      className="doodle-loop-main"
+                    />
+
+                    {/* Secondary rough overlap line */}
+                    <path
+                      d="M 210,48 C 305,42 375,118 378,232 C 380,345 285,430 180,432 C 75,434 20,325 24,208 C 28,90 115,54 218,52"
+                      stroke="#151513"
+                      strokeWidth="1.2"
+                      strokeOpacity="0.35"
+                      strokeLinecap="round"
+                      className="doodle-loop-sub"
+                    />
+
+                    {/* Hand-drawn Sparkle Star (Top Right) */}
+                    <g className="doodle-sparkle-tr">
+                      <path
+                        d="M 335,28 Q 335,52 359,52 Q 335,52 335,76 Q 335,52 311,52 Q 335,52 335,28 Z"
+                        fill="#B02038"
+                      />
+                    </g>
+
+                    {/* Small Star (Bottom Left) */}
+                    <g className="doodle-sparkle-bl">
+                      <path
+                        d="M 42,390 Q 42,404 56,404 Q 42,404 42,418 Q 42,404 28,404 Q 42,404 42,390 Z"
+                        fill="#B02038"
+                        opacity="0.85"
+                      />
+                    </g>
+
+                    {/* Playful sketch ray lines (Left shoulder) */}
+                    <g stroke="#706C63" strokeWidth="1.8" strokeLinecap="round" opacity="0.65" className="doodle-rays">
+                      <line x1="45" y1="120" x2="20" y2="105" />
+                      <line x1="38" y1="145" x2="12" y2="140" />
+                      <line x1="42" y1="170" x2="16" y2="178" />
+                    </g>
+
+                    {/* Hand-drawn curly flourish / swirl (Bottom Right) */}
+                    <path
+                      d="M 320,385 C 352,395 372,422 350,444 C 328,460 302,438 318,416 C 334,394 365,425 382,410"
+                      fill="none"
+                      stroke="#B02038"
+                      strokeWidth="1.8"
+                      strokeLinecap="round"
+                      opacity="0.85"
+                      className="doodle-swirl"
+                    />
+
+                    {/* Crosshairs & Dots doodle accents */}
+                    <g stroke="#151513" strokeWidth="1.6" strokeLinecap="round" opacity="0.4">
+                      {/* Top Left cross */}
+                      <line x1="72" y1="52" x2="72" y2="66" />
+                      <line x1="65" y1="59" x2="79" y2="59" />
+                      
+                      {/* Right accent cross */}
+                      <line x1="375" y1="165" x2="375" y2="177" />
+                      <line x1="369" y1="171" x2="381" y2="171" />
+                    </g>
+                    
+                    {/* Decorative dots */}
+                    <circle cx="348" cy="115" r="2.5" fill="#B02038" opacity="0.6" />
+                    <circle cx="68" cy="340" r="2" fill="#706C63" opacity="0.5" />
+                    <circle cx="360" cy="330" r="2.5" fill="#151513" opacity="0.4" />
+
+                    {/* Handwritten-style tag / annotation arrow */}
+                    <g className="doodle-tag">
+                      <path
+                        d="M 115,22 C 145,12 195,16 230,28"
+                        stroke="#B02038"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeDasharray="4 3"
+                        fill="none"
+                      />
+                      <text
+                        x="165"
+                        y="12"
+                        fill="#B02038"
+                        fontSize="11"
+                        fontFamily="'JetBrains Mono', monospace"
+                        fontWeight="700"
+                        letterSpacing="0.12em"
+                        textAnchor="middle"
+                      >
+                        ✦ BUILDER ✦
+                      </text>
+                    </g>
+                  </svg>
                 </div>
+
+                <img
+                  src={hiteshImage}
+                  alt="Hitesh Kumar — Full Stack Engineer"
+                  className="hero-portrait-img"
+                  loading="eager"
+                  draggable={false}
+                />
               </div>
             </div>
           </div>
@@ -455,28 +565,86 @@ export const Hero: React.FC = () => {
           /* mobile: comfortable width that won't overwhelm */
           width: clamp(140px, 44vw, 200px);
           will-change: transform;
+          overflow: visible;
         }
 
-        /* Offset frame removed — clean, confident portrait */
-
-        .hero-portrait-frame {
-          position: relative;
+        /* ── Doodle Drawing Background ── */
+        .hero-portrait-doodles {
+          position: absolute;
+          top: -12%;
+          left: -16%;
+          width: 132%;
+          height: 124%;
+          pointer-events: none;
           z-index: 1;
-          border: 1px solid #D3CEC2;
-          border-radius: 3px;
-          background-color: #EAE6DC;
-          padding: 4px;
-          overflow: hidden;
+          overflow: visible;
         }
+
+        .hero-doodle-svg {
+          width: 100%;
+          height: 100%;
+          overflow: visible;
+        }
+
+        .doodle-loop-main {
+          transition: stroke-dashoffset 800ms ease;
+        }
+
+        .doodle-sparkle-tr {
+          transform-origin: 335px 52px;
+          animation: doodleFloat 4s ease-in-out infinite;
+        }
+
+        .doodle-sparkle-bl {
+          transform-origin: 42px 404px;
+          animation: doodleFloat 5.5s ease-in-out infinite reverse;
+        }
+
+        .doodle-swirl {
+          transition: transform 300ms cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .doodle-tag {
+          transition: transform 300ms cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .hero-portrait-outer:hover .doodle-swirl {
+          transform: rotate(5deg) scale(1.04);
+          transform-origin: 340px 410px;
+        }
+
+        .hero-portrait-outer:hover .doodle-tag {
+          transform: translateY(-2px);
+        }
+
+        @keyframes doodleFloat {
+          0%, 100% {
+            transform: translateY(0) rotate(0deg);
+          }
+          50% {
+            transform: translateY(-4px) rotate(6deg);
+          }
+        }
+
+        /* Sticker portrait — no frame, no box, natural PNG transparency */
         .hero-portrait-img {
+          position: relative;
+          z-index: 2;
           display: block;
           width: 100%;
-          aspect-ratio: 4 / 5;
-          object-fit: cover;
-          object-position: center top;
-          border-radius: 2px;
-          /* Full B&W — confident photographic choice, not uncertain half-measure */
-          filter: grayscale(100%) contrast(1.06);
+          height: auto;
+          object-fit: contain;
+          /* Natural colors — no filter */
+          filter: drop-shadow(0 10px 24px rgba(21, 21, 19, 0.09));
+          /* No border-radius — PNG cut-out shape shows through */
+          border-radius: 0;
+          user-select: none;
+          -webkit-user-drag: none;
+          transition: transform 350ms cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .hero-portrait-outer:hover .hero-portrait-img {
+          transform: scale(1.02) rotate(-0.5deg);
         }
 
         /* ══════════════════════════════════════
