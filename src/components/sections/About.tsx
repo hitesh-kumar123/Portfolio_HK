@@ -1,110 +1,419 @@
-import React from "react";
-import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import React, { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 
-const METADATA_FIELDS = [
-  { label: "ROLE", value: "Full Stack Developer" },
-  { label: "FOCUS", value: "Web Applications (MERN & TypeScript)" },
-  { label: "COMMUNITY", value: "Open Source Contributor & Project Admin" },
-  { label: "EXPLORING", value: "AI Integration & LLM APIs" },
-  { label: "LOCATION", value: "India (Available Remotely)" },
-  { label: "STATUS", value: "Open for Full-Time & Freelance Builds" },
-];
+// ─────────────────────────────────────────────
+// About: Editorial Engineering Manifesto
+// Color system: Paper #F4F1E9 | Ink #151513 | Wine #7C2638 | Muted #706C63 | Border #D3CEC2
+// Typography: Syne (manifesto) | Plus Jakarta Sans (body) | JetBrains Mono (label/CTA)
+// Scope: About section ONLY
+// Preserved: id="about", id="about-heading", GitHub URL, factual bio content
+// ─────────────────────────────────────────────
+
+const EASE: [number, number, number, number] = [0.25, 0, 0, 1];
+
+// Container: drives staggered line reveals
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.05,
+    },
+  },
+};
+
+// Line clip-reveal
+const lineVariants = {
+  hidden: { y: "108%", opacity: 0 },
+  visible: {
+    y: "0%",
+    opacity: 1,
+    transition: { duration: 0.55, ease: EASE },
+  },
+};
+
+// Subtle fade-up for non-manifesto elements
+const fadeVariants = {
+  hidden: { opacity: 0, y: 12 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: EASE },
+  },
+};
 
 export const About: React.FC = () => {
+  const manifestoRef = useRef<HTMLDivElement>(null);
+  const manifestoInView = useInView(manifestoRef, {
+    once: true,
+    margin: "-60px 0px -60px 0px",
+  });
+
+  const narrativeRef = useRef<HTMLDivElement>(null);
+  const narrativeInView = useInView(narrativeRef, {
+    once: true,
+    margin: "-50px 0px -50px 0px",
+  });
+
+  const labelRef = useRef<HTMLDivElement>(null);
+  const labelInView = useInView(labelRef, {
+    once: true,
+    margin: "-30px 0px -30px 0px",
+  });
+
   return (
     <section
       id="about"
-      className="section-container border-b border-gray-200 bg-canvas"
+      className="ab-section"
       aria-labelledby="about-heading"
     >
-      {/* ── Section Tag ── */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
-        className="mb-8"
-      >
-        <span className="section-tag">
-          01 — ABOUT
-        </span>
-      </motion.div>
+      <div className="ab-container">
 
-      {/* ── Open Split Composition ── */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-
-        {/* Left: Clean Heading & Statement */}
+        {/* ── Section Label ── */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-          className="lg:col-span-6 space-y-6"
+          ref={labelRef}
+          className="ab-label-wrap"
+          initial="hidden"
+          animate={labelInView ? "visible" : "hidden"}
+          variants={fadeVariants}
         >
-          <h2 id="about-heading" className="display-title font-bold text-ink">
-            Crafting software with <br />
-            <span className="text-cobalt">structural clarity</span> <br />
-            &amp; purpose.
-          </h2>
-
-          <div className="h-1 w-16 bg-cobalt rounded-full" />
-
-          <p className="text-xl sm:text-2xl text-gray-700 leading-relaxed font-medium">
-            "I believe good web development is not just about writing code that compiles — it is about engineering software that is fast, maintainable, and genuinely useful."
-          </p>
+          <span className="ab-label">ABOUT</span>
         </motion.div>
 
-        {/* Right: Personal Narrative & Metadata */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.65, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-          className="lg:col-span-6 space-y-8"
-        >
-          {/* High Contrast Narrative */}
-          <div className="space-y-4 text-base sm:text-lg text-gray-700 leading-relaxed font-normal">
-            <p>
-              I am a Full Stack Developer based in India, specializing in building responsive web applications using the MERN stack (MongoDB, Express.js, React, Node.js) and TypeScript.
-            </p>
-            <p>
-              My background includes extensive involvement in open-source programs like GirlScript Summer of Code (GSSOC), where I served as both a contributor and Project Admin managing PRs, guiding contributors, and reviewing architectures.
-            </p>
-            <p>
-              I actively participate in hackathons like Odoo, explore emerging AI interfaces and LLM APIs, and strive to deliver clean, dependable digital experiences.
-            </p>
+        {/* ── Editorial Composition ── */}
+        <div className="ab-composition">
+
+          {/* ── Left: Manifesto ── */}
+          <div className="ab-manifesto-col" ref={manifestoRef}>
+
+            {/* Wine signature vertical rule */}
+            <div className="ab-wine-rule" aria-hidden="true" />
+
+            {/* Manifesto content wrapper */}
+            <div className="ab-manifesto-content">
+              <motion.h2
+                id="about-heading"
+                className="ab-manifesto"
+                initial="hidden"
+                animate={manifestoInView ? "visible" : "hidden"}
+                variants={containerVariants}
+              >
+                {/* Line 1 */}
+                <span className="ab-line-clip">
+                  <motion.span className="ab-line" variants={lineVariants}>
+                    I DON&apos;T JUST
+                  </motion.span>
+                </span>
+                {/* Line 2 */}
+                <span className="ab-line-clip">
+                  <motion.span className="ab-line" variants={lineVariants}>
+                    WRITE CODE.
+                  </motion.span>
+                </span>
+
+                {/* Breathing gap between the two phrases */}
+                <span className="ab-phrase-gap" aria-hidden="true" />
+
+                {/* Line 3 */}
+                <span className="ab-line-clip">
+                  <motion.span className="ab-line" variants={lineVariants}>
+                    I BUILD SYSTEMS
+                  </motion.span>
+                </span>
+                {/* Line 4 — Wine accent */}
+                <span className="ab-line-clip">
+                  <motion.span className="ab-line ab-line--wine" variants={lineVariants}>
+                    PEOPLE CAN USE.
+                  </motion.span>
+                </span>
+              </motion.h2>
+            </div>
+
           </div>
 
-          {/* Metadata Grid */}
-          <div className="pt-6 border-t border-gray-200 grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {METADATA_FIELDS.map((item) => (
-              <div key={item.label} className="space-y-1 p-4 bg-white rounded-xl border border-gray-200 shadow-2xs hover:border-cobalt hover:shadow-sm transition-all duration-200">
-                <span className="block font-mono text-[10px] font-bold uppercase tracking-wider text-cobalt">
-                  {item.label}
-                </span>
-                <span className="block text-sm font-semibold text-ink">
-                  {item.value}
-                </span>
-              </div>
-            ))}
-          </div>
+          {/* ── Right: Supporting Narrative ── */}
+          <motion.div
+            ref={narrativeRef}
+            className="ab-narrative-col"
+            initial="hidden"
+            animate={narrativeInView ? "visible" : "hidden"}
+            variants={containerVariants}
+          >
+            <motion.div className="ab-narrative-text" variants={fadeVariants}>
+              <p>
+                I'm Hitesh Kumar — a Full Stack Engineer based in India,
+                specialising in building responsive web applications with
+                the MERN stack and TypeScript. I care about the full product
+                journey: from architecture decisions to the moment a user
+                actually accomplishes something.
+              </p>
+              <p>
+                My open-source work spans contribution and project administration
+                through programmes like GirlScript Summer of Code, alongside
+                building AI-assisted developer tools and LLM integrations with
+                engineering precision.
+              </p>
+            </motion.div>
 
-          {/* Direct Link */}
-          <div className="pt-2">
-            <a
-              href="https://github.com/hitesh-kumar123"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm font-bold text-cobalt hover:underline group"
-            >
-              <span>Explore GitHub Repositories</span>
-              <ArrowUpRight size={15} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-            </a>
-          </div>
-        </motion.div>
+            {/* GitHub editorial link (single CTA) */}
+            <motion.div variants={fadeVariants}>
+              <a
+                href="https://github.com/hitesh-kumar123"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="ab-github-link"
+                aria-label="Explore Hitesh Kumar's GitHub repositories"
+              >
+                <span className="ab-github-text">EXPLORE GITHUB</span>
+                <span className="ab-github-arrow" aria-hidden="true">↗</span>
+              </a>
+            </motion.div>
+
+          </motion.div>
+
+        </div>
 
       </div>
+
+      {/* ── Scoped styles ── */}
+      <style>{`
+
+        /* ══════════════════════════════════════
+           SECTION BASE
+        ══════════════════════════════════════ */
+        .ab-section {
+          position: relative;
+          background-color: #F4F1E9;
+          border-bottom: 1px solid #D3CEC2;
+          box-sizing: border-box;
+          padding-top: clamp(4rem, 7vw, 6.5rem);
+          padding-bottom: clamp(4rem, 7vw, 6.5rem);
+        }
+
+        .ab-container {
+          max-width: 1280px;
+          margin: 0 auto;
+          padding: 0 1.5rem;
+          box-sizing: border-box;
+        }
+
+        @media (min-width: 640px)  { .ab-container { padding: 0 2rem; } }
+        @media (min-width: 1024px) { .ab-container { padding: 0 3rem; } }
+
+        /* ══════════════════════════════════════
+           SECTION LABEL — ABOUT
+        ══════════════════════════════════════ */
+        .ab-label-wrap {
+          margin-bottom: 2.25rem;
+        }
+        .ab-label {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 11px;
+          font-weight: 500;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: #7C2638;
+        }
+
+        /* ══════════════════════════════════════
+           COMPOSITION — mobile: column, desktop: row
+        ══════════════════════════════════════ */
+        .ab-composition {
+          display: flex;
+          flex-direction: column;
+          gap: 3rem;
+        }
+
+        /* ══════════════════════════════════════
+           MANIFESTO COLUMN
+        ══════════════════════════════════════ */
+        .ab-manifesto-col {
+          display: flex;
+          flex-direction: row;
+          gap: 1.5rem;
+          align-items: stretch;
+          min-width: 0;
+        }
+
+        .ab-manifesto-content {
+          display: flex;
+          flex-direction: column;
+          flex: 1 1 auto;
+          min-width: 0;
+        }
+
+        /* Wine vertical rule — editorial signature accent */
+        .ab-wine-rule {
+          flex-shrink: 0;
+          width: 2px;
+          align-self: stretch;
+          background-color: #7C2638;
+          opacity: 0.55;
+          margin-top: 0.25rem;
+          margin-bottom: 0.25rem;
+        }
+
+        /* ══════════════════════════════════════
+           MANIFESTO HEADING
+        ══════════════════════════════════════ */
+        .ab-manifesto {
+          display: flex;
+          flex-direction: column;
+          margin: 0;
+          padding: 0;
+          font-family: 'Syne', sans-serif;
+          font-weight: 800;
+          font-size: clamp(1.75rem, 6.5vw, 2.5rem);
+          line-height: 0.98;
+          letter-spacing: -0.03em;
+          text-transform: uppercase;
+          color: #151513;
+        }
+
+        /* Line clipping for animation */
+        .ab-line-clip {
+          display: block;
+          overflow: hidden;
+          padding-bottom: 0.08em;
+          padding-right: 0.12em;
+          box-sizing: border-box;
+        }
+
+        .ab-line {
+          display: block;
+          white-space: nowrap;
+        }
+
+        /* Wine accent on "PEOPLE CAN USE." */
+        .ab-line--wine {
+          color: #7C2638;
+        }
+
+        /* Breathing gap between phrases */
+        .ab-phrase-gap {
+          display: block;
+          height: 0.5em;
+        }
+
+        /* ══════════════════════════════════════
+           NARRATIVE COLUMN (Quiet body text)
+        ══════════════════════════════════════ */
+        .ab-narrative-col {
+          display: flex;
+          flex-direction: column;
+          gap: 1.75rem;
+        }
+
+        .ab-narrative-text {
+          display: flex;
+          flex-direction: column;
+          gap: 1.25rem;
+        }
+
+        .ab-narrative-text p {
+          font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+          font-size: clamp(0.9375rem, 1.15vw, 1.05rem);
+          font-weight: 400;
+          line-height: 1.75;
+          color: #706C63;
+          margin: 0;
+        }
+
+        /* ══════════════════════════════════════
+           GITHUB EDITORIAL LINK (Only CTA)
+        ══════════════════════════════════════ */
+        .ab-github-link {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.4rem;
+          text-decoration: none;
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 11px;
+          font-weight: 600;
+          letter-spacing: 0.09em;
+          text-transform: uppercase;
+          color: #151513;
+        }
+
+        .ab-github-text {
+          position: relative;
+        }
+
+        .ab-github-text::after {
+          content: '';
+          position: absolute;
+          left: 0;
+          bottom: -2px;
+          height: 1px;
+          width: 0%;
+          background-color: #151513;
+          transition: width 260ms cubic-bezier(0.25, 0, 0, 1);
+        }
+
+        .ab-github-link:hover .ab-github-text::after {
+          width: 100%;
+        }
+
+        .ab-github-link:focus-visible {
+          outline: 2px solid #7C2638;
+          outline-offset: 4px;
+          border-radius: 2px;
+        }
+
+        .ab-github-arrow {
+          display: inline-block;
+          font-size: 13px;
+          color: #7C2638;
+          transition: transform 260ms cubic-bezier(0.25, 0, 0, 1);
+        }
+
+        .ab-github-link:hover .ab-github-arrow {
+          transform: translate(4px, -4px);
+        }
+
+        /* ══════════════════════════════════════
+           DESKTOP — Asymmetrical Editorial (58% / 42%)
+        ══════════════════════════════════════ */
+        @media (min-width: 1024px) {
+          .ab-composition {
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 4.5rem;
+          }
+
+          .ab-manifesto-col {
+            flex: 0 0 58%;
+            min-width: 0;
+          }
+
+          .ab-manifesto {
+            font-size: clamp(1.75rem, 2.1vw, 2.45rem);
+          }
+
+          .ab-narrative-col {
+            flex: 1 1 0;
+            min-width: 0;
+            padding-top: 0.25rem;
+          }
+        }
+
+        @media (min-width: 1280px) {
+          .ab-manifesto {
+            font-size: clamp(1.85rem, 2.1vw, 2.55rem);
+          }
+        }
+
+        /* ══════════════════════════════════════
+           REDUCED MOTION
+        ══════════════════════════════════════ */
+        @media (prefers-reduced-motion: reduce) {
+          .ab-github-text::after,
+          .ab-github-arrow {
+            transition: none !important;
+          }
+        }
+
+      `}</style>
     </section>
   );
 };

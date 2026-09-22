@@ -1,181 +1,354 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ExternalLink, ChevronLeft, ChevronRight, Award } from "lucide-react";
-import { certificatesData, Certificate } from "@/data/certificates";
+import { ArrowUpRight } from "lucide-react";
+import { certificatesData } from "@/data/certificates";
 import { CertificateArchiveModal } from "../modals/CertificateArchiveModal";
-import { TiltCard } from "../common/TiltCard";
-import { Magnetic } from "../common/Magnetic";
 
-const CERTS_PER_PAGE = 3;
+/* ─────────────────────────────────────────────
+   Palette — matches global editorial system
+   ───────────────────────────────────────────── */
+const PAL = {
+  paper:   "#F4F1E9",
+  surface: "#FAF8F2",
+  ink:     "#151513",
+  muted:   "#706C63",
+  border:  "#D3CEC2",
+  wine:    "#7C2638",
+};
+
+/* Sort: most recent year first */
+const sorted = [...certificatesData].sort(
+  (a, b) => parseInt(b.year) - parseInt(a.year)
+);
 
 export const Certificates: React.FC = () => {
-  const [currentPage, setCurrentPage] = useState(0);
+  const [hoveredId, setHoveredId]   = useState<string | null>(null);
   const [isArchiveOpen, setIsArchiveOpen] = useState(false);
 
-  const totalPages = Math.ceil(certificatesData.length / CERTS_PER_PAGE);
-
-  const paginatedCerts = certificatesData.slice(
-    currentPage * CERTS_PER_PAGE,
-    (currentPage + 1) * CERTS_PER_PAGE
-  );
+  const hovered = sorted.find((c) => c.id === hoveredId) ?? null;
 
   return (
     <>
       <section
         id="certificates"
-        className="section-container border-b border-gray-200 bg-canvas"
         aria-labelledby="cert-heading"
+        style={{ background: PAL.paper, borderBottom: `1px solid ${PAL.border}`, position: "relative" }}
       >
-        {/* ── Section Header ── */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 pb-6 border-b border-gray-200">
-          <div>
-            <span className="section-tag">
-              07 — CERTIFICATES
-            </span>
-            <h2 id="cert-heading" className="display-title font-bold text-ink">
-              Verified learning &amp; <br />
-              <span className="text-cobalt">technical credentials</span>
-            </h2>
-          </div>
+        {/* ── Scoped styles ── */}
+        <style>{`
+          .cert-mono    { font-family: 'JetBrains Mono', 'Fira Mono', monospace; }
+          .cert-display { font-family: 'Syne', sans-serif; }
 
-          <Magnetic strength={0.2}>
+          .cert-row {
+            display: grid;
+            grid-template-columns: 100px 1fr 110px;
+            align-items: start;
+            gap: 0 28px;
+            padding: 36px 0;
+            border-bottom: 1px solid ${PAL.border};
+            transition: transform 0.22s ease;
+            position: relative;
+            cursor: default;
+          }
+          @media (hover: hover) { .cert-row:hover { transform: translateY(-3px); } }
+          @media (prefers-reduced-motion: reduce) {
+            .cert-row { transition: none !important; }
+            .cert-row:hover { transform: none !important; }
+          }
+          @media (max-width: 680px) {
+            .cert-row { grid-template-columns: 1fr; gap: 10px 0; padding: 28px 0; }
+          }
+
+          .cert-row--featured::before {
+            content: '';
+            position: absolute;
+            left: -20px; top: 36px; bottom: 36px;
+            width: 2px;
+            background: ${PAL.wine};
+            border-radius: 1px;
+          }
+          @media (max-width: 680px) {
+            .cert-row--featured::before { left: -16px; top: 28px; bottom: 28px; }
+          }
+
+          .cert-title-wrap { position: relative; display: inline; }
+          .cert-title-wrap::after {
+            content: '';
+            position: absolute;
+            bottom: -2px; left: 0;
+            width: 0; height: 1px;
+            background: ${PAL.wine};
+            transition: width 0.28s ease;
+          }
+          .cert-row:hover .cert-title-wrap::after,
+          .cert-row:focus-within .cert-title-wrap::after { width: 100%; }
+          @media (prefers-reduced-motion: reduce) { .cert-title-wrap::after { transition: none; } }
+
+          .cert-badge {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 8.5px; font-weight: 700;
+            letter-spacing: 0.12em; text-transform: uppercase;
+            color: ${PAL.muted};
+            border: 1px solid ${PAL.border};
+            padding: 3px 7px; border-radius: 2px;
+            display: inline-block;
+            transition: border-color 0.22s, color 0.22s;
+          }
+          .cert-row:hover .cert-badge { border-color: ${PAL.wine}; color: ${PAL.wine}; }
+          @media (prefers-reduced-motion: reduce) { .cert-badge { transition: none; } }
+
+          .cert-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px; font-weight: 700;
+            color: ${PAL.border}; letter-spacing: 0.06em;
+            user-select: none; transition: color 0.22s;
+          }
+          .cert-row:hover .cert-num { color: ${PAL.wine}; }
+          @media (prefers-reduced-motion: reduce) { .cert-num { transition: none; } }
+
+          .cert-rule {
+            width: 14px; height: 2px;
+            background: ${PAL.wine}; border-radius: 1px;
+            margin-top: 14px;
+            transition: width 0.28s ease;
+          }
+          .cert-row:hover .cert-rule { width: 28px; }
+          @media (prefers-reduced-motion: reduce) { .cert-rule { transition: none; } }
+
+          .cert-link {
+            display: inline-flex; align-items: center; gap: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9.5px; font-weight: 700;
+            letter-spacing: 0.11em; text-transform: uppercase;
+            color: ${PAL.wine};
+            border-bottom: 1px solid transparent;
+            padding-bottom: 1px; text-decoration: none;
+            transition: border-color 0.2s, opacity 0.2s;
+          }
+          .cert-link:hover { border-color: ${PAL.wine}; opacity: 0.78; }
+          .cert-link:focus-visible { outline: 2px solid ${PAL.wine}; outline-offset: 4px; border-radius: 2px; }
+          .cert-link-arrow { transition: transform 0.2s ease; }
+          .cert-link:hover .cert-link-arrow { transform: translate(2px, -2px); }
+          @media (prefers-reduced-motion: reduce) {
+            .cert-link-arrow { transition: none; }
+            .cert-link:hover .cert-link-arrow { transform: none; }
+          }
+
+          .cert-cta {
+            display: inline-flex; align-items: center; gap: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10.5px; font-weight: 700;
+            letter-spacing: 0.14em; text-transform: uppercase;
+            color: ${PAL.wine};
+            border-bottom: 1px solid transparent; padding-bottom: 1px;
+            background: none; border-left: none; border-right: none; border-top: none;
+            cursor: pointer; text-decoration: none;
+            transition: border-color 0.2s, opacity 0.2s;
+          }
+          .cert-cta:hover { border-color: ${PAL.wine}; opacity: 0.78; }
+          .cert-cta:focus-visible { outline: 2px solid ${PAL.wine}; outline-offset: 4px; border-radius: 2px; }
+
+          .cert-row:focus-visible { outline: 2px solid ${PAL.wine}; outline-offset: 8px; border-radius: 2px; }
+
+          .cert-right {
+            text-align: right; display: flex;
+            flex-direction: column; align-items: flex-end; gap: 12px;
+          }
+          @media (max-width: 680px) {
+            .cert-right { text-align: left; align-items: flex-start; flex-direction: row; gap: 16px; flex-wrap: wrap; }
+          }
+
+          /* Floating preview — desktop only */
+          .cert-preview-wrap {
+            position: fixed;
+            pointer-events: none;
+            z-index: 50;
+            right: 48px;
+            top: 50%;
+            width: 250px;
+          }
+          @media (max-width: 1100px) { .cert-preview-wrap { display: none !important; } }
+        `}</style>
+
+        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "96px 40px" }}>
+
+          {/* ── Section Header ── */}
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            style={{
+              display: "flex", justifyContent: "space-between",
+              alignItems: "flex-end", flexWrap: "wrap",
+              gap: 24, paddingBottom: 40,
+              borderBottom: `1px solid ${PAL.border}`,
+            }}
+          >
+            <div>
+              <h2
+                id="cert-heading"
+                className="cert-display"
+                style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)", fontWeight: 800, color: PAL.ink, lineHeight: 1.05, letterSpacing: "-0.022em", margin: 0 }}
+              >
+                A RECORD OF
+                <br />
+                <span style={{ color: PAL.wine }}>CONTINUOUS LEARNING.</span>
+              </h2>
+              <p
+                className="cert-mono"
+                style={{ fontSize: 11, color: PAL.muted, marginTop: 16, lineHeight: 1.8, maxWidth: 460 }}
+              >
+                Formal credentials and program recognitions earned through structured
+                learning, open-source participation, and practical development.
+              </p>
+            </div>
+
             <button
               onClick={() => setIsArchiveOpen(true)}
-              className="btn-secondary group"
+              className="cert-cta"
+              aria-label="View all credentials"
             >
-              <Award size={14} className="group-hover:rotate-12 transition-transform duration-300" />
-              <span>View All Credentials →</span>
+              <span>VIEW ALL CREDENTIALS</span>
+              <ArrowUpRight size={12} strokeWidth={2.5} />
             </button>
-          </Magnetic>
-        </div>
+          </motion.div>
 
-        {/* ── Uniform Card Framing with 3D Tilt & Shadows ── */}
-        <div className="min-h-[420px]">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentPage}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.4 }}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-            >
-              {paginatedCerts.map((cert) => (
-                <TiltCard
+          {/* ── Archive List ── */}
+          <div role="list" style={{ borderTop: `1px solid ${PAL.border}` }}>
+            {sorted.map((cert, idx) => {
+              const isFeatured = idx === 0;
+              return (
+                <motion.div
                   key={cert.id}
-                  maxTilt={4}
-                  spotlight={true}
-                  spotlightColor="rgba(37, 99, 235, 0.1)"
-                  className="p-6 bg-white rounded-2xl border border-gray-200 hover:border-cobalt hover:shadow-xl transition-all duration-300 flex flex-col justify-between space-y-5 group overflow-hidden shadow-xs"
+                  role="listitem"
+                  initial={{ opacity: 0, y: 18 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-30px" }}
+                  transition={{ duration: 0.55, delay: idx * 0.07, ease: [0.16, 1, 0.3, 1] }}
                 >
-                  <div className="space-y-4">
-                    {/* Uniform Framing */}
-                    <div className="aspect-[4/3] overflow-hidden rounded-xl border border-gray-200 relative bg-gray-50 shadow-2xs">
-                      <img
-                        src={cert.image}
-                        alt={cert.title}
-                        className="w-full h-full object-cover group-hover:scale-106 transition-all duration-500"
-                        loading="lazy"
-                      />
+                  <div
+                    className={`cert-row${isFeatured ? " cert-row--featured" : ""}`}
+                    onMouseEnter={() => setHoveredId(cert.id)}
+                    onMouseLeave={() => setHoveredId(null)}
+                    onFocus={() => setHoveredId(cert.id)}
+                    onBlur={() => setHoveredId(null)}
+                    tabIndex={0}
+                    aria-label={`${cert.title} — ${cert.issuer}, ${cert.year}`}
+                  >
+                    {/* Left: index + category + rule */}
+                    <div style={{ paddingTop: 4 }}>
+                      <span className="cert-num" aria-hidden="true">{cert.number}</span>
+                      <br />
+                      <span className="cert-badge">{cert.category}</span>
+                      <div className="cert-rule" />
                     </div>
 
-                    {/* Metadata */}
-                    <div className="flex items-center justify-between">
-                      <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-cobalt bg-cobalt/10 px-2.5 py-0.5 rounded">
-                        {cert.category}
-                      </span>
-                      <span className="font-mono text-xs text-gray-500 font-bold">
+                    {/* Centre: title + issuer + description */}
+                    <div>
+                      {isFeatured && (
+                        <p className="cert-mono" style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: PAL.wine, marginBottom: 6 }}>
+                          MOST RECENT
+                        </p>
+                      )}
+
+                      <h3
+                        className="cert-display"
+                        style={{ fontSize: "clamp(1.15rem, 2vw, 1.55rem)", fontWeight: 700, color: PAL.ink, letterSpacing: "-0.01em", lineHeight: 1.15, margin: 0, marginBottom: 5 }}
+                      >
+                        <span className="cert-title-wrap">{cert.title}</span>
+                      </h3>
+
+                      <p className="cert-mono" style={{ fontSize: 10.5, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: PAL.wine, marginBottom: 10 }}>
+                        {cert.issuer}
+                      </p>
+
+                      <p style={{ fontFamily: "inherit", fontSize: 13.5, color: PAL.muted, lineHeight: 1.75, margin: 0, maxWidth: 520 }}>
+                        {cert.description}
+                      </p>
+                    </div>
+
+                    {/* Right: year + verify */}
+                    <div className="cert-right" style={{ paddingTop: 4 }}>
+                      <p className="cert-mono" style={{ fontSize: 13, fontWeight: 700, color: PAL.ink, letterSpacing: "0.04em" }}>
                         {cert.year}
-                      </span>
+                      </p>
+                      <a
+                        href={cert.verifyUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="cert-link"
+                        aria-label={`Verify ${cert.title} — opens in new tab`}
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <span>VERIFY</span>
+                        <ArrowUpRight size={11} strokeWidth={2.5} className="cert-link-arrow" />
+                      </a>
                     </div>
-
-                    <h3 className="font-display text-lg text-ink font-bold leading-snug group-hover:text-cobalt transition-colors">
-                      {cert.title}
-                    </h3>
-
-                    <p className="font-mono text-xs text-gray-500 font-semibold">
-                      Issuer: {cert.issuer}
-                    </p>
-
-                    <p className="text-xs text-gray-600 leading-relaxed font-normal">
-                      {cert.description}
-                    </p>
                   </div>
+                </motion.div>
+              );
+            })}
+          </div>
 
-                  {/* Verification CTA */}
-                  <div className="pt-4 border-t border-gray-200">
-                    <a
-                      href={cert.verifyUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 font-mono text-xs font-bold uppercase tracking-wider text-cobalt hover:underline group/link"
-                    >
-                      <span>Verify Credential</span>
-                      <ExternalLink size={13} className="group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
-                    </a>
-                  </div>
-                </TiltCard>
-              ))}
-            </motion.div>
-          </AnimatePresence>
+          {/* ── Bottom bar ── */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.25 }}
+            style={{ marginTop: 52, paddingTop: 32, borderTop: `1px solid ${PAL.border}`, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}
+          >
+            <p className="cert-mono" style={{ fontSize: 10.5, color: PAL.muted, lineHeight: 1.7 }}>
+              All credentials link to their original issuing organisations.
+            </p>
+            <button onClick={() => setIsArchiveOpen(true)} className="cert-cta" aria-label="Open full certificate archive">
+              <span>OPEN FULL ARCHIVE</span>
+              <ArrowUpRight size={12} strokeWidth={2.5} />
+            </button>
+          </motion.div>
         </div>
 
-        {/* ── Editorial Pagination Controller ── */}
-        {totalPages > 1 && (
-          <div className="mt-12 pt-6 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs">
-            <div className="text-gray-500 uppercase tracking-wider font-semibold">
-              <span>PAGE </span>
-              <strong className="text-ink">0{currentPage + 1}</strong>
-              <span> / 0{totalPages}</span>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <Magnetic strength={0.25} disabled={currentPage === 0}>
-                <button
-                  onClick={() => setCurrentPage((p) => Math.max(0, p - 1))}
-                  disabled={currentPage === 0}
-                  className="inline-flex items-center gap-1 px-4 py-2 border border-gray-200 bg-white font-mono text-xs font-bold uppercase tracking-wider rounded-full text-ink hover:text-cobalt hover:border-cobalt disabled:opacity-30 disabled:cursor-not-allowed transition-all active:scale-95 shadow-2xs"
-                  aria-label="Previous page"
-                >
-                  <ChevronLeft size={14} />
-                  PREV
-                </button>
-              </Magnetic>
-
-              <div className="flex items-center gap-1.5 px-2">
-                {Array.from({ length: totalPages }).map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setCurrentPage(i)}
-                    className={`w-7 h-7 rounded-full text-xs font-mono font-bold transition-all duration-200 ${
-                      currentPage === i
-                        ? "bg-cobalt text-white shadow-sm scale-105"
-                        : "bg-white text-gray-500 hover:bg-gray-100 hover:text-ink border border-gray-200"
-                    }`}
-                    aria-label={`Go to page ${i + 1}`}
-                  >
-                    0{i + 1}
-                  </button>
-                ))}
+        {/* ── Floating image preview — desktop ≥1100px only, aria-hidden ── */}
+        <AnimatePresence>
+          {hovered && (
+            <motion.div
+              key={hovered.id}
+              className="cert-preview-wrap"
+              initial={{ opacity: 0, scale: 0.93 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{   opacity: 0, scale: 0.93 }}
+              transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              style={{ transform: "translateY(-50%)" }}
+              aria-hidden="true"
+            >
+              <div
+                style={{
+                  background: PAL.surface,
+                  border: `1px solid ${PAL.border}`,
+                  borderRadius: 4,
+                  overflow: "hidden",
+                  boxShadow: "0 8px 32px rgba(21,21,19,0.12)",
+                }}
+              >
+                <img
+                  src={hovered.image}
+                  alt=""
+                  loading="lazy"
+                  style={{ width: "100%", height: "auto", display: "block" }}
+                />
+                <div style={{ padding: "10px 14px", borderTop: `1px solid ${PAL.border}` }}>
+                  <p className="cert-mono" style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: PAL.muted }}>
+                    {hovered.issuer} · {hovered.year}
+                  </p>
+                </div>
               </div>
-
-              <Magnetic strength={0.25} disabled={currentPage === totalPages - 1}>
-                <button
-                  onClick={() => setCurrentPage((p) => Math.min(totalPages - 1, p + 1))}
-                  disabled={currentPage === totalPages - 1}
-                  className="inline-flex items-center gap-1 px-4 py-2 border border-gray-200 bg-white font-mono text-xs font-bold uppercase tracking-wider rounded-full text-ink hover:text-cobalt hover:border-cobalt disabled:opacity-30 disabled:cursor-not-allowed transition-all active:scale-95 shadow-2xs"
-                  aria-label="Next page"
-                >
-                  NEXT
-                  <ChevronRight size={14} />
-                </button>
-              </Magnetic>
-            </div>
-          </div>
-        )}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </section>
 
-      {/* Interactive Certificate Archive Modal */}
+      {/* ── Certificate Archive Modal (preserved) ── */}
       <CertificateArchiveModal
         isOpen={isArchiveOpen}
         onClose={() => setIsArchiveOpen(false)}
@@ -183,3 +356,5 @@ export const Certificates: React.FC = () => {
     </>
   );
 };
+
+

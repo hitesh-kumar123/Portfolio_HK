@@ -1,132 +1,391 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-import { servicesList, ServiceOffering } from "@/data/services";
+import { servicesList } from "@/data/services";
+
+/* ─────────────────────────────────────────────
+   Palette — matches global editorial system
+   ───────────────────────────────────────────── */
+const PAL = {
+  paper:   "#F4F1E9",
+  surface: "#FAF8F2",
+  ink:     "#151513",
+  muted:   "#706C63",
+  border:  "#D3CEC2",
+  wine:    "#7C2638",
+};
 
 export const Services: React.FC = () => {
-  const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
+  const [activeIdx, setActiveIdx] = useState<number | null>(null);
 
-  const scrollTo = (id: string) => {
+  const scrollTo = (id: string) =>
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-  };
 
   return (
     <section
       id="services"
-      className="section-container border-b border-gray-200 bg-canvas"
       aria-labelledby="services-heading"
+      style={{ background: PAL.paper, borderBottom: `1px solid ${PAL.border}` }}
     >
-      {/* ── Section Header ── */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 pb-6 border-b border-gray-200">
-        <div>
-          <span className="section-tag">
-            05 — WHAT I BUILD
-          </span>
-          <h2 id="services-heading" className="display-title font-bold text-ink">
-            What I build <br />
-            <span className="text-cobalt">for products, people &amp; the web</span>
-          </h2>
-        </div>
+      {/* ── Scoped styles ── */}
+      <style>{`
+        .svc-mono { font-family: 'JetBrains Mono', 'Fira Mono', monospace; }
+        .svc-display { font-family: 'Syne', sans-serif; }
 
-        <p className="text-sm font-medium text-gray-500 max-w-xs md:text-right">
-          Available for contract engineering, full-stack MVP builds, and custom web product development.
-        </p>
-      </div>
+        /* Row */
+        .svc-row {
+          display: grid;
+          grid-template-columns: 44px 1fr auto;
+          align-items: start;
+          gap: 0 28px;
+          padding: 40px 0;
+          border-bottom: 1px solid ${PAL.border};
+          cursor: default;
+          transition: transform 0.22s ease;
+        }
+        @media (hover: hover) {
+          .svc-row:hover { transform: translateY(-3px); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .svc-row { transition: none !important; }
+          .svc-row:hover { transform: none !important; }
+        }
+        @media (max-width: 640px) {
+          .svc-row {
+            grid-template-columns: 32px 1fr auto;
+            gap: 0 16px;
+            padding: 28px 0;
+          }
+        }
 
-      {/* ── Editorial Interactive List ── */}
-      <div className="border-t border-gray-200 divide-y divide-gray-200">
-        {servicesList.map((service, idx) => {
-          const isHovered = hoveredIdx === idx;
-          return (
-            <motion.div
-              key={service.number}
-              onMouseEnter={() => setHoveredIdx(idx)}
-              onMouseLeave={() => setHoveredIdx(null)}
-              className="py-8 sm:py-10 transition-all duration-200 cursor-pointer group px-5 -mx-5 rounded-2xl hover:bg-white hover:shadow-md border border-transparent hover:border-gray-200"
+        /* Underline expand on hover */
+        .svc-title-wrap { position: relative; display: inline-block; }
+        .svc-title-wrap::after {
+          content: '';
+          position: absolute;
+          bottom: -3px;
+          left: 0;
+          width: 0;
+          height: 1px;
+          background: ${PAL.wine};
+          transition: width 0.28s ease;
+        }
+        .svc-row:hover .svc-title-wrap::after { width: 100%; }
+        @media (prefers-reduced-motion: reduce) {
+          .svc-title-wrap::after { transition: none; }
+        }
+
+        /* Arrow button */
+        .svc-arrow {
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          border: 1px solid ${PAL.border};
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: ${PAL.muted};
+          transition: border-color 0.22s, color 0.22s, background 0.22s, transform 0.22s;
+          flex-shrink: 0;
+          margin-top: 4px;
+        }
+        .svc-row:hover .svc-arrow {
+          border-color: ${PAL.wine};
+          color: ${PAL.wine};
+          background: transparent;
+          transform: translate(2px, -2px);
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .svc-arrow { transition: none; }
+          .svc-row:hover .svc-arrow { transform: none; }
+        }
+
+        /* Deliverable tags */
+        .svc-tag {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 9.5px;
+          font-weight: 700;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: ${PAL.muted};
+          border: 1px solid ${PAL.border};
+          padding: 4px 9px;
+          border-radius: 2px;
+          background: transparent;
+        }
+
+        /* CTA link */
+        .svc-cta {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 10.5px;
+          font-weight: 700;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          color: ${PAL.wine};
+          border-bottom: 1px solid transparent;
+          padding-bottom: 1px;
+          transition: border-color 0.2s, opacity 0.2s;
+          cursor: pointer;
+          background: none;
+          border-left: none;
+          border-right: none;
+          border-top: none;
+          text-decoration: none;
+        }
+        .svc-cta:hover { border-color: ${PAL.wine}; opacity: 0.78; }
+        .svc-cta:focus-visible {
+          outline: 2px solid ${PAL.wine};
+          outline-offset: 4px;
+          border-radius: 2px;
+        }
+      `}</style>
+
+      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "96px 40px" }}>
+
+        {/* ── Section Header ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-end",
+            flexWrap: "wrap",
+            gap: 24,
+            paddingBottom: 40,
+            borderBottom: `1px solid ${PAL.border}`,
+            marginBottom: 0,
+          }}
+        >
+          <div>
+            <p
+              className="svc-mono"
+              style={{
+                fontSize: 10,
+                fontWeight: 700,
+                letterSpacing: "0.16em",
+                textTransform: "uppercase",
+                color: PAL.wine,
+                marginBottom: 14,
+              }}
             >
-              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-                
-                {/* Number & Service Title */}
-                <div className="flex items-start sm:items-center gap-6">
-                  <span className={`font-mono text-sm sm:text-base font-bold transition-colors ${
-                    isHovered ? "text-cobalt" : "text-gray-400"
-                  }`}>
+              05 — WHAT I BUILD
+            </p>
+            <h2
+              id="services-heading"
+              className="svc-display"
+              style={{
+                fontSize: "clamp(2.2rem, 4.5vw, 4rem)",
+                fontWeight: 800,
+                color: PAL.ink,
+                lineHeight: 1.02,
+                letterSpacing: "-0.025em",
+                margin: 0,
+              }}
+            >
+              FROM IDEA
+              <br />
+              TO WORKING
+              <br />
+              <span style={{ color: PAL.wine }}>PRODUCT.</span>
+            </h2>
+          </div>
+
+          <p
+            className="svc-mono"
+            style={{
+              fontSize: 11,
+              color: PAL.muted,
+              maxWidth: 280,
+              lineHeight: 1.8,
+              textAlign: "right",
+            }}
+          >
+            Available for contract engineering,
+            full-stack MVP builds, and
+            custom web product development.
+          </p>
+        </motion.div>
+
+        {/* ── Capability Index Rows ── */}
+        <div
+          role="list"
+          style={{ borderTop: `1px solid ${PAL.border}` }}
+        >
+          {servicesList.map((service, idx) => {
+            const isOpen = activeIdx === idx;
+            return (
+              <motion.div
+                key={service.number}
+                role="listitem"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-30px" }}
+                transition={{ duration: 0.55, delay: idx * 0.07, ease: [0.16, 1, 0.3, 1] }}
+              >
+                {/* ── Main row ── */}
+                <div
+                  className="svc-row"
+                  onMouseEnter={() => setActiveIdx(idx)}
+                  onMouseLeave={() => setActiveIdx(null)}
+                  onFocus={() => setActiveIdx(idx)}
+                  onBlur={() => setActiveIdx(null)}
+                  tabIndex={0}
+                  role="button"
+                  aria-expanded={isOpen}
+                  aria-label={`${service.title} — ${service.shortSummary}`}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      setActiveIdx(isOpen ? null : idx);
+                    }
+                  }}
+                >
+                  {/* Index number */}
+                  <span
+                    className="svc-mono"
+                    style={{
+                      fontSize: 11,
+                      fontWeight: 700,
+                      color: isOpen ? PAL.wine : PAL.border,
+                      letterSpacing: "0.06em",
+                      paddingTop: 6,
+                      transition: "color 0.22s",
+                      userSelect: "none",
+                    }}
+                    aria-hidden="true"
+                  >
                     {service.number}
                   </span>
+
+                  {/* Title + summary + detail */}
                   <div>
-                    <h3 className="font-display text-2xl sm:text-3xl text-ink font-bold tracking-tight group-hover:text-cobalt transition-colors">
+                    <h3
+                      className="svc-display svc-title-wrap"
+                      style={{
+                        fontSize: "clamp(1.4rem, 2.4vw, 2rem)",
+                        fontWeight: 700,
+                        color: PAL.ink,
+                        letterSpacing: "-0.015em",
+                        lineHeight: 1.15,
+                        margin: 0,
+                        marginBottom: 6,
+                      }}
+                    >
                       {service.title}
                     </h3>
-                    <p className="text-xs font-mono text-gray-500 mt-1 font-medium">
+
+                    <p
+                      className="svc-mono"
+                      style={{
+                        fontSize: 11,
+                        color: PAL.muted,
+                        lineHeight: 1.65,
+                        margin: 0,
+                        maxWidth: 520,
+                      }}
+                    >
                       {service.shortSummary}
                     </p>
-                  </div>
-                </div>
 
-                {/* Arrow Indicator */}
-                <div className="flex items-center gap-4 self-end lg:self-center">
-                  <div className={`w-10 h-10 rounded-full border flex items-center justify-center transition-all ${
-                    isHovered
-                      ? "border-cobalt bg-cobalt text-white scale-110 shadow-sm"
-                      : "border-gray-200 bg-gray-50 text-ink"
-                  }`}>
-                    <ArrowUpRight size={16} className={`transition-transform duration-200 ${
-                      isHovered ? "translate-x-0.5 -translate-y-0.5" : ""
-                    }`} />
-                  </div>
-                </div>
-
-              </div>
-
-              {/* Expandable Narrative */}
-              <AnimatePresence>
-                {isHovered && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.3, ease: "easeOut" }}
-                    className="overflow-hidden pt-6 mt-4 border-t border-gray-100 grid grid-cols-1 lg:grid-cols-12 gap-6"
-                  >
-                    <p className="lg:col-span-8 text-sm sm:text-base text-gray-700 leading-relaxed">
-                      {service.description}
-                    </p>
-                    <div className="lg:col-span-4 flex flex-wrap gap-2 justify-start lg:justify-end self-start">
-                      {service.deliverables.map((item) => (
-                        <span
-                          key={item}
-                          className="px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-wider bg-gray-100 text-gray-800 border border-gray-200 rounded-full"
+                    {/* Expanded detail */}
+                    <AnimatePresence>
+                      {isOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0, marginTop: 0 }}
+                          animate={{ opacity: 1, height: "auto", marginTop: 20 }}
+                          exit={{ opacity: 0, height: 0, marginTop: 0 }}
+                          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                          style={{ overflow: "hidden" }}
                         >
-                          {item}
-                        </span>
-                      ))}
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.div>
-          );
-        })}
-      </div>
+                          {/* Full description */}
+                          <p
+                            style={{
+                              fontFamily: "inherit",
+                              fontSize: 14,
+                              color: PAL.muted,
+                              lineHeight: 1.8,
+                              marginBottom: 16,
+                              maxWidth: 560,
+                            }}
+                          >
+                            {service.description}
+                          </p>
 
-      {/* ── Consultation CTA Bar ── */}
-      <div className="mt-14 p-8 sm:p-10 rounded-2xl bg-white border border-gray-200 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-        <div className="space-y-1">
-          <h3 className="text-lg font-bold text-ink">
-            Have a specific feature, MVP, or application in mind?
-          </h3>
-          <p className="text-sm text-gray-500 font-medium">
-            Let's discuss timelines, tech stack architecture, and deliverables.
-          </p>
+                          {/* Deliverable tags */}
+                          <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                            {service.deliverables.map((item) => (
+                              <span key={item} className="svc-tag">{item}</span>
+                            ))}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+
+                  {/* Arrow */}
+                  <div className="svc-arrow" aria-hidden="true">
+                    <ArrowUpRight size={15} strokeWidth={2.2} />
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
 
-        <button
-          onClick={() => scrollTo("contact")}
-          className="btn-primary"
+        {/* ── Bottom editorial CTA ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.25 }}
+          style={{
+            marginTop: 64,
+            paddingTop: 40,
+            borderTop: `1px solid ${PAL.border}`,
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            flexWrap: "wrap",
+            gap: 24,
+          }}
         >
-          <span>Start a Conversation</span>
-          <ArrowUpRight size={14} />
-        </button>
+          <div>
+            <p
+              className="svc-display"
+              style={{
+                fontSize: "clamp(1.1rem, 2vw, 1.5rem)",
+                fontWeight: 700,
+                color: PAL.ink,
+                letterSpacing: "-0.01em",
+                marginBottom: 6,
+              }}
+            >
+              Have a project or idea in mind?
+            </p>
+            <p
+              className="svc-mono"
+              style={{ fontSize: 11, color: PAL.muted, lineHeight: 1.65 }}
+            >
+              Let's discuss timelines, tech stack, and deliverables.
+            </p>
+          </div>
+
+          <button
+            onClick={() => scrollTo("contact")}
+            className="svc-cta"
+            aria-label="Discuss a project — scroll to contact section"
+          >
+            <span>DISCUSS A PROJECT</span>
+            <ArrowUpRight size={12} strokeWidth={2.5} />
+          </button>
+        </motion.div>
+
       </div>
     </section>
   );

@@ -1,241 +1,888 @@
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { ExternalLink, Github, BookOpen, ArrowUpRight, Grid } from "lucide-react";
+import React, { useState } from "react";
+import { ArrowUpRight, Github, BookOpen, Layers } from "lucide-react";
 import { projectsData, Project } from "@/data/projects";
 import { CaseStudyModal } from "../modals/CaseStudyModal";
 import { ProjectArchiveModal } from "../modals/ProjectArchiveModal";
-import { TiltCard } from "../common/TiltCard";
-import { Magnetic } from "../common/Magnetic";
 
 export const Projects: React.FC = () => {
   const [selectedCaseStudy, setSelectedCaseStudy] = useState<Project | null>(null);
   const [isArchiveOpen, setIsArchiveOpen] = useState(false);
 
-  // Signature Interaction: Floating Cursor Preview for Desktop
-  const [hoveredProject, setHoveredProject] = useState<Project | null>(null);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [isTouchDevice, setIsTouchDevice] = useState(false);
-
-  useEffect(() => {
-    setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
-  }, []);
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (isTouchDevice) return;
-    setMousePos({ x: e.clientX, y: e.clientY });
-  };
-
-  // Featured 3 curated projects
-  const featuredProjects = projectsData.filter((p) => p.featured);
+  // Separate projects based on curation hierarchy
+  // Featured project: Smart Rent System (index 0)
+  const featuredProject = projectsData[0];
+  // Secondary projects: Saylo (index 1) & PackGo (index 2)
+  const secondaryProjects = projectsData.slice(1, 3);
+  // Supporting projects: Weather, Simon Game, Spotify Replica (index 3+)
+  const supportingProjects = projectsData.slice(3);
 
   return (
     <>
-      <section
-        id="work"
-        onMouseMove={handleMouseMove}
-        className="section-container border-b border-gray-200 bg-canvas relative"
-        aria-labelledby="work-heading"
-      >
-        {/* ── Section Header ── */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 pb-6 border-b border-gray-200">
-          <div>
-            <span className="section-tag">
-              03 — SELECTED WORK
-            </span>
-            <h2 id="work-heading" className="display-title font-bold text-ink">
-              Selected builds &amp; <br />
-              <span className="text-cobalt">production web applications</span>
-            </h2>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <Magnetic strength={0.2}>
+      <section id="work" className="pj-section" aria-labelledby="work-heading">
+        <div className="pj-container">
+          {/* ── Section Header ── */}
+          <header className="pj-header">
+            <div className="pj-header-text">
+              <span className="pj-label">SELECTED WORK</span>
+              <h2 id="work-heading" className="pj-headline">
+                BUILT FOR<br />
+                REAL USERS.<br />
+                DESIGNED WITH<br />
+                PURPOSE.
+              </h2>
+            </div>
+            <div className="pj-header-action">
               <button
+                type="button"
                 onClick={() => setIsArchiveOpen(true)}
-                className="btn-secondary group"
+                className="pj-archive-btn"
+                aria-label="Browse all projects in catalog archive"
               >
-                <Grid size={14} className="group-hover:rotate-90 transition-transform duration-300" />
-                <span>Browse All Work ({projectsData.length})</span>
+                <Layers size={13} aria-hidden="true" />
+                <span>ARCHIVE ({projectsData.length}) ↗</span>
               </button>
-            </Magnetic>
-          </div>
-        </div>
+            </div>
+          </header>
 
-        {/* ── Curated Balanced 3-Column Editorial Grid with 3D Tilt ── */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          {featuredProjects.map((project, idx) => (
-            <motion.div
-              key={project.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.6, delay: idx * 0.12, ease: [0.16, 1, 0.3, 1] }}
-              onMouseEnter={() => setHoveredProject(project)}
-              onMouseLeave={() => setHoveredProject(null)}
-              className="h-full"
-            >
-              <TiltCard
-                maxTilt={4}
-                spotlight={true}
-                spotlightColor="rgba(37, 99, 235, 0.12)"
-                className="h-full group flex flex-col bg-white rounded-2xl border border-gray-200 hover:border-cobalt hover:shadow-2xl transition-all duration-300 overflow-hidden shadow-xs"
-              >
-                <article className="flex flex-col h-full">
-                  {/* Image Preview Container */}
-                  <div className="relative aspect-[16/10] overflow-hidden bg-black/5 border-b border-gray-200">
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full h-full object-cover group-hover:scale-108 transition-all duration-700 ease-[0.16,1,0.3,1]"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+          {/* ── 1. Featured Project Showcase ── */}
+          {featuredProject && (
+            <article className="pj-featured-card" aria-label={`Featured Project: ${featuredProject.title}`}>
+              <div className="pj-featured-img-wrap">
+                <img
+                  src={featuredProject.image}
+                  alt={featuredProject.title}
+                  className="pj-featured-img"
+                  loading="lazy"
+                />
+              </div>
 
-                    {/* Project Number & Category Pill */}
-                    <div className="absolute top-4 left-4 bg-ink px-2.5 py-0.5 text-[10px] font-mono font-bold text-white rounded shadow-sm">
-                      0{idx + 1}
-                    </div>
+              <div className="pj-featured-info">
+                <div className="pj-meta-top">
+                  <span className="pj-tag-accent">{featuredProject.category}</span>
+                  <span className="pj-meta-dot">•</span>
+                  <span className="pj-meta-year">{featuredProject.year}</span>
+                </div>
 
-                    <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-xs px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-ink shadow-sm rounded-full border border-gray-200 transition-transform group-hover:scale-105">
-                      {project.category}
-                    </div>
+                <h3 className="pj-featured-title">{featuredProject.title}</h3>
+                <p className="pj-featured-desc">{featuredProject.description}</p>
+
+                {/* Tech Tags */}
+                <div className="pj-tech-list">
+                  {featuredProject.technologies.map((tech) => (
+                    <span key={tech} className="pj-tech-tag">
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Project Actions */}
+                <div className="pj-actions-row">
+                  {featuredProject.liveUrl && (
+                    <a
+                      href={featuredProject.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="pj-btn-primary"
+                      aria-label={`View live ${featuredProject.title}`}
+                    >
+                      <span>VIEW PROJECT</span>
+                      <ArrowUpRight size={14} aria-hidden="true" />
+                    </a>
+                  )}
+
+                  {featuredProject.githubUrl && (
+                    <a
+                      href={featuredProject.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="pj-btn-secondary"
+                      aria-label={`View ${featuredProject.title} source code on GitHub`}
+                    >
+                      <Github size={14} aria-hidden="true" />
+                      <span>GITHUB</span>
+                    </a>
+                  )}
+
+                  <button
+                    type="button"
+                    onClick={() => setSelectedCaseStudy(featuredProject)}
+                    className="pj-btn-text"
+                    aria-label={`Read case study for ${featuredProject.title}`}
+                  >
+                    <BookOpen size={13} aria-hidden="true" />
+                    <span>CASE STUDY</span>
+                  </button>
+                </div>
+              </div>
+            </article>
+          )}
+
+          {/* ── 2. Secondary Projects (2-Column Editorial Grid) ── */}
+          <div className="pj-secondary-grid">
+            {secondaryProjects.map((project) => (
+              <article key={project.id} className="pj-secondary-card" aria-label={`Project: ${project.title}`}>
+                <div className="pj-secondary-img-wrap">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="pj-secondary-img"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div className="pj-secondary-info">
+                  <div className="pj-meta-top">
+                    <span className="pj-tag-accent">{project.category}</span>
+                    <span className="pj-meta-dot">•</span>
+                    <span className="pj-meta-year">{project.year}</span>
                   </div>
 
-                  {/* Information Body */}
-                  <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between space-y-6">
-                    <div className="space-y-4">
-                      {/* Tech stack tags */}
-                      <div className="flex flex-wrap gap-1.5">
-                        {project.technologies.slice(0, 4).map((tech) => (
-                          <span
-                            key={tech}
-                            className="px-2.5 py-1 text-xs font-semibold bg-gray-100 text-gray-800 rounded-md border border-gray-200 transition-all duration-200 hover:border-cobalt hover:text-cobalt hover:-translate-y-0.5"
-                          >
-                            {tech}
-                          </span>
-                        ))}
+                  <h3 className="pj-secondary-title">{project.title}</h3>
+                  <p className="pj-secondary-desc">{project.description}</p>
+
+                  <div className="pj-tech-list">
+                    {project.technologies.slice(0, 4).map((tech) => (
+                      <span key={tech} className="pj-tech-tag">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="pj-actions-row">
+                    {project.liveUrl && (
+                      <a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="pj-btn-primary"
+                        aria-label={`View live ${project.title}`}
+                      >
+                        <span>VIEW PROJECT</span>
+                        <ArrowUpRight size={14} aria-hidden="true" />
+                      </a>
+                    )}
+
+                    {project.githubUrl && (
+                      <a
+                        href={project.githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="pj-btn-secondary"
+                        aria-label={`View ${project.title} source code on GitHub`}
+                      >
+                        <Github size={14} aria-hidden="true" />
+                        <span>GITHUB</span>
+                      </a>
+                    )}
+
+                    <button
+                      type="button"
+                      onClick={() => setSelectedCaseStudy(project)}
+                      className="pj-btn-text"
+                      aria-label={`Read case study for ${project.title}`}
+                    >
+                      <BookOpen size={13} aria-hidden="true" />
+                      <span>CASE STUDY</span>
+                    </button>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          {/* ── 3. Supporting Projects (Compact Editorial Rows) ── */}
+          {supportingProjects.length > 0 && (
+            <div className="pj-supporting-section">
+              <div className="pj-supporting-header">
+                <span className="pj-supporting-label">ADDITIONAL IMPLEMENTATIONS</span>
+              </div>
+
+              <div className="pj-supporting-list">
+                {supportingProjects.map((project) => (
+                  <div key={project.id} className="pj-supporting-row">
+                    <div className="pj-supporting-main">
+                      <div className="pj-supporting-meta">
+                        <span className="pj-supporting-num">{project.number}</span>
+                        <span className="pj-supporting-cat">{project.category}</span>
                       </div>
-
-                      {/* Title */}
-                      <h3 className="font-display text-2xl text-ink font-bold tracking-tight group-hover:text-cobalt transition-colors duration-200">
-                        {project.title}
-                      </h3>
-
-                      {/* Description with WCAG contrast */}
-                      <p className="text-sm text-gray-600 leading-relaxed font-normal">
-                        {project.description}
-                      </p>
+                      <h4 className="pj-supporting-title">{project.title}</h4>
+                      <p className="pj-supporting-desc">{project.tagline || project.description}</p>
                     </div>
 
-                    {/* Card Actions Footer */}
-                    <div className="pt-5 border-t border-gray-200 flex flex-col gap-2.5">
-                      <button
-                        onClick={() => setSelectedCaseStudy(project)}
-                        className="w-full py-2.5 bg-gray-50 hover:bg-ink hover:text-white text-ink text-xs font-mono font-bold uppercase tracking-wider rounded-xl flex items-center justify-center gap-2 border border-gray-200 transition-all duration-200 hover:shadow-xs active:scale-98 group/btn"
-                      >
-                        <BookOpen size={14} className="group-hover/btn:scale-110 transition-transform" />
-                        <span>Read Case Study</span>
-                      </button>
+                    <div className="pj-supporting-techs">
+                      {project.technologies.slice(0, 3).map((tech) => (
+                        <span key={tech} className="pj-tech-tag-sm">
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
 
-                      <div className="flex items-center gap-2">
-                        <a
-                          href={project.githubUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex-1 py-2.5 bg-white hover:bg-ink hover:text-white border border-gray-200 text-ink text-xs font-mono font-bold uppercase tracking-wider rounded-xl flex items-center justify-center gap-1.5 transition-all duration-200 active:scale-98 group/gh shadow-2xs"
-                        >
-                          <Github size={14} className="group-hover/gh:rotate-12 transition-transform" />
-                          <span>Code</span>
-                        </a>
-
+                    <div className="pj-supporting-links">
+                      {project.liveUrl && (
                         <a
                           href={project.liveUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex-1 py-2.5 bg-cobalt hover:bg-cobalt-hover text-white text-xs font-mono font-bold uppercase tracking-wider rounded-xl flex items-center justify-center gap-1.5 transition-all duration-200 shadow-xs hover:shadow-md active:scale-98 group/live"
+                          className="pj-row-link"
+                          aria-label={`Live demo for ${project.title}`}
                         >
-                          <span>Live App</span>
-                          <ArrowUpRight size={14} className="group-hover/live:translate-x-0.5 group-hover/live:-translate-y-0.5 transition-transform" />
+                          <span>LIVE</span>
+                          <ArrowUpRight size={13} aria-hidden="true" />
                         </a>
-                      </div>
+                      )}
+                      {project.githubUrl && (
+                        <a
+                          href={project.githubUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="pj-row-link"
+                          aria-label={`GitHub repository for ${project.title}`}
+                        >
+                          <span>CODE</span>
+                          <ArrowUpRight size={13} aria-hidden="true" />
+                        </a>
+                      )}
+                      <button
+                        type="button"
+                        onClick={() => setSelectedCaseStudy(project)}
+                        className="pj-row-btn"
+                        aria-label={`Case study for ${project.title}`}
+                      >
+                        <span>CASE STUDY</span>
+                      </button>
                     </div>
-
                   </div>
-                </article>
-              </TiltCard>
-            </motion.div>
-          ))}
-        </div>
+                ))}
+              </div>
+            </div>
+          )}
 
-        {/* ── Global Archive Banner CTA ── */}
-        <div className="p-8 sm:p-12 rounded-2xl border border-gray-200 bg-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 hover:shadow-lg transition-shadow shadow-xs">
-          <div className="space-y-2">
-            <span className="font-mono text-xs font-bold uppercase tracking-wider text-cobalt">
-              CATALOG ARCHIVE
-            </span>
-            <h3 className="font-display text-2xl sm:text-3xl text-ink font-bold tracking-tight">
-              Looking for more projects &amp; experiments?
-            </h3>
-            <p className="text-sm text-gray-500 max-w-lg font-medium">
-              Explore the complete archive containing frontends, API prototypes, and open-source challenges.
-            </p>
-          </div>
+          {/* ── 4. Catalog Archive Banner CTA ── */}
+          <footer className="pj-footer-banner">
+            <div className="pj-banner-content">
+              <span className="pj-banner-tag">FULL REPOSITORY INDEX</span>
+              <h3 className="pj-banner-title">EXPLORE THE COMPLETE CATALOGUE</h3>
+              <p className="pj-banner-desc">
+                Browse all engineering prototypes, full-stack microservices, API experiments, and open-source packages.
+              </p>
+            </div>
 
-          <div className="flex flex-wrap items-center gap-3">
-            <Magnetic strength={0.2}>
+            <div className="pj-banner-actions">
               <button
+                type="button"
                 onClick={() => setIsArchiveOpen(true)}
-                className="btn-primary"
+                className="pj-btn-primary"
               >
-                <span>View All Work →</span>
+                <span>OPEN PROJECT ARCHIVE</span>
+                <ArrowUpRight size={14} aria-hidden="true" />
               </button>
-            </Magnetic>
-            <Magnetic strength={0.2}>
+
               <a
                 href="https://github.com/hitesh-kumar123"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-secondary"
+                className="pj-btn-secondary"
               >
-                <Github size={14} />
-                <span>GitHub Archive</span>
+                <Github size={14} aria-hidden="true" />
+                <span>GITHUB REPOSITORIES</span>
               </a>
-            </Magnetic>
-          </div>
+            </div>
+          </footer>
         </div>
-      </section>
 
-      {/* Signature Interaction: Smooth Floating Cursor Preview on Desktop */}
-      <AnimatePresence>
-        {!isTouchDevice && hoveredProject && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
-            style={{
-              position: "fixed",
-              left: mousePos.x + 20,
-              top: mousePos.y + 20,
-              pointerEvents: "none",
-              zIndex: 60,
-            }}
-            className="hidden md:block w-72 p-2 bg-white rounded-xl border border-black/15 shadow-2xl overflow-hidden"
-          >
-            <div className="aspect-[16/10] overflow-hidden rounded-lg relative bg-black/5">
-              <img
-                src={hoveredProject.image}
-                alt={hoveredProject.title}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="p-2 space-y-0.5">
-              <div className="text-xs font-bold text-ink truncate">{hoveredProject.title}</div>
-              <div className="text-[10px] font-mono text-cobalt font-semibold uppercase">{hoveredProject.category}</div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+        {/* ── Scoped Editorial Styling ── */}
+        <style>{`
+          /* ══════════════════════════════════════
+             SECTION & CONTAINER
+          ══════════════════════════════════════ */
+          .pj-section {
+            background-color: #F4F1E9;
+            color: #151513;
+            padding: clamp(4rem, 8vw, 7.5rem) 1.5rem;
+            position: relative;
+            box-sizing: border-box;
+            width: 100%;
+          }
+
+          .pj-container {
+            max-width: 1320px;
+            margin: 0 auto;
+            box-sizing: border-box;
+          }
+
+          /* ══════════════════════════════════════
+             HEADER
+          ══════════════════════════════════════ */
+          .pj-header {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-bottom: clamp(2.5rem, 5vw, 4rem);
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #D3CEC2;
+          }
+
+          @media (min-width: 768px) {
+            .pj-header {
+              flex-direction: row;
+              justify-content: space-between;
+              align-items: flex-end;
+            }
+          }
+
+          .pj-label {
+            display: block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #7C2638;
+            margin-bottom: 1rem;
+          }
+
+          .pj-headline {
+            margin: 0;
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: clamp(2rem, 3.8vw, 3.6rem);
+            line-height: 1.02;
+            letter-spacing: -0.03em;
+            text-transform: uppercase;
+            color: #151513;
+          }
+
+          .pj-archive-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #151513;
+            background: transparent;
+            border: 1px solid #D3CEC2;
+            padding: 0.65rem 1.25rem;
+            cursor: pointer;
+            transition: color 200ms ease, border-color 200ms ease, transform 200ms ease;
+          }
+
+          .pj-archive-btn:hover {
+            color: #7C2638;
+            border-color: #7C2638;
+            transform: translateY(-1px);
+          }
+
+          /* ══════════════════════════════════════
+             COMMON META & TAGS
+          ══════════════════════════════════════ */
+          .pj-meta-top {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+          }
+
+          .pj-tag-accent {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #7C2638;
+          }
+
+          .pj-meta-dot {
+            color: #D3CEC2;
+            font-size: 12px;
+          }
+
+          .pj-meta-year {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 500;
+            color: #706C63;
+          }
+
+          .pj-tech-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem 0.5rem;
+            margin: 1.25rem 0 1.75rem 0;
+          }
+
+          .pj-tech-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 500;
+            color: #151513;
+            background-color: #FAF8F2;
+            border: 1px solid #D3CEC2;
+            padding: 0.25rem 0.6rem;
+            letter-spacing: 0.02em;
+          }
+
+          .pj-tech-tag-sm {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: #706C63;
+            background-color: #FAF8F2;
+            border: 1px solid #D3CEC2;
+            padding: 0.15rem 0.45rem;
+          }
+
+          /* ══════════════════════════════════════
+             ACTION BUTTONS
+          ══════════════════════════════════════ */
+          .pj-actions-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.75rem 1rem;
+            margin-top: auto;
+          }
+
+          .pj-btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background-color: #151513;
+            color: #F4F1E9;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 0.65rem 1.15rem;
+            border: 1px solid #151513;
+            cursor: pointer;
+            transition: background-color 200ms ease, color 200ms ease, transform 200ms ease;
+          }
+
+          .pj-btn-primary:hover {
+            background-color: #7C2638;
+            border-color: #7C2638;
+            transform: translateY(-2px);
+          }
+
+          .pj-btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: transparent;
+            color: #151513;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 0.65rem 1.15rem;
+            border: 1px solid #D3CEC2;
+            cursor: pointer;
+            transition: color 200ms ease, border-color 200ms ease, transform 200ms ease;
+          }
+
+          .pj-btn-secondary:hover {
+            color: #7C2638;
+            border-color: #7C2638;
+            transform: translateY(-2px);
+          }
+
+          .pj-btn-text {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: transparent;
+            border: none;
+            color: #706C63;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            cursor: pointer;
+            padding: 0.65rem 0.25rem;
+            text-decoration: underline;
+            text-decoration-color: #D3CEC2;
+            text-underline-offset: 4px;
+            transition: color 200ms ease, text-decoration-color 200ms ease;
+          }
+
+          .pj-btn-text:hover {
+            color: #7C2638;
+            text-decoration-color: #7C2638;
+          }
+
+          /* ══════════════════════════════════════
+             1. FEATURED PROJECT (Horizontal Showcase)
+          ══════════════════════════════════════ */
+          .pj-featured-card {
+            display: flex;
+            flex-direction: column;
+            background-color: #FAF8F2;
+            border: 1px solid #D3CEC2;
+            margin-bottom: 2.5rem;
+            box-sizing: border-box;
+          }
+
+          @media (min-width: 960px) {
+            .pj-featured-card {
+              flex-direction: row;
+            }
+          }
+
+          .pj-featured-img-wrap {
+            width: 100%;
+            overflow: hidden;
+            background-color: #EAE6DC;
+            border-bottom: 1px solid #D3CEC2;
+          }
+
+          @media (min-width: 960px) {
+            .pj-featured-img-wrap {
+              width: 58%;
+              flex-shrink: 0;
+              border-bottom: none;
+              border-right: 1px solid #D3CEC2;
+            }
+          }
+
+          .pj-featured-img {
+            width: 100%;
+            height: 100%;
+            min-height: 280px;
+            max-height: 480px;
+            object-fit: cover;
+            display: block;
+            filter: grayscale(10%);
+            transition: transform 350ms ease, filter 350ms ease;
+          }
+
+          .pj-featured-card:hover .pj-featured-img {
+            transform: scale(1.025);
+            filter: grayscale(0%);
+          }
+
+          .pj-featured-info {
+            padding: clamp(1.5rem, 3.5vw, 2.75rem);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex: 1;
+            box-sizing: border-box;
+          }
+
+          .pj-featured-title {
+            margin: 0;
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(1.65rem, 2.4vw, 2.25rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: #151513;
+          }
+
+          .pj-featured-desc {
+            margin: 0.85rem 0 0 0;
+            font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+            font-size: 14px;
+            line-height: 1.65;
+            color: #706C63;
+          }
+
+          /* ══════════════════════════════════════
+             2. SECONDARY PROJECTS (2-Column Grid)
+          ══════════════════════════════════════ */
+          .pj-secondary-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2.5rem;
+            margin-bottom: 3.5rem;
+          }
+
+          @media (min-width: 860px) {
+            .pj-secondary-grid {
+              grid-template-columns: repeat(2, 1fr);
+            }
+          }
+
+          .pj-secondary-card {
+            display: flex;
+            flex-direction: column;
+            background-color: #FAF8F2;
+            border: 1px solid #D3CEC2;
+            box-sizing: border-box;
+          }
+
+          .pj-secondary-img-wrap {
+            width: 100%;
+            height: 240px;
+            overflow: hidden;
+            background-color: #EAE6DC;
+            border-bottom: 1px solid #D3CEC2;
+          }
+
+          .pj-secondary-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            filter: grayscale(10%);
+            transition: transform 350ms ease, filter 350ms ease;
+          }
+
+          .pj-secondary-card:hover .pj-secondary-img {
+            transform: scale(1.025);
+            filter: grayscale(0%);
+          }
+
+          .pj-secondary-info {
+            padding: clamp(1.25rem, 2.5vw, 2rem);
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            box-sizing: border-box;
+          }
+
+          .pj-secondary-title {
+            margin: 0;
+            font-family: 'Syne', sans-serif;
+            font-size: 1.45rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: #151513;
+          }
+
+          .pj-secondary-desc {
+            margin: 0.65rem 0 0 0;
+            font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #706C63;
+          }
+
+          /* ══════════════════════════════════════
+             3. SUPPORTING PROJECTS (Editorial Rows)
+          ══════════════════════════════════════ */
+          .pj-supporting-section {
+            margin-top: 2rem;
+            margin-bottom: 3.5rem;
+            border-top: 1px solid #D3CEC2;
+            padding-top: 2rem;
+          }
+
+          .pj-supporting-header {
+            margin-bottom: 1.25rem;
+          }
+
+          .pj-supporting-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #706C63;
+          }
+
+          .pj-supporting-list {
+            display: flex;
+            flex-direction: column;
+          }
+
+          .pj-supporting-row {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid #D3CEC2;
+            transition: background-color 200ms ease;
+          }
+
+          @media (min-width: 900px) {
+            .pj-supporting-row {
+              flex-direction: row;
+              align-items: center;
+              justify-content: space-between;
+              gap: 2rem;
+            }
+          }
+
+          .pj-supporting-main {
+            flex: 1;
+          }
+
+          .pj-supporting-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.35rem;
+          }
+
+          .pj-supporting-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 600;
+            color: #7C2638;
+          }
+
+          .pj-supporting-cat {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #706C63;
+          }
+
+          .pj-supporting-title {
+            margin: 0;
+            font-family: 'Syne', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #151513;
+          }
+
+          .pj-supporting-desc {
+            margin: 0.35rem 0 0 0;
+            font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+            font-size: 13px;
+            line-height: 1.5;
+            color: #706C63;
+          }
+
+          .pj-supporting-techs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+          }
+
+          .pj-supporting-links {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            flex-shrink: 0;
+          }
+
+          .pj-row-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: #151513;
+            transition: color 200ms ease;
+          }
+
+          .pj-row-link:hover {
+            color: #7C2638;
+          }
+
+          .pj-row-btn {
+            display: inline-flex;
+            align-items: center;
+            background: transparent;
+            border: none;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            text-decoration: underline;
+            text-decoration-color: #D3CEC2;
+            text-underline-offset: 3px;
+            color: #706C63;
+            cursor: pointer;
+            padding: 0;
+            transition: color 200ms ease, text-decoration-color 200ms ease;
+          }
+
+          .pj-row-btn:hover {
+            color: #7C2638;
+            text-decoration-color: #7C2638;
+          }
+
+          /* ══════════════════════════════════════
+             4. FOOTER BANNER CTA
+          ══════════════════════════════════════ */
+          .pj-footer-banner {
+            padding: clamp(2rem, 4vw, 3rem);
+            background-color: #FAF8F2;
+            border: 1px solid #D3CEC2;
+            display: flex;
+            flex-direction: column;
+            gap: 1.75rem;
+          }
+
+          @media (min-width: 860px) {
+            .pj-footer-banner {
+              flex-direction: row;
+              align-items: center;
+              justify-content: space-between;
+            }
+          }
+
+          .pj-banner-content {
+            max-width: 600px;
+          }
+
+          .pj-banner-tag {
+            display: block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #7C2638;
+            margin-bottom: 0.5rem;
+          }
+
+          .pj-banner-title {
+            margin: 0;
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(1.35rem, 2vw, 1.75rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: #151513;
+          }
+
+          .pj-banner-desc {
+            margin: 0.5rem 0 0 0;
+            font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+            font-size: 13px;
+            line-height: 1.55;
+            color: #706C63;
+          }
+
+          .pj-banner-actions {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.75rem;
+            flex-shrink: 0;
+          }
+
+          /* ══════════════════════════════════════
+             REDUCED MOTION
+          ══════════════════════════════════════ */
+          @media (prefers-reduced-motion: reduce) {
+            .pj-featured-img,
+            .pj-secondary-img,
+            .pj-btn-primary,
+            .pj-btn-secondary,
+            .pj-archive-btn {
+              transition: none !important;
+              transform: none !important;
+            }
+          }
+        `}</style>
+      </section>
 
       {/* Interactive Case Study Modal */}
       <CaseStudyModal
@@ -256,3 +903,5 @@ export const Projects: React.FC = () => {
     </>
   );
 };
+
+export default Projects;

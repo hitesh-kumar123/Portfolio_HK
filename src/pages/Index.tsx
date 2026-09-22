@@ -12,7 +12,6 @@ import { CurrentlyExploring } from "@/components/sections/CurrentlyExploring";
 import { Certificates } from "@/components/sections/Certificates";
 import { Contact } from "@/components/sections/Contact";
 import { ScrollProgress } from "@/components/common/ScrollProgress";
-import { BackToTop } from "@/components/common/BackToTop";
 
 export const Index: React.FC = () => {
   return (
@@ -32,7 +31,6 @@ export const Index: React.FC = () => {
         <Contact />
       </main>
       <Footer />
-      <BackToTop />
     </div>
   );
 };
