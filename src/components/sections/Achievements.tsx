@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+ï»¿import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { achievementsList } from "@/data/achievements";
 
 /* ---------------------------------------------
-   Palette — matches global editorial system
+   Palette â€” matches global editorial system
    --------------------------------------------- */
 const PAL = {
   paper:   "#F4F1E9",
@@ -22,7 +22,7 @@ export const Achievements: React.FC = () => {
     <section
       id="achievements"
       aria-labelledby="achievements-heading"
-      style={{ background: '#EDE9DC', borderBottom: `1px solid ${PAL.border}` }}
+      style={{ background: PAL.paper, borderBottom: `1px solid ${PAL.border}` }}
     >
       {/* -- Scoped styles -- */}
       <style>{`
@@ -173,7 +173,7 @@ export const Achievements: React.FC = () => {
                 marginBottom: 14,
               }}
             >
-              06 — RECOGNITION
+              06 â€” RECOGNITION
             </p>
             <h2
               id="achievements-heading"
@@ -204,7 +204,7 @@ export const Achievements: React.FC = () => {
             }}
           >
             A factual record of hackathons,
-            programs, and community work —
+            programs, and community work â€”
             built through consistency, not claims.
           </p>
         </motion.div>
@@ -230,7 +230,7 @@ export const Achievements: React.FC = () => {
                 onFocus={() => setActiveIdx(idx)}
                 onBlur={() => setActiveIdx(null)}
                 tabIndex={0}
-                aria-label={`${item.title} — ${item.organization}, ${item.year}`}
+                aria-label={`${item.title} â€” ${item.organization}, ${item.year}`}
               >
                 {/* -- Left: Year + Status -- */}
                 <div style={{ paddingTop: 4 }}>
@@ -306,7 +306,7 @@ export const Achievements: React.FC = () => {
                     {item.description}
                   </p>
 
-                  {/* Link — visible below description on mobile */}
+                  {/* Link â€” visible below description on mobile */}
                   {item.link && (
                     <div style={{ marginTop: 16, display: "none" }} className="ach-link-mobile">
                       <a
@@ -330,7 +330,7 @@ export const Achievements: React.FC = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="ach-link"
-                      aria-label={`${item.link.text} — opens in new tab`}
+                      aria-label={`${item.link.text} â€” opens in new tab`}
                       style={{ flexDirection: "column", alignItems: "flex-end" }}
                     >
                       <ArrowUpRight size={16} strokeWidth={2} className="ach-link-arrow" />
@@ -379,3 +379,4 @@ export const Achievements: React.FC = () => {
     </section>
   );
 };
+

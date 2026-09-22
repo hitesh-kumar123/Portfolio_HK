@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+ï»¿import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { servicesList } from "@/data/services";
 
 /* ---------------------------------------------
-   Palette — matches global editorial system
+   Palette â€” matches global editorial system
    --------------------------------------------- */
 const PAL = {
   paper:   "#F4F1E9",
@@ -25,7 +25,7 @@ export const Services: React.FC = () => {
     <section
       id="services"
       aria-labelledby="services-heading"
-      style={{ background: '#EDE9DC', borderBottom: `1px solid ${PAL.border}` }}
+      style={{ background: PAL.paper, borderBottom: `1px solid ${PAL.border}` }}
     >
       {/* -- Scoped styles -- */}
       <style>{`
@@ -174,7 +174,7 @@ export const Services: React.FC = () => {
                 marginBottom: 14,
               }}
             >
-              05 — WHAT I BUILD
+              05 â€” WHAT I BUILD
             </p>
             <h2
               id="services-heading"
@@ -238,7 +238,7 @@ export const Services: React.FC = () => {
                   tabIndex={0}
                   role="button"
                   aria-expanded={isOpen}
-                  aria-label={`${service.title} — ${service.shortSummary}`}
+                  aria-label={`${service.title} â€” ${service.shortSummary}`}
                   onKeyDown={(e) => {
                     if (e.key === "Enter" || e.key === " ") {
                       e.preventDefault();
@@ -379,7 +379,7 @@ export const Services: React.FC = () => {
           <button
             onClick={() => scrollTo("contact")}
             className="svc-cta"
-            aria-label="Discuss a project — scroll to contact section"
+            aria-label="Discuss a project â€” scroll to contact section"
           >
             <span>DISCUSS A PROJECT</span>
             <ArrowUpRight size={12} strokeWidth={2.5} />
@@ -390,3 +390,4 @@ export const Services: React.FC = () => {
     </section>
   );
 };
+

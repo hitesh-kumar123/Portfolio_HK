@@ -183,7 +183,7 @@ export const About: React.FC = () => {
         ══════════════════════════════════════ */
         .ab-section {
           position: relative;
-          background-color: #EDE9DC;
+          background-color: #F4F1E9;
           border-bottom: 1px solid #D3CEC2;
           box-sizing: border-box;
           padding-top: clamp(4rem, 7vw, 6.5rem);

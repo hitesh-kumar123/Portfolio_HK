@@ -12,7 +12,10 @@ import {
   SiGithub,
   SiPostman,
   SiPython,
-  SiMysql
+  SiMysql,
+  SiPostgresql,
+  SiSupabase,
+  SiGraphql
 } from "react-icons/si";
 import { type IconType } from "react-icons";
 
@@ -46,14 +49,17 @@ export const toolboxGroups: SkillGroup[] = [
       { name: "Express.js", icon: SiExpress, color: "#111111", context: "Routing, Middleware, API Architecture" },
       { name: "Tailwind CSS", icon: SiTailwindcss, color: "#06B6D4", context: "Design Tokens, Fluid Typography, Layouts" },
       { name: "Redux", icon: SiRedux, color: "#764ABC", context: "Predictable Global State Management" },
+      { name: "GraphQL", icon: SiGraphql, color: "#E10098", context: "Typed Schemas, Queries & Mutations" },
     ]
   },
   {
     number: "03",
     category: "DATA",
     skills: [
+      { name: "PostgreSQL", icon: SiPostgresql, color: "#4169E1", context: "Relational Schemas, Constraints, Indexes" },
+      { name: "SQL", icon: SiMysql, color: "#00758F", context: "Complex Queries, Joins, Transactions" },
       { name: "MongoDB", icon: SiMongodb, color: "#47A248", context: "NoSQL Schemas, Aggregations, Mongoose" },
-      { name: "SQL", icon: SiMysql, color: "#00758F", context: "Relational Queries, Table Structures" },
+      { name: "Supabase", icon: SiSupabase, color: "#3ECF8E", context: "BaaS, Row Level Security, Realtime DB" },
     ]
   },
   {

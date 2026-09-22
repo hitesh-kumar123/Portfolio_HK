@@ -4,14 +4,14 @@
 
 @layer base {
   :root {
-    --bg-canvas: #FAFAFA;
-    --bg-surface: #FFFFFF;
-    --bg-subtle: #F4F5F7;
-    --border-color: #E5E7EB;
-    --text-ink: #09090B;
-    --text-body: #374151;
-    --text-muted: #6B7280;
-    --accent-cobalt: #2563EB;
+    --bg-canvas: #F4F1E9;
+    --bg-surface: #FAF8F2;
+    --bg-subtle: #EAE6DC;
+    --border-color: #D3CEC2;
+    --text-ink: #151513;
+    --text-body: #706C63;
+    --text-muted: #706C63;
+    --accent-cobalt: #B02038;
   }
 
   html {

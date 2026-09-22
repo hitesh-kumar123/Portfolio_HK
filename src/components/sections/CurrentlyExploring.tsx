@@ -21,7 +21,7 @@ export const CurrentlyExploring: React.FC = () => {
     <section
       id="explore"
       aria-labelledby="explore-heading"
-      style={{ background: PAL.surface, borderBottom: `1px solid ${PAL.border}` }}
+      style={{ background: PAL.paper, borderBottom: `1px solid ${PAL.border}` }}
     >
       {/* ── Scoped styles ── */}
       <style>{`
@@ -296,3 +296,4 @@ export const CurrentlyExploring: React.FC = () => {
     </section>
   );
 };
+

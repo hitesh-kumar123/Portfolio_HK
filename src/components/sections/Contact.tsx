@@ -91,7 +91,7 @@ export const Contact: React.FC = () => {
     <section
       id="contact"
       aria-labelledby="contact-heading"
-      style={{ background: '#EDE9DC' }}
+      style={{ background: PAL.paper }}
     >
       {/* -- Scoped styles -- */}
       <style>{`
@@ -492,5 +492,6 @@ export const Contact: React.FC = () => {
     </section>
   );
 };
+
 
 
