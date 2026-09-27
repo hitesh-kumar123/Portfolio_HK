@@ -1,290 +1,405 @@
-import React, { useState } from "react";
-import { motion } from "framer-motion";
-import { ArrowUpRight, ArrowUp, Copy, Check } from "lucide-react";
-import { siteNavItems } from "@/data/navigation";
+import React from "react";
+import { ArrowUp, ArrowUpRight, Github, Linkedin, Mail, Sparkles } from "lucide-react";
 
-const PAL = {
-  paper:   "#F4F1E9",
-  surface: "#FAF8F2",
-  ink:     "#151513",
-  muted:   "#706C63",
-  border:  "#D3CEC2",
-  wine:    "#B02038",
-};
+interface SocialItem {
+  name: string;
+  href: string;
+  icon: React.ReactNode;
+}
 
-const NAV_LINKS = [
-  { id: "about",   label: "About" },
-  { id: "work",    label: "Projects" },
-  { id: "contact", label: "Contact" },
-];
-
-const EXTERNAL_LINKS = [
-  { label: "GitHub",   href: "https://github.com/hitesh-kumar123", copyable: false },
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/hitesh-kumar-hk/", copyable: false },
-  { label: "Email",    href: "mailto:hiteshdevkumar2003@gmail.com", copyable: true },
+const SOCIAL_ITEMS: SocialItem[] = [
+  {
+    name: "LinkedIn",
+    href: "https://www.linkedin.com/in/hitesh-kumar-hk/",
+    icon: <Linkedin size={18} strokeWidth={2} />,
+  },
+  {
+    name: "GitHub",
+    href: "https://github.com/hitesh-kumar123",
+    icon: <Github size={18} strokeWidth={2} />,
+  },
+  {
+    name: "Email",
+    href: "mailto:hiteshdevkumar2003@gmail.com",
+    icon: <Mail size={18} strokeWidth={2} />,
+  },
 ];
 
 export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
-  const [copied, setCopied] = useState(false);
 
-  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
-  const scrollTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
-  const handleCopyEmail = () => {
-    navigator.clipboard.writeText("hiteshdevkumar2003@gmail.com").then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    });
+  const scrollToContact = () => {
+    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
-    <footer
-      aria-label="Site footer"
-      style={{ background: PAL.paper, borderTop: `1px solid ${PAL.border}` }}
-    >
-      <style>{`
-        .ftr-mono    { font-family: 'JetBrains Mono', 'Fira Mono', monospace; }
-        .ftr-display { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
+    <footer aria-label="Site footer" className="ft-cta-wrap">
+      {/* Top ambient luxury hairline glow */}
+      <div className="ft-cta-glow-line" aria-hidden="true" />
 
-        .ftr-link {
+      <div className="ft-cta-container">
+
+        {/* ── Giant Magnetic CTA Headline ── */}
+        <div className="ft-cta-hero">
+          <div className="ft-cta-eyebrow">
+            <span className="ft-cta-dot" aria-hidden="true" />
+            <span>HAVE AN IDEA OR SDE OPPORTUNITY?</span>
+          </div>
+
+          <a
+            href="mailto:hiteshdevkumar2003@gmail.com"
+            className="ft-cta-big-link"
+            aria-label="Let's work together — Send an email"
+          >
+            <span className="ft-cta-big-text">LET&apos;S WORK TOGETHER</span>
+            <div className="ft-cta-big-arrow-box" aria-hidden="true">
+              <ArrowUpRight size={36} strokeWidth={2.2} className="ft-cta-big-arrow" />
+            </div>
+          </a>
+        </div>
+
+        {/* ── Mid-Row: Floating Socials & Back to Top ── */}
+        <div className="ft-cta-mid-row">
+
+          {/* Borderless Floating Socials */}
+          <div className="ft-cta-socials">
+            {SOCIAL_ITEMS.map((item) => (
+              <a
+                key={item.name}
+                href={item.href}
+                target={item.href.startsWith("http") ? "_blank" : undefined}
+                rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                className="ft-cta-social-link"
+                aria-label={`${item.name} profile`}
+              >
+                <span className="ft-cta-social-icon">{item.icon}</span>
+                <span className="ft-cta-social-name">{item.name}</span>
+                <ArrowUpRight size={14} strokeWidth={2} className="ft-cta-social-arrow" aria-hidden="true" />
+              </a>
+            ))}
+          </div>
+
+          {/* Elevate Button */}
+          <button
+            type="button"
+            onClick={scrollToTop}
+            className="ft-cta-top-btn"
+            aria-label="Scroll back to top of page"
+          >
+            <span className="ft-cta-top-txt">BACK TO TOP</span>
+            <div className="ft-cta-top-icon-circle">
+              <ArrowUp size={14} strokeWidth={2.5} className="ft-cta-top-arrow" />
+            </div>
+          </button>
+
+        </div>
+
+        {/* ── Bottom Precision Bar ── */}
+        <div className="ft-cta-bottom-bar">
+          <p className="ft-cta-copyright">
+            © {currentYear} HITESH KUMAR · ALL RIGHTS RESERVED
+          </p>
+
+          <p className="ft-cta-location">
+            AHMEDABAD, INDIA · REMOTE WORLDWIDE
+          </p>
+        </div>
+
+      </div>
+
+      {/* ── Scoped Styling ── */}
+      <style>{`
+        .ft-cta-wrap {
+          background-color: #0E0D0C;
+          color: #FAF8F2;
+          width: 100%;
           position: relative;
+          box-sizing: border-box;
+          padding: clamp(4rem, 7vw, 6.5rem) 0 2rem;
+          overflow: hidden;
+        }
+
+        .ft-cta-glow-line {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 1px;
+          background: linear-gradient(
+            90deg,
+            transparent 0%,
+            rgba(176, 32, 56, 0.5) 30%,
+            rgba(250, 248, 242, 0.35) 50%,
+            rgba(176, 32, 56, 0.5) 70%,
+            transparent 100%
+          );
+        }
+
+        .ft-cta-container {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 1.5rem;
+          box-sizing: border-box;
+          display: flex;
+          flex-direction: column;
+          gap: clamp(3rem, 5vw, 4.5rem);
+        }
+
+        /* ── Giant CTA Headline ── */
+        .ft-cta-hero {
+          display: flex;
+          flex-direction: column;
+          gap: 1.25rem;
+        }
+
+        .ft-cta-eyebrow {
           display: inline-flex;
           align-items: center;
-          gap: 5px;
-          background: none;
+          gap: 8px;
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 11px;
+          font-weight: 700;
+          letter-spacing: 0.16em;
+          color: #B02038;
+          text-transform: uppercase;
+        }
+
+        .ft-cta-dot {
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background-color: #B02038;
+          box-shadow: 0 0 0 2px rgba(176, 32, 56, 0.3);
+          display: inline-block;
+        }
+
+        .ft-cta-big-link {
+          display: inline-flex;
+          align-items: center;
+          justify-content: space-between;
+          text-decoration: none;
+          color: #FAF8F2;
+          gap: 1.5rem;
+          cursor: pointer;
+          transition: all 260ms ease;
+          width: 100%;
+          border-bottom: 1px solid #24221F;
+          padding-bottom: 2rem;
+        }
+
+        .ft-cta-big-text {
+          font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+          font-size: clamp(2.4rem, 6.2vw, 5.2rem);
+          font-weight: 800;
+          line-height: 1;
+          letter-spacing: -0.03em;
+          color: #FAF8F2;
+          transition: color 240ms ease, transform 240ms ease;
+        }
+
+        .ft-cta-big-arrow-box {
+          width: clamp(54px, 6vw, 76px);
+          height: clamp(54px, 6vw, 76px);
+          border-radius: 50%;
+          border: 1px solid #33302B;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: #181715;
+          color: #FAF8F2;
+          flex-shrink: 0;
+          transition: all 260ms ease;
+        }
+
+        .ft-cta-big-arrow {
+          transition: transform 260ms ease, color 260ms ease;
+        }
+
+        .ft-cta-big-link:hover .ft-cta-big-text {
+          color: #B02038;
+          transform: translateX(6px);
+        }
+
+        .ft-cta-big-link:hover .ft-cta-big-arrow-box {
+          background-color: #B02038;
+          border-color: #B02038;
+          box-shadow: 0 8px 30px rgba(176, 32, 56, 0.45);
+          transform: scale(1.06);
+        }
+
+        .ft-cta-big-link:hover .ft-cta-big-arrow {
+          transform: translate(3px, -3px);
+          color: #FFFFFF;
+        }
+
+        /* ── Mid Row: Socials & Back to Top ── */
+        .ft-cta-mid-row {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          flex-wrap: wrap;
+          gap: 1.75rem;
+        }
+
+        .ft-cta-socials {
+          display: flex;
+          align-items: center;
+          gap: clamp(1.25rem, 3vw, 2.5rem);
+          flex-wrap: wrap;
+        }
+
+        .ft-cta-social-link {
+          display: inline-flex;
+          align-items: center;
+          gap: 7px;
+          text-decoration: none;
+          color: #9E9A90;
+          font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+          font-size: 14px;
+          font-weight: 600;
+          transition: color 200ms ease, transform 200ms ease;
+        }
+
+        .ft-cta-social-icon {
+          color: #706C62;
+          transition: color 200ms ease, transform 200ms ease;
+          display: flex;
+          align-items: center;
+        }
+
+        .ft-cta-social-arrow {
+          color: #4A4842;
+          transition: color 200ms ease, transform 200ms ease;
+        }
+
+        .ft-cta-social-link:hover {
+          color: #FAF8F2;
+          transform: translateY(-2px);
+        }
+
+        .ft-cta-social-link:hover .ft-cta-social-icon {
+          color: #B02038;
+          transform: scale(1.15);
+        }
+
+        .ft-cta-social-link:hover .ft-cta-social-arrow {
+          color: #B02038;
+          transform: translate(2px, -2px);
+        }
+
+        /* Elevate Button */
+        .ft-cta-top-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          background: transparent;
           border: none;
           padding: 0;
           cursor: pointer;
-          text-decoration: none;
-          color: ${PAL.muted};
+          color: #9E9A90;
           font-family: 'JetBrains Mono', monospace;
-          font-size: 10.5px;
+          transition: all 200ms ease;
+        }
+
+        .ft-cta-top-txt {
+          font-size: 11px;
           font-weight: 700;
           letter-spacing: 0.12em;
           text-transform: uppercase;
-          transition: color 0.22s;
-        }
-        .ftr-link::after {
-          content: '';
-          position: absolute;
-          bottom: -2px; left: 0;
-          width: 0; height: 1px;
-          background: ${PAL.wine};
-          transition: width 0.26s ease;
-        }
-        .ftr-link:hover { color: ${PAL.ink}; }
-        .ftr-link:hover::after { width: 100%; }
-        .ftr-link:focus-visible {
-          outline: 2px solid ${PAL.wine};
-          outline-offset: 5px;
-          border-radius: 2px;
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .ftr-link { transition: none; }
-          .ftr-link::after { transition: none; }
+          transition: color 200ms ease;
         }
 
-        .ftr-arrow { transition: transform 0.2s ease; color: ${PAL.border}; }
-        .ftr-link:hover .ftr-arrow { transform: translate(2px,-2px); color: ${PAL.wine}; }
-        @media (prefers-reduced-motion: reduce) {
-          .ftr-arrow { transition: none; }
-          .ftr-link:hover .ftr-arrow { transform: none; }
-        }
-
-        .ftr-top {
-          display: inline-flex;
-          align-items: center;
-          gap: 6px;
-          background: none;
-          border: 1px solid ${PAL.border};
-          padding: 9px 16px;
-          border-radius: 2px;
-          cursor: pointer;
-          font-family: 'JetBrains Mono', monospace;
-          font-size: 9.5px;
-          font-weight: 700;
-          letter-spacing: 0.13em;
-          text-transform: uppercase;
-          color: ${PAL.muted};
-          transition: border-color 0.22s, color 0.22s, transform 0.22s;
-        }
-        .ftr-top:hover { border-color: ${PAL.ink}; color: ${PAL.ink}; transform: translateY(-2px); }
-        .ftr-top:focus-visible { outline: 2px solid ${PAL.wine}; outline-offset: 4px; border-radius: 2px; }
-        .ftr-top-arrow { transition: transform 0.22s ease; }
-        .ftr-top:hover .ftr-top-arrow { transform: translateY(-3px); }
-        @media (prefers-reduced-motion: reduce) {
-          .ftr-top { transition: none; }
-          .ftr-top:hover { transform: none; }
-          .ftr-top-arrow { transition: none; }
-          .ftr-top:hover .ftr-top-arrow { transform: none; }
-        }
-
-        .ftr-copy {
-          display: inline-flex;
-          align-items: center;
-          gap: 3px;
-          font-family: 'JetBrains Mono', monospace;
-          font-size: 8.5px;
-          font-weight: 700;
-          letter-spacing: 0.1em;
-          text-transform: uppercase;
-          color: ${PAL.muted};
-          background: none;
-          border: 1px solid ${PAL.border};
-          border-radius: 2px;
-          padding: 2px 7px;
-          cursor: pointer;
-          transition: border-color 0.2s, color 0.2s;
-        }
-        .ftr-copy:hover { border-color: ${PAL.wine}; color: ${PAL.wine}; }
-        .ftr-copy:focus-visible { outline: 2px solid ${PAL.wine}; outline-offset: 3px; }
-        @media (prefers-reduced-motion: reduce) { .ftr-copy { transition: none; } }
-
-        .ftr-links-row {
+        .ft-cta-top-icon-circle {
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          border: 1px solid #2E2D2A;
+          background: #181715;
           display: flex;
           align-items: center;
-          gap: 28px;
-          flex-wrap: wrap;
+          justify-content: center;
+          color: #FAF8F2;
+          transition: all 220ms ease;
         }
-        @media (max-width: 600px) { .ftr-links-row { gap: 18px; } }
 
-        .ftr-bottom {
+        .ft-cta-top-arrow {
+          transition: transform 220ms ease;
+        }
+
+        .ft-cta-top-btn:hover .ft-cta-top-txt {
+          color: #FAF8F2;
+        }
+
+        .ft-cta-top-btn:hover .ft-cta-top-icon-circle {
+          background-color: #B02038;
+          border-color: #B02038;
+          box-shadow: 0 4px 16px rgba(176, 32, 56, 0.4);
+          transform: translateY(-2px);
+        }
+
+        .ft-cta-top-btn:hover .ft-cta-top-arrow {
+          transform: translateY(-2px);
+        }
+
+        /* ── Bottom Precision Bar ── */
+        .ft-cta-bottom-bar {
           display: flex;
+          align-items: center;
           justify-content: space-between;
-          align-items: center;
           flex-wrap: wrap;
-          gap: 16px;
+          gap: 1rem;
+          padding-top: 1.5rem;
+          border-top: 1px solid #1C1B19;
         }
 
-        .ftr-sep {
-          width: 1px;
-          height: 18px;
-          background: ${PAL.border};
-          flex-shrink: 0;
+        .ft-cta-copyright,
+        .ft-cta-location {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 10.5px;
+          color: #63605A;
+          letter-spacing: 0.06em;
+          margin: 0;
         }
-        @media (max-width: 720px) { .ftr-sep { display: none; } }
+
+        @media (max-width: 768px) {
+          .ft-cta-big-link {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1.25rem;
+          }
+          .ft-cta-mid-row {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1.5rem;
+          }
+          .ft-cta-socials {
+            width: 100%;
+            justify-content: space-between;
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .ft-cta-big-link,
+          .ft-cta-big-text,
+          .ft-cta-big-arrow-box,
+          .ft-cta-big-arrow,
+          .ft-cta-social-link,
+          .ft-cta-social-icon,
+          .ft-cta-social-arrow,
+          .ft-cta-top-btn,
+          .ft-cta-top-icon-circle,
+          .ft-cta-top-arrow {
+            transition: none !important;
+            transform: none !important;
+          }
+        }
       `}</style>
-
-      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "72px 40px 48px" }}>
-
-        {/* Closing statement */}
-        <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-40px" }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          style={{ paddingBottom: 36, borderBottom: `1px solid ${PAL.border}` }}
-        >
-          <p
-            className="ftr-display"
-            style={{
-              fontSize: "clamp(1.05rem, 2.5vw, 1.9rem)",
-              fontWeight: 700,
-              color: PAL.ink,
-              letterSpacing: "-0.014em",
-              lineHeight: 1.15,
-              margin: 0,
-            }}
-          >
-            DESIGNED WITH CURIOSITY.{" "}
-            <span style={{ color: PAL.wine }}>BUILT WITH CODE.</span>
-          </p>
-        </motion.div>
-
-        {/* Nav + External links */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-30px" }}
-          transition={{ duration: 0.6, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-          style={{
-            padding: "32px 0",
-            borderBottom: `1px solid ${PAL.border}`,
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            flexWrap: "wrap",
-            gap: 20,
-          }}
-        >
-          <nav aria-label="Footer navigation">
-            <div className="ftr-links-row">
-              {NAV_LINKS.map(({ id, label }) => (
-                <button
-                  key={id}
-                  className="ftr-link"
-                  onClick={() => scrollTo(id)}
-                  aria-label={`Jump to ${label} section`}
-                >
-                  {label}
-                </button>
-              ))}
-            </div>
-          </nav>
-
-          <div aria-hidden="true" className="ftr-sep" />
-
-          <div className="ftr-links-row">
-            {EXTERNAL_LINKS.map((link) => (
-              <span key={link.label} style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
-                <a
-                  className="ftr-link"
-                  href={link.href}
-                  target={link.href.startsWith("http") ? "_blank" : undefined}
-                  rel="noopener noreferrer"
-                  aria-label={
-                    link.href.startsWith("http")
-                      ? `${link.label} profile — opens in new tab`
-                      : `Send email to Hitesh Kumar`
-                  }
-                >
-                  {link.label}
-                  {link.href.startsWith("http") && (
-                    <ArrowUpRight size={10} strokeWidth={2.5} className="ftr-arrow" />
-                  )}
-                </a>
-                {link.copyable && (
-                  <button
-                    className="ftr-copy"
-                    onClick={handleCopyEmail}
-                    aria-label="Copy email address to clipboard"
-                  >
-                    {copied
-                      ? <><Check size={8} /><span>COPIED</span></>
-                      : <><Copy size={8} /><span>COPY</span></>
-                    }
-                  </button>
-                )}
-              </span>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Bottom metadata bar */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.55, delay: 0.15 }}
-          className="ftr-bottom"
-          style={{ paddingTop: 26 }}
-        >
-          <p className="ftr-mono" style={{ fontSize: 10, color: PAL.muted, letterSpacing: "0.08em" }}>
-            © {currentYear} Hitesh Kumar. All rights reserved.
-          </p>
-
-          <button
-            className="ftr-top"
-            onClick={scrollToTop}
-            aria-label="Back to top of page"
-          >
-            <span>BACK TO TOP</span>
-            <ArrowUp size={11} strokeWidth={2.5} className="ftr-top-arrow" />
-          </button>
-        </motion.div>
-
-      </div>
     </footer>
   );
 };
+
+export default Footer;
