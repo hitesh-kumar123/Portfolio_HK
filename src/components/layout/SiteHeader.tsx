@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 // ─────────────────────────────────────────────
@@ -15,10 +15,11 @@ import { motion, AnimatePresence } from "framer-motion";
 // ─────────────────────────────────────────────
 
 const MENU_ITEMS = [
-  { label: "ABOUT",       id: "about"   },
-  { label: "WORK",        id: "work"    },
-  { label: "EXPERIMENTS", id: "journey" },
-  { label: "CONTACT",     id: "contact" },
+  { label: "ABOUT",        id: "about"        },
+  { label: "WORK",         id: "work"         },
+  { label: "SERVICES",     id: "services"     },
+  { label: "CREDENTIALS",  id: "certificates" },
+  { label: "CONTACT",      id: "contact"      },
 ] as const;
 
 const SOCIAL_LINKS = [

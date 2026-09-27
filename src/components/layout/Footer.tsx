@@ -1,4 +1,4 @@
-﻿import React, { useState } from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowUpRight, ArrowUp, Copy, Check } from "lucide-react";
 import { siteNavItems } from "@/data/navigation";
@@ -45,7 +45,7 @@ export const Footer: React.FC = () => {
     >
       <style>{`
         .ftr-mono    { font-family: 'JetBrains Mono', 'Fira Mono', monospace; }
-        .ftr-display { font-family: 'Syne', sans-serif; }
+        .ftr-display { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
 
         .ftr-link {
           position: relative;
